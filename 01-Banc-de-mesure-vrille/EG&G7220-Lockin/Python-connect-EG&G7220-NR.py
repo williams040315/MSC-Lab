@@ -2,7 +2,7 @@
 """
 Created on Wed Feb 24 10:24:51 2021
 
-@author: williams
+@author: Williams BRETT, MSC, CNRS
 """
 
 from websocket import create_connection
@@ -16,12 +16,9 @@ time.sleep(3)
 cmd.send("{\"cmd\":\"SEN.\",\"data\":\"14\"}")
 
 iterator = 0
-
 while iterator < 10 : 
-    
     cmd.send("{\"cmd\":\"DATA?\"}")
     print(data.recv())
     iterator = iterator + 1
     time.sleep(1)
-
 cmd.send("{\"cmd\":\"STOP\"}")
