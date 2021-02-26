@@ -10,7 +10,7 @@ Cette section regroupe l'ensemble des codes qui permettent de piloter les équip
 
 `Le code du Lock in amplifier a été écrit en javascript grace à node-red. L'ensemble du contrôle et de la lecture des données se fait grâce à Python3 avec une communication en websockets non bloquante`
 
-2 - Mesure de masse
+2 - Mesure de masse :
 * Balance Kern : [à compléter]
 
 3 - Platine de translation : 
