@@ -1,0 +1,28 @@
+/*
+
+path of the last processed image
+
+*/
+
+socket.on('res_dir', function(msg){             // directory where are save the results
+
+  //alert('last prrocessing is ' + msg.mess)
+  if ($(".proc_pics_panel").is(":hidden")){     // show panel
+      $(".proc_pics_panel").show()
+  }
+  $('#curr_proc_pic').attr('src', msg.mess + '?' + new Date().getTime())
+
+})
+
+/*
+
+path of the first image in static/processings
+
+*/
+
+socket.on('server_res_dir', function(msg){            // server result directory containing pictures for the interface
+
+  //alert('last processing is ' + msg.mess)
+  $('#curr_proc_pic').attr('src', msg.mess + '/frame0.png?' + new Date().getTime())
+
+})

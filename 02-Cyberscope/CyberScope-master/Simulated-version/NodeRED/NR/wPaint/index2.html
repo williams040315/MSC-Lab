@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+  <title>wPaint</title>
+  <link rel="icon" type="image/vnd.microsoft.icon"  href="./demo/img/favicon.ico" />
+  <link rel="Stylesheet" type="text/css" href="./demo/demo.css" />
+  <script type="text/javascript" src="./lib/jquery.1.10.2.min.js"></script>
+</head>
+<body>
+  <div id="content">
+    <div style="position: relative; z-index: 1;" class="content-box">
+      <script type="text/javascript" src="./lib/jquery.ui.core.1.10.3.min.js"></script>
+      <script type="text/javascript" src="./lib/jquery.ui.widget.1.10.3.min.js"></script>
+      <script type="text/javascript" src="./lib/jquery.ui.mouse.1.10.3.min.js"></script>
+      <script type="text/javascript" src="./lib/jquery.ui.draggable.1.10.3.min.js"></script>
+      <link rel="Stylesheet" type="text/css" href="./lib/wColorPicker.min.css" />
+      <script type="text/javascript" src="./lib/wColorPicker.min.js"></script>
+      <link rel="Stylesheet" type="text/css" href="./wPaint.min.css" />
+      <script type="text/javascript" src="./wPaint.min.js"></script>
+      <script type="text/javascript" src="./plugins/main/wPaint.menu.main.min.js"></script>
+      <script type="text/javascript" src="./plugins/text/wPaint.menu.text.min.js"></script>
+      <script type="text/javascript" src="./plugins/shapes/wPaint.menu.main.shapes.min.js"></script>
+      <script type="text/javascript" src="./plugins/file/wPaint.menu.main.file.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!--  
+      <div style="background-image: url('http://localhost/tarte.png'); width:512px; height:512px; " id="wPaint"></div>
+      -->
+
+      <div id="wPaint" style="border: 2px; z-index: 3; position: absolute width: 620px; height: 500px; background-color: rgba(0, 0, 255, 0);"></div>
+      <div id="cam" style="border: 1px; z-index: 2; position: absolute; width: 620px; height: 500px;"></div>
+
+      <!--
+      <center style="margin-bottom: 50px;">
+      <input type="button" value="toggle menu" onclick="console.log($('#wPaint').wPaint('menuOrientation')); $('#wPaint').wPaint('menuOrientation', $('#wPaint').wPaint('menuOrientation') === 'vertical' ? 'horizontal' : 'vertical');"/>
+      </center>
+      -->
+      <script type="text/javascript">
+          var images = ['/test/uploads/wPaint-PL.png'];
+          $.ajax({
+            type: 'GET',
+            url: 'http://127.0.0.1/test/uploads/list.php',
+            success: function (resp) {
+              resp = JSON.parse(resp);
+              for(var key in resp) if(key != 'end') images.push('/test/uploads/'+resp[key]);
+            },
+            error:function(err){
+              console.log('error');
+            }
+          });
+          function saveImg(image) {
+            var nameOfPicture = prompt("Please enter the name of picture", "Name of picture ....");
+            if (nameOfPicture != null) {
+                var _this = this;
+                $.ajax({
+                  type: 'POST',
+                  url: '/test/upload.php',
+                  data: {image : image , nameOfPicture : nameOfPicture},
+                  success: function (resp) {
+                    _this._displayStatus('Image saved successfully: '+nameOfPicture);
+                    resp = $.parseJSON(resp);
+                    images.push(resp.img);
+                    alert(image);
+                    $('#wPaint-img').attr('src', image);
+                  }
+                });
+            }
+          }
+          function loadImgBg () {
+            this._showFileModal('bg', images);
+          }
+          function loadImgFg () {
+            this._showFileModal('fg', images);
+          }
+          $('#wPaint').wPaint({
+            menuOffsetLeft: 0,
+            menuOffsetTop: 0,
+            saveImg: saveImg,
+          //  Image : ["data:image/png;base64,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"],
+            loadImgBg: loadImgBg,
+            loadImgFg: loadImgFg,
+            MenuOrientation: 'horizontal'
+          });
+      </script>
+    </div>
+  </div>
+</body>
+</html>

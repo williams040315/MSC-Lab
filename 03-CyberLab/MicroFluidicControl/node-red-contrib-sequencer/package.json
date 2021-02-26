@@ -1,0 +1,23 @@
+{
+    "name"         : "node-red-contrib-sequencer",
+    "version"      : "2.0.0",
+    "description"  : "Digital Sequencer for Microfluidic Valves",
+    "keywords": [ "node-red" ],
+    "author": "Williams BRETT | Lab513",
+     "dependencies": {
+        "airtable": "0.5.6",
+        "node-red-dashboard" : "2.9.6",
+        "node-red-node-serialport" : "0.6.7"       
+	},
+    "node-red"     : {
+        "nodes": {
+            "sequencer": "sequencer/sequencer.js"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Lab513/CyberScope/"
+    },
+    "license": "CNRS, University Paris 7, MSC"
+}
+

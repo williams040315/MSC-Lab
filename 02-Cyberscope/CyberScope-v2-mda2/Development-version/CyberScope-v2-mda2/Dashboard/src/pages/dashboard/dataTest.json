@@ -1,0 +1,91 @@
+{"timestamp" : 7,
+"Action en cours" :
+{
+"device" : "Device name",
+"topic" : "Topic name",
+"action" : "Action name"
+},
+"Experience" :  {
+"en cours" : true,
+"en pause" : false,
+"nom": "experience name",
+"user" : "username",
+"microscope" : "miscroscope name",
+"type" : "microfuidique"
+},
+"image" : {
+"nom" : "name.tiff",
+"black" : true,
+"white" : false,
+"noise" : false,
+"blurred" : true
+},
+"cell":{
+"nCell" : 84,
+"size" : [ 6, 3, 42 ],
+"position" : [ [32, 21], [12,22], [1,2] ],
+"fluorescence" : [ 1, 2, 3 ]
+},
+"microscope" : {
+"en cours" : true,
+"z" : 64,
+"lim basse autofocus" : 12,
+"lim haute autofocus" : 13,
+"lim basse mécanique" : 14,
+"lim haute mécanique" : 15,
+"z offset auto focus" : 16,
+"roue a filtre" : 17,
+"autofocus": "in progress", 
+"intensité" : 9,
+"shutter" : "ouvert"
+},
+"motionstage" :{
+"en cours" : true,
+"x" : 1,
+"y" : 2
+},
+"mosaic" :{
+"en cours" : true,
+"masque" : "masque name",
+"script" : "script name",
+"mappa": "tout le masque"
+},
+"fluorescence" : {
+"nom" : "XCITE 120PC",
+"en cours" : true,
+"channel" : [ [2,3,99], [11,22,33], [44,55,66] ]
+},
+"photoactivation" : {
+"nom" : "coolled pe 4000",
+"en cours" : false,
+"channel" : [ [2,3,99], [11,22,33], [44,55,66] ]
+},
+"camera" : {
+"en cours" : true
+},
+"ufluidcs" : {
+"use" : false,
+"v1" : false,
+"v2" : false,
+"v3" : false,
+"v4" : false,
+"v5" : false
+},
+"delay" : {
+"en cours": false,
+"temps" : 60
+},
+"analysis" : {
+"en cours": true,
+"script" : "nom du script"
+},
+"goto" : {
+"en cours": true,
+"where" : 104
+},
+"break" : {
+"en cours": false,
+"qui" : 218
+}
+
+}

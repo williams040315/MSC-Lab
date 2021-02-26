@@ -1,0 +1,9 @@
+{"_id":{"$oid":"5cacb19ffe0dd2225094e4c9"},"name":"toto","email":"toto@gmail.com","password":"$2b$10$MeBBZwaDRhSN9HeXjzEwduSPNHQL3v/NMRHQlLwGY6B9M3ulpgaFW","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5cacb966849ac125bc1fa660"},"name":"test","email":"test@test.fr","password":"$2b$10$6RggJtfP/S4/EW62VqKRJuS3x6Jl.YGRPnGGIRA85Ncd0UOKPBhA.","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5cadeb6cd742f81a14d95b8f"},"name":"Pierre-Louis","email":"pierre-louis.crescitz@epitech.eu","password":"$2b$10$Ed73U6SUJU4TJmdaTz/hKOznH/MBDlAHFex15v6ygJImKahbX7OOC","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5cadf3c7d742f81a14d95b95"},"name":"admin","email":"admin@admin.fr","password":"$2b$10$eBuzthpkinA4DMr/6jbohO6qiUOXD.pZc0.UTb/fs7fF3tyRNyNU.","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5cb89bed27c7ad13bc65e17b"},"name":"Brett","email":"wllmsbrtt@gmail.com","password":"$2b$10$Rt3g3JIJKBZu.LqcSQmoPubSshGCKwJ3iw9vU9MT0JfKVKIbLjjVq","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5cb9cabb2fc1212978e8ea28"},"name":"Pierre-Louis","email":"admin@admin.r","password":"$2b$10$mOcKnttS6.8mGOtyudsy2O3nibvtzjzLcs7QzacH.ik6bfhouaFjK","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5cb9e610aa5d3036e0d38cb1"},"name":"AndroidNavigator","email":"android@navigator.fr","password":"$2b$10$bfsTxDyc8rM.AOKuxTu4F.hDFeCV4jsi/lGjCqz8e7SGgsu/c/E/a","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5cde7963c2703c0554a7080d"},"name":"android","email":"android@android.fr","password":"$2b$10$.18pylyVX/dyCjmMkUnX5e4rXwGy8pzkQ51fKcoI5.SRm1Xoi3GBe","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d40552ac3ce0239bcc1f4f8"},"name":"pascal","email":"test@gmail.com","password":"$2b$10$p1CKJ8VQQsM0ApnIAeHprubX2aO6ULoMjTaBdG2BmXpA2AMC/2Cz6","__v":{"$numberInt":"0"}}

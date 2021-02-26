@@ -1,0 +1,8 @@
+$('#select_track').on('change', function() {        // select operation
+    //alert( $(this).val() );
+    curr_meth_track = $(this).val()
+    socket.emit('kind_track', $(this).val())    // send the current operation to the server
+
+});
+
+socket.emit('kind_track', 'min')

@@ -1,0 +1,26 @@
+symbol: global
+
+DS_Store
+unet/models_generated/*
+unet/training_sets/*
+unet/build_training_sets/*
+*.pyc
+unet/test
+unet/predictions/movie/
+unet/image_analysis/upload/
+unet/image_analysis/static/processings/
+unet/processings/
+unet/image_analysis/static/curr_pic/
+unet/image_analysis/static/settings/
+unet/models/
+unet/test_code/manual_modif_masks/
+unet/analysis/cntrs/
+unet/analysis/imgs_fluo/
+unet/analysis/imgs_RFP_fluo/
+unet/test_code/video_sim_track
+unet/test_code/epxx_20x_thresh
+unet/test_code/size_cntrs
+unet/test_code/track_segm_tif
+visualization/cell_analysis/upload/
+visualization/cell_analysis/static/curr_pic/
+visualization/cell_analysis/static/upload/

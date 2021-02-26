@@ -1,0 +1,63 @@
+                
+
+<div>
+<div class="form-group"><br>
+<table style="text-align: left;"
+ border="0" cellpadding="2" cellspacing="5">
+  <tbody>
+    <tr>
+<td
+ style="height: 500px; vertical-align: top; width: 595px;"
+ colspan="1" rowspan="14"><iframe
+ src="http://127.0.0.1:5000/" frameborder="0"
+ height="500" width="650"></iframe></td>      <td style="width: 200px;">Z-Start [um]</td>
+      <td><input
+ style="width: 136px;" class="zstart"
+  type="number"></td>
+      <td style="width: 56px;"></td>
+</tr>
+    <tr>
+      <td style="width: 200px;">Z-end [um]</td>
+      <td><input
+ style="width: 136px;" class="zend" 
+ type="number"></td>
+      <td style="width: 56px;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 200px;">Z-Step [um]</td>
+      <td><input
+ style="width: 136px;" class="zstep" required=""
+ min="0" max="100000" step="1" type="number"></td>
+      <td style="width: 56px;"></td>
+    </tr>
+    <tr>
+      <td>Trigger</td>
+      <td><select class='trigger'><option value="SELF">SELF</option><option value="AutoFocus">AutoFocus</option></select></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="width: 56px;"
+ colspan="3" rowspan="1">
+      <hr></td>
+    </tr>
+    <tr>
+      <td>Time exposure<br>Invert color<br>Active color mapping</td>
+      <td><input type='number' value='100' min='1' max='1000' step='1' id='posExposure'></input><br><select id='posInvert'><option selected value='OFF'>OFF</option><option value='ON'>ON</option></select><br><select id='posMap'><option  value='OFF'>OFF</option><option selected value='ON'>ON</option></select></td>
+   <td></td>
+    </tr>
+    <tr>
+      <td><br>Enligthing</td>
+      <td><br><div id='posEnligth'></div></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><br><div id='posAdjustName'></td>
+      <td style="text-align: left; vertical-align: top;" colspan="2" ><br><div id='posAdjust'></td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+</div>
+

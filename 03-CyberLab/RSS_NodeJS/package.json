@@ -1,0 +1,15 @@
+{
+  "name": "rss2teams",
+  "version": "1.0.0",
+  "description": "Send RSS to Teams",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "author": "Pierre-Louis Crescitz",
+  "license": "ISC",
+  "dependencies": {
+    "rss-parser": "^3.9.0",
+    "sync-request": "^6.1.0"
+  }
+}

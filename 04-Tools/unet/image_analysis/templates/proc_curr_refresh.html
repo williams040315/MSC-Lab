@@ -1,0 +1,38 @@
+/*
+
+Color the current processed file
+
+*/
+
+var dic_being_processed = {'color':'#ff9966', 'text-decoration': 'underline'}
+var dic_done = {'color':'#d4d4aa', 'text-decoration': 'line-through'}
+
+var find_proc = function(msg){
+      var id = '#' + msg.mess
+      var cpd = $(id.replace('.','\\.'))      // current proc done
+      return cpd
+}
+
+socket.on('curr_proc', function(msg){
+
+     $('.listfiles li').each(function(){
+        if (msg.mess.match($(this).attr('id')) != null){
+             $(this).css(dic_being_processed) // being processed
+        }
+    })
+    $('.completed').css(dic_done)
+})
+
+/*
+
+Completed file
+
+*/
+
+socket.on('proc_done', function(msg){
+
+     proc_done = find_proc(msg)
+     proc_done.addClass('completed')               // add class "completed"
+     proc_done.css(dic_done)                       // change the color and strike
+
+})

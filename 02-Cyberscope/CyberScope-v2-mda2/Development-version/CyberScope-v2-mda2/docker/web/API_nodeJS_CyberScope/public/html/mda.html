@@ -1,0 +1,455 @@
+<!--
+Filename: c:\Users\Natasha\Desktop\auth-cyberScope\public\html\user-info.html
+Created Date: Monday, April 8th 2019, 12:17:36 pm
+Author: Pierre-Louis CRESCITZ
+Author email: pierre-louis.crescitz@epitech.eu
+Description: GUI to perform MDA
+
+OpenSource
+-->
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>DashBoard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  
+      <link rel="stylesheet" href="../css/styleMda.css">
+
+      <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- FANCY TREE -->
+
+    <!-- This demo uses an 3rd-party, jQuery UI based context menu -->
+    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <!-- jquery-contextmenu (https://github.com/mar10/jquery-ui-contextmenu/) -->
+    <script src="//cdn.jsdelivr.net/npm/ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
+
+    <link href="../fancytree-master/src/skin-win8/ui.fancytree.css" rel="stylesheet">
+    <script src="../fancytree-master/src/jquery.fancytree.js"></script>
+    <script src="../fancytree-master/src/jquery.fancytree.dnd5.js"></script>
+    <script src="../fancytree-master/src/jquery.fancytree.edit.js"></script>
+    <script src="../fancytree-master/src/jquery.fancytree.gridnav.js"></script>
+    <script src="../fancytree-master/src/jquery.fancytree.table.js"></script>
+    <script src="../fancytree-master/src/jquery.fancytree.multi.js"></script>
+
+
+</head>
+
+<body>
+    <div class=" mt-3 mr-3 ml-3 mb-3">
+        <div class="row">
+        
+            <div class="col" id="protocol">
+                <div id="protocol-settings"><p>LOADING...</p>  
+                  <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div></div>
+
+
+
+               <!-- <div id="available_ressources">
+                    <span>Available resources and functions | drag and drop directly on the tree</span><br>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Autofocus');"><img src='../icons/autofocus.png'>&nbsp;Autofocus</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Z-Stack + Setting channel');"><img src='../icons/flag_blue.png'>&nbsp;Z-Stack + Setting channel</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Z-Stack + Setting channel + Mosaic');"><img src='../icons/flag_green.png'>&nbsp;Z-Stack + Setting channel + Mosaic</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Simple Picture + Setting channel');"><img src='../icons/flag_red.png'>&nbsp;Simple Picture + Setting channel</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Simple Picture + Setting channel + Mosaic');"><img src='../icons/flag_purple.png'>&nbsp;Simple Picture + Setting channel + Mosaic</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Delay');"><img src='../icons/clock.png'>&nbsp;Delay</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'XYZ-position');"><img src='../icons/yxz-512.png'>&nbsp;XYZ-position</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Group Position');"><img src='../icons/text_list_numbers.png'>&nbsp;Group Position</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Sequence');"><img src='../icons/arrow_rotate_clockwise.png'>&nbsp;Sequence</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Function');"><img src='../icons/lightning.png'>&nbsp;Function</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'MicroFluidics Valves');"><img src='../icons/controller.png'>&nbsp;MicroFluidics Valves</span>
+                  </div> -->
+
+                
+                      <div class="dropdown mr-3 mt-2">
+                        <button class="dropbtn btn btn-info">Picture Taking</button>
+                        <div class="dropdown-content">
+                          <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Z-Stack + Setting channel');"><img src='../icons/flag_blue.png'>&nbsp;Z-Stack + Setting channel</span></a>
+                          <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Z-Stack + Setting channel + Mosaic');"><img src='../icons/flag_green.png'>&nbsp;Z-Stack + Setting channel + Mosaic</span></a>
+                          <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Simple Picture + Setting channel');"><img src='../icons/flag_red.png'>&nbsp;Simple Picture + Setting channel</span></a>
+                          <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Simple Picture + Setting channel + Mosaic');"><img src='../icons/flag_purple.png'>&nbsp;Simple Picture + Setting channel + Mosaic</span></a>
+                        </div>
+                      </div>
+               
+
+                   
+                        <div class="dropdown mr-3 mt-2">
+                          <button class="dropbtn btn btn-info">Actions</button>
+                          <div class="dropdown-content">
+                            <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Delay');"><img src='../icons/clock.png'>&nbsp;Delay</span></a>
+                            <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Sequence');"><img src='../icons/arrow_rotate_clockwise.png'>&nbsp;Sequence</span></a>
+                            <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Function');"><img src='../icons/lightning.png'>&nbsp;Function</span></a>
+                            <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Slack message');"><img src='../icons/lightning.png'>&nbsp;Slack message</span></a>
+                          </div>
+                        </div>
+                     
+
+                      
+                          <div class="dropdown mt-2">
+                            <button class="dropbtn btn btn-info">Controllers</button>
+                            <div class="dropdown-content">
+                              <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Autofocus');"><img src='../icons/autofocus.png'>&nbsp;Autofocus</span></a>
+                              <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'XYZ-position');"><img src='../icons/yxz-512.png'>&nbsp;XYZ-position</span></a>
+                              <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Group Position');"><img src='../icons/text_list_numbers.png'>&nbsp;Group Position</span></a>
+                              <a href="#"><span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'MicroFluidics Valves');"><img src='../icons/controller.png'>&nbsp;MicroFluidics Valves</span></a>
+                            </div>
+                          </div>
+                      
+                
+                
+                <table id="tree" class="sampletree" style="width:100%">
+                    <colgroup>
+                        <col width="40%"> <!--FUNCTION-->
+                        <col width="5%"> <!--Cle a molette-->
+                        <col width="5%"> <!--BTN CUSTOM-->
+                        <col width="5%"> <!--BTN CUSTOM-->
+                        <col width="45%"> <!--Description-->
+                    </colgroup>
+                    <thead>
+                        <tr> <th></th> <th></th> <th></th> <th></th> <th>Info</th> </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="alignCenter"></td>
+                        <td class="alignCenter"></td>
+                        <td class="alignCenter"></td>
+                        <td class="alignCenter"></td>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+
+            <div class="col" id="configmda">
+
+
+            </div>
+
+            <div class="col" id="livecamera">
+                <div class="camwrapper" id="live-here">
+                    <!--<img id="cam" class="img-fluid " src="/images/no_camera_signal.webp" style="position:relative;width: 512px !important; ">-->
+                    <img id="cam" class="img-fluid " src="http://172.27.0.183:5000/video_feed" style="position:relative; ">
+                    <!--<img id="cam" class="img-fluid" src="../video_feed.jpg" style="position:relative;width: 512px !important; ">-->
+                </div>
+
+                <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Position X
+                        <span class="badge badge-primary badge-pill" id="position-x">Loading...</span>
+                        Position Y
+                        <span class="badge badge-primary badge-pill" id="position-y">Loading...</span>
+                        Position Z
+                        <span class="badge badge-primary badge-pill" id="position-z">Loading...</span>
+                        </li>
+                </ul>
+
+                <div class="form-group">
+                  <label for="select-af-objectif">Select your objective</label>
+                  <select class="form-control" id="select-af-objectif">
+                      <option name="default-option"
+                      value="0">Select your objective...</option>
+                     <option name="LCPlanFl 20x"
+                value="75">LCPlanFl 20x</option>
+                     <option name="LCPlanFl 40x"
+                value="76">LCPlanFl 40x</option>
+                     <option name="LCPlanFl 60x"
+                value="79">LCPlanFl 60x</option>
+                     <option name="LUCPlanFl 40x"
+                value="78">LUCPlanFl 40x</option>
+                     <option name="LUCPlanFlN 20x"
+                value="75">LUCPlanFlN 20x</option>
+                     <option name="LUCPlanFlN 40x"
+                value="76">LUCPlanFlN 40x</option>
+                     <option name="LUCPlanFlN 60x"
+                value="79">LUCPlanFlN 60x</option>
+                     <option name="PlanApo 100x O3"
+                value="31">PlanApo 100x O3</option>
+                     <option name="PlanApo 60x O TIRFM-SP"
+                value="70">PlanApo 60x O TIRFM-SP</option>
+                     <option name="PlanApo 60x O/LSM"
+                value="62">PlanApo 60x O/LSM</option>
+                     <option name="PlanApo 60x O3"
+                value="30">PlanApo 60x O3</option>
+                     <option name="PlanApo 40x W/LSM"
+                value="60">PlanApo 40x W/LSM</option>
+                     <option name="PlanApoN 60x O"
+                value="30">PlanApoN 60x O</option>
+                     <option name="SLCPlanFl 40x"
+                value="77">SLCPlanFl 40x</option>
+                     <option name="UApo 30x 3/340"
+                value="45">UApo 30x 3/340</option>
+                     <option name="UApo 40x 3/340"
+                value="47">UApo 40x 3/340</option>
+                     <option name="UApo 40x W"
+                value="48">UApo 40x W</option>
+                     <option name="UPlanFl 60x OI3"
+                value="57">UPlanFl 60x OI3</option>
+                     <option name="UPlanApo 20x"
+                value="36">UPlanApo 20x</option>
+                     <option name="UPlanApo 100x OI3"
+                value="43">UPlanApo 100x OI3</option>
+                     <option name="UPlanApo 40x OI3"
+                value="39">UPlanApo 40x OI3</option>
+                     <option name="UPlanApo 60x"
+                value="40">UPlanApo 60x</option>
+                     <option name="UPlanApo 60x W"
+                value="41">UPlanApo 60x W</option>
+                     <option name="UPlanApo 60x W/IR"
+                value="42">UPlanApo 60x W/IR</option>
+                     <option name="UplanFl 100x O3"
+                value="58">UplanFl 100x O3</option>
+                     <option name="UPlanFl 20x"
+                value="55">UPlanFl 20x</option>
+                     <option name="UPlanFl 40x O-SP"
+                value="71">UPlanFl 40x O-SP</option>
+                     <option name="UPlanFl 40x"
+                value="56">UPlanFl 40x</option>
+                     <option name="UPlanFlN 100x O"
+                value="58">UPlanFlN 100x O</option>
+                     <option name="UPlanFlN 100x OI"
+                value="58">UPlanFlN 100x OI</option>
+                     <option name="UPlanFlN 20x"
+                value="55">UPlanFlN 20x</option>
+                     <option name="UPlanFlN 40x O"
+                value="39">UPlanFlN 40x O</option>
+                     <option name="UPlanFl 60x"
+                value="40">UPlanFl 60x</option>
+                     <option name="UPlanFlN 60x OI"
+                value="57">UPlanFlN 60x OI</option>
+                     <option name="UPlanSApo 100x O"
+                value="43">UPlanSApo 100x O</option>
+                     <option name="UPlanSApo 20x"
+                value="36">UPlanSApo 20x</option>
+                     <option name="UPlanSApo 40x"
+                value="47">UPlanSApo 40x</option>
+                     <option name="UPlanSApo 60x O"
+                value="30">UPlanSApo 60x O</option>
+                     <option name="UPlanSApo 60x W"
+                value="41">UPlanSApo 60x W</option>
+                     <option name="UPlanFlN 40x"
+                value="56">UPlanFlN 40x</option>
+                     </select>
+               
+
+                <div class="keys mt-2">
+                    <div class="diagNW" onclick="myMovePlatine('diagNW')" onmousedown="clickStyleArrowsKeys('.diagNW')" onmouseup="unClickStyleArrowsKeys('.diagNW')">
+                      ⬉
+                    </div>
+                    <div class="up" onclick="myMovePlatine('UP')" onmousedown="clickStyleArrowsKeys('.up')" onmouseup="unClickStyleArrowsKeys('.up')">
+                      ↑
+                    </div>
+                    <div class="diagNE" onclick="myMovePlatine('diagNE')" onmousedown="clickStyleArrowsKeys('.diagNE')" onmouseup="unClickStyleArrowsKeys('.diagNE')">
+                      ⬈
+                    </div>
+                    <br />
+
+                    <div class="left" onclick="myMovePlatine('LEFT')" onmousedown="clickStyleArrowsKeys('.left')" onmouseup="unClickStyleArrowsKeys('.left')">
+                      ←
+                    </div>
+                    <div class="" onclick="myEasterEgg()">
+                      🔬
+                    </div>
+                    <div class="right" onclick="myMovePlatine('RIGHT')" onmousedown="clickStyleArrowsKeys('.right')" onmouseup="unClickStyleArrowsKeys('.right')">
+                      →
+                    </div>
+                    <br />
+
+                    <div class="diagSW" onclick="myMovePlatine('diagSW')" onmousedown="clickStyleArrowsKeys('.diagSW')" onmouseup="unClickStyleArrowsKeys('.diagSW')">
+                      ⬋
+                    </div>
+                    <div class="down" onclick="myMovePlatine('DOWN')" onmousedown="clickStyleArrowsKeys('.down')" onmouseup="unClickStyleArrowsKeys('.down')">
+                      ↓
+                      </div>
+                    <div class="diagSE" onclick="myMovePlatine('diagSE')" onmousedown="clickStyleArrowsKeys('.diagSE')" onmouseup="unClickStyleArrowsKeys('.diagSE')">
+                      ⬊
+                    </div>
+
+                </div>
+
+                <div class="moving-values mt-2">
+                    
+                        <div class="form-group row">
+                                <label for="colFormLabelSm" class="col col-form-label col-form-label">Moving length</label>
+                                <div class="col">
+                                  <input type="number" id="moving-length-value"  class="form-control form-control" id="colFormLabelSm" placeholder="col-form-label">
+                                </div>
+                        </div>
+
+                    <button type="button" class="btn btn-primary btn-sm" onclick="smallMovingValues()">Small distance</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="mediumMovingValues()">Medium distance</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="largeMovingValues()">Large distance</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!--MODAL-->
+
+        <!--MODAL ZS+SC-->
+        <div class="modal fade bd-example-modal-lg test" id="myModalZSPSC" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Z-Stack + Setting channel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="myModalZSPSCContent">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="updateZSPSC()" data-dismiss="modal">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--MODAL ZS+SC+M-->
+        <div class="modal fade bd-example-modal-lg test" id="myModalZSPSCPMM" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Z-Stack + Setting channel + Mosaic mask</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="myModalZSPSCPMMContent">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="updateZSPSCPMM()" data-dismiss="modal">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--MODAL SP+SC-->
+        <div class="modal fade bd-example-modal-lg test" id="myModalSPPSC" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Simple picture + Setting channel</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="myModalSPPSCContent">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="updateSPPSC()" data-dismiss="modal">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--MODAL SP+SC+M-->
+        <div class="modal fade bd-example-modal-lg test" id="myModalSPPSCPMM" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Simple picture + Setting channel + Mosaic mask</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="myModalSPPSCPMMContent">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="updateSPPSCPMM()" data-dismiss="modal">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--MODAL Delay-->
+        <div class="modal fade" id="myModalDelay" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Delay</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="myModalDelayContent">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="updateDelay()" data-dismiss="modal">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--MODAL Sequence-->
+        <div class="modal fade" id="myModalSequence" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Sequence</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="myModalSequenceContent">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="updateSequence()" data-dismiss="modal">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--MODAL MicroFluidices-->
+        <div class="modal fade" id="myModalMFV" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Sequence</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="myModalMFVContent">
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" onclick="updateMicroFluidicsM()" data-dismiss="modal">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--!MODAL-->
+
+
+    <script  src="../js/scriptMda.js"></script>
+    <script src="../js/scriptUpdateNodeFancyTree.js"></script>
+    <script  src="../js/scriptJtree.js"></script>
+</body>
+
+</html>

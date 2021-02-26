@@ -1,0 +1,28 @@
+<script type="text/javascript">
+    RED.nodes.registerType('PhotometricsEvolv512',{
+        category: 'Lab513',
+        color:"#ffffff",
+        align: "left",
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "PhotometricsEvolv512.png",
+        label: function() {
+            return this.name||"EVOLV-512";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="PhotometricsEvolv512">
+  <div class="form-row">
+    <label for="node-input-pyfile"><i class="fa fa-tag"></i> pyfile </label>
+    <input type="text" id="node-input-pyfile" value="C:\Users\Williams\Desktop\node-red-contrib-photometrics-evolv-512\PhotometricsEvolv512\test.py" placeholder="C:\Users\Williams\Desktop\node-red-contrib-photometrics-evolv-512\PhotometricsEvolv512\test.py">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="PhotometricsEvolv512">
+    <p> Photometrics-Evolv512</ p>
+    <p>Testing: williams<br>Williams BRETT | MSC | 2018</p>
+</script>

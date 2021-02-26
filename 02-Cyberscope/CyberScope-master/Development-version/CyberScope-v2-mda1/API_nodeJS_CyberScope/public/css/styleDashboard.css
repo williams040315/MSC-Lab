@@ -1,0 +1,121 @@
+/*
+ * Filename: c:\Users\Natasha\Desktop\auth-cyberScope\public\css\styleDashboard.css
+ * Created Date: Friday, April 5th 2019, 2:09:01 pm
+ * Author: Pierre-Louis CRESCITZ
+ * Author email: pierre-louis.crescitz@epitech.eu
+ * Description: Style for dashboard.html
+ * 
+ * OpenSource
+ */
+
+ /* __STYLE_JOYSTICK__ */
+
+ .joystick {
+    zoom: 70%; /* TAILLE EN % DU JOYSTICK */
+    background: linear-gradient(rgb(40, 40, 40), rgb(10, 10, 10));
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, .75),
+    inset 1px 2px 7px rgba(255, 255, 255, .25),
+    inset 2px 3px 20px rgba(0, 0, 0, .75);
+    border-radius: 15px;
+    display: inline-block;
+    height: 300px;
+    position: relative;
+    width: 300px;
+  }
+  
+  .joystick:before {
+    background: radial-gradient(rgb(175, 0, 0), rgb(200, 0, 0));
+    border-radius: 50%;
+    box-shadow: inset -10px -15px 45px rgba(255, 255, 255, .25),
+    -105px -105px 50px 10px rgba(10, 10, 10, .65),
+    -95px -95px 0 71px rgba(255, 255, 255, .07),
+    -95px -95px 0 50px rgba(20, 20, 20, .3),
+    -96px -96px 0 52px rgba(0, 0, 0, .4),
+    -95px -95px 0 70px rgba(30, 30, 30, .2),
+    -96px -96px 0 72px rgba(0, 0, 0, .4),
+    inset 0 0 0 2px rgb(250, 55, 55),
+    inset 2px 3px 0 0 rgb(255, 255, 255),
+    inset -2px -3px 0 0 rgb(255, 255, 255),
+    0 0 0 5px rgb(150, 0, 0),
+    -1px -1px 0 5px rgb(225, 0, 0);
+    content: '';
+    display: block;
+    height: 50px;
+    left: 220px;
+    position: absolute;
+    top: 220px;
+    width: 50px;
+  }
+  
+  .joystick.pressed:before {
+    background: radial-gradient(rgb(125, 0, 0), rgb(150, 0, 0));
+    box-shadow: inset -10px -15px 45px rgba(255, 185, 185, .25),
+    -105px -105px 50px 10px rgba(10, 10, 10, .65),
+    -95px -95px 0 71px rgba(255, 255, 255, .07),
+    -95px -95px 0 50px rgba(20, 20, 20, .3),
+    -96px -96px 0 52px rgba(0, 0, 0, .4),
+    -95px -95px 0 70px rgba(30, 30, 30, .2),
+    -96px -96px 0 72px rgba(0, 0, 0, .4),
+    inset 1px 1px 4px 1px rgba(0, 0, 0, .85),
+    0 0 0 5px rgb(150, 0, 0),
+    inset -1px -1px 0 0 rgba(250, 100, 100, .75),
+    -1px -1px 0 5px rgb(225, 0, 0);
+  }
+  
+  .joystick:after {
+    background: radial-gradient(ellipse at 32px 28px, rgb(255, 255, 255) 10%, rgb(225, 55, 55) 11%, rgb(200, 0, 0) 100%);
+    border-radius: 50%;
+    box-shadow: inset 3px 5px 25px rgba(255, 0, 0, .5),
+    inset 3px 5px 35px rgba(255, 205, 205, .75),
+    inset 0 0 5px rgba(255, 205, 205, .75),
+    inset -10px -15px 45px rgba(0, 0, 0, .25),
+    15px 30px 15px 0 rgba(0, 0, 0, .75);
+    content: '';
+    display: block;
+    height: 80px;
+    left: 110px;
+    position: absolute;
+    top: 110px;
+    transition: all .02s linear;
+    width: 80px;
+  }
+  
+  .joystick.up:after {
+    top: 75px;
+  }
+  
+  .joystick.down:after {
+    top: 145px;
+  }
+  
+  .joystick.left:after {
+    left: 75px;
+  }
+  
+  .joystick.right:after {
+    left: 145px;
+  }
+  
+  .joystick.up.left:after {
+    left: 85px;
+    top: 85px;
+  }
+  
+  .joystick.up.right:after {
+    left: 135px;
+    top: 85px;
+  }
+  
+  .joystick.down.left:after {
+    left: 85px;
+    top: 135px;
+  }
+  
+  .joystick.down.right:after {
+    left: 135px;
+    top: 135px;
+  }
+
+  /* !__STYLE_JOYSTICK__ */
+
+  

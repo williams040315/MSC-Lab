@@ -1,0 +1,39 @@
+version: '3'
+services:
+  web:
+    build: ./web/API_nodeJS_CyberScope/
+    ports:
+    - "4000:4000"
+    links:
+      - db
+      - node-red
+    environment:
+      PORT: "4000"
+    restart: 'on-failure'
+    depends_on:
+      - db
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      PORT: 27017
+    restart: 'on-failure'
+  db-express:
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=db
+      - ME_CONFIG_MONGODB_PORT=27017
+    restart: 'on-failure'
+    depends_on:
+      - db
+  node-red:
+    image: nodered/node-red:latest
+    environment:
+      - TZ=Europe/Amsterdam
+    ports:
+      - "1880:1880"
+    volumes:
+      - ~/node-red/data:/data

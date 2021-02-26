@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width" />
+  
+  <title>Websanova :: wPaint</title>
+
+  <!-- filestart -->
+  <link rel="icon" type="image/vnd.microsoft.icon"  href="./a/demo/img/favicon.ico" />
+  <link rel="Stylesheet" type="text/css" href="./a/demo/demo.css" />
+  <script type="text/javascript" src="./a/lib/jquery.1.10.2.min.js"></script>
+  <!-- fileend -->
+</head>
+<body>
+  
+  <div id="content">
+
+    <div style="position: relative; z-index: 1;" class="content-box">
+      <!-- jQuery UI -->
+      <script type="text/javascript" src="./a/lib/jquery.ui.core.1.10.3.min.js"></script>
+      <script type="text/javascript" src="./a/lib/jquery.ui.widget.1.10.3.min.js"></script>
+      <script type="text/javascript" src="./a/lib/jquery.ui.mouse.1.10.3.min.js"></script>
+      <script type="text/javascript" src="./a/lib/jquery.ui.draggable.1.10.3.min.js"></script>
+      
+      <!-- wColorPicker -->
+      <link rel="Stylesheet" type="text/css" href="./a/lib/wColorPicker.min.css" />
+      <script type="text/javascript" src="./a/lib/wColorPicker.min.js"></script>
+
+      <!-- wPaint -->
+      <link rel="Stylesheet" type="text/css" href="./a/wPaint.min.css" />
+      <script type="text/javascript" src="./a/wPaint.min.js"></script>
+      <script type="text/javascript" src="./a/plugins/main/wPaint.menu.main.min.js"></script>
+      <script type="text/javascript" src="./a/plugins/text/wPaint.menu.text.min.js"></script>
+      <script type="text/javascript" src="./a/plugins/shapes/wPaint.menu.main.shapes.min.js"></script>
+      <script type="text/javascript" src="./a/plugins/file/wPaint.menu.main.file.min.js"></script>
+
+      <div id="wPaint" style="z-index: 3; position:absolute; width:850px; height:650px; border: 1px solid black; background-image: url(test.png) background-color:rgba(0, 0, 255, 0);"></div>
+      <div id="cam" style="border: none; z-index: 2; position:absolute; width:850px; height:650px;">
+        <iframe width="850" height="650" frameBorder="0" src="http://localhost/opencv/video_display.html"></iframe>
+      </div>
+    
+<!--
+      <center style="margin-bottom: 50px;">
+        <input type="button" value="toggle menu" onclick="console.log($('#wPaint').wPaint('menuOrientation')); $('#wPaint').wPaint('menuOrientation', $('#wPaint').wPaint('menuOrientation') === 'vertical' ? 'horizontal' : 'vertical');"/>
+      </center>
+-->
+  <script type="text/javascript">
+        var images = ['/a/test/uploads/wPaint-PL.png'];
+        $.ajax({
+              type: 'GET',
+              url: 'http://127.0.0.1/a/test/uploads/list.php',
+              success: function (resp) {
+                resp = JSON.parse(resp);
+                for(var key in resp) if(key != 'end') images.push('/a/test/uploads/'+resp[key]);
+              },
+              error:function(err){
+                console.log('error');
+              }
+            });
+        function saveImg(image) {
+          var nameOfPicture = prompt("Please enter your name of picture", "Name of picture ....");
+          if (nameOfPicture != null) {
+              var _this = this;
+              $.ajax({
+                type: 'POST',
+                url: '/a/test/upload.php',
+                data: {image : image , nameOfPicture : nameOfPicture},
+                success: function (resp) {
+                  _this._displayStatus('Image saved successfully: '+nameOfPicture);
+                  resp = $.parseJSON(resp);
+                  images.push(resp.img);
+                  $('#wPaint-img').attr('src', image);
+                }
+              });
+          }
+        }
+        function loadImgBg () {
+          this._showFileModal('bg', images);
+        }
+        function loadImgFg () {
+          this._showFileModal('fg', images);
+        }
+        // init wPaint
+        $('#wPaint').wPaint({
+          menuOffsetLeft: 0,
+          menuOffsetTop: 0,
+          saveImg: saveImg,
+          loadImgBg: loadImgBg,
+          loadImgFg: loadImgFg,
+        });
+        
+      </script>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+#butt {
+ font-size: 85%;
+ width: 135px;
+ height: 60px;
+ border: none;
+}
+
+
+.nav-pills > li.active > a {
+    background-color:green;
+}
+
+.nav-pills>li.active>a:hover {
+    background-color:green;
+}

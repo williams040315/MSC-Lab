@@ -1,0 +1,27 @@
+$('#butt_save_dir').click(function(){
+    $('.addr_save_panel').toggle()
+})
+
+$('#addr_save_text').keypress(function(e){
+   //alert($(this).val())
+   if (e.which == 13) {
+         $('.addr_save_panel').toggle()
+         socket.emit('save_addr', $(this).val())
+   return false;
+   } // end if
+
+})
+
+$('#butt_set').click(function(){
+    $('.set_panel').toggle()
+})
+
+$('#butt_infos_hs').click(function(){
+    $('.hard_soft_infos_panel').toggle()
+})
+
+$('#select_model').on('change', function() {        // select the model
+
+    curr_model = $(this).val()
+
+});

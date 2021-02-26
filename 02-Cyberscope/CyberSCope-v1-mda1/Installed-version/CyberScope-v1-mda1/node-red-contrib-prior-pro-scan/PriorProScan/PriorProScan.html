@@ -1,0 +1,26 @@
+<script type="text/javascript">
+    RED.nodes.registerType('PriorProScan',{
+        category: 'Lab513',
+        color:"#ffffff",
+        align: "left",
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "PriorScanPro.png",
+        label: function() {
+            return this.name||"PRO-SCAN";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="PriorProScan">
+  <div class="form-row">
+  </div>
+</script>
+
+<script type="text/x-red" data-help-name="PriorProScan">
+    <p>Prior-Pro-Scan</p>
+    <p>Testing: williams<br>Williams BRETT | MSC | 2018</p>
+</script>

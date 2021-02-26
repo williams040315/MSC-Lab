@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Visualization -->
+
+<!-- Page for visualizing the results of the processing -->
+
+{% include 'head_firstpage.html' %}
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="/static/css/visu_results.css">
+<link rel="stylesheet" href="/static/css/css.css">
+
+
+<style>
+
+#butt_pp{
+    position: fixed;
+    top: 580px;
+    left: 60%;
+    font-size:85%;
+    z-index: 30
+    }
+
+
+</style>
+
+<body>
+
+    {% include 'header_doc_exit.html' %}
+
+    <a href="../#" style="position:absolute; top:15px; right:250px " > <i class="fa fa-cog  fa-1x fa-fw"  aria-hidden="true"></i> back to processing </a>
+ <!-- line-height : 50px;  -->
+    <!--  Navbar -->
+
+    <nav class="navbar-custom ">
+    <!-- <nav class="navbar-default ">  -->
+      <div class="container-fluid">
+        <div class="navbar-header">
+
+        </div>
+      </div>
+    </nav>
+
+
+    <!--  Iframe for results -->
+
+    <div class="results" hide>
+        <h1 id='figtitle' style="text-align:center; color:#ffb84d; " > Spectrum </h1>
+
+            <div class="row no-gutters">
+              <div class="col-12 col-sm-9 ">  <!-- col-md-8 -->
+                <!-- <iframe src=''  height="650" width="650" id='iframeres' frameBorder="0" style="margin-left:110px"  ></iframe> -->
+                <iframe src=''  height="450" width="500" id='iframeres' frameBorder="0" style="margin-left:110px"  ></iframe>
+              </div>
+
+              <!-- Button for watching all the controls -->
+
+              <div class="col-2 col-md-2">
+                <button class="btn btn-success" id="change1dctrl" > <i class="fa fa-chevron-right" aria-hidden="true"></i>   <!-- Button for controls -->
+              </div>
+            </div>
+
+
+    </div>
+
+   <!--  <div class='pp'> divpp </div> -->  <!-- Peakpicking -->
+
+    <!--  Tab for visualizing the spectrum -->
+
+     <div class="side_results"> Spectrum </div>
+
+    <!--  Tab for controlling the quality of the processing -->
+
+     <div class="side_control"> Control </div>
+
+     <!--  Names to access to the results -->
+
+    <div class="results_names" id="resultats">
+
+
+
+        <h3 align="center" > Datasets </h3>
+        <br>
+        <!-- |dicsort  -->
+        {% for i in dict_data_short %}
+
+            <h4 style="font-size:15px" > - {{i}} </h4>
+             <!-- class='data' -->
+
+            <!-- list of the processed datasets..  -->
+
+            {% for l in dict_data_short[i] %}
+
+              <h5 style='margin-left:50px' kind='{{l[1]}}' class='data' spec='{{l[2]}}' ctrl='{{l[3]}}' pp='{{l[4]}}'  > - {{l[0]}} </h5>
+
+            {% endfor %}
+
+        {% endfor %}
+
+        <br><br>
+
+        <!-- ##### Download Results -->
+
+        <form id="downloadform" action="/download" method="post">
+            <!-- style="left:600px;" -->
+            <div style='text-align:center' >
+                  <i class="fa fa-download fa-2x" id='download'></i>
+            </div>
+         </form>
+
+    </div>
+
+    <div class="col-2 col-md-2">
+      <button class="btn btn-success" id="butt_pp" >  peakpicking   <!-- Button for controls -->
+    </div>
+
+    {% include 'footer.html' %}
+
+     <!-- Download handlings -->
+
+    <div class="download_ok" hidden> Downloads done.. </div>         <!-- Message appearing to tell that the processings are done -->
+
+    {% if  download %}
+     <!-- Driven in define_all_pages -->
+        <form id="download_open" action="/open_download" method="post">         <!-- Open folder containing the dowloads of the processings -->
+            <div class="download_link" style='font-size:100%; text-align:center; margin-bottom:20px'>
+                 open dataset
+                <br>
+                  <i class="fa fa-search fa-1x" id='search_data'></i>
+                  <br>
+            </div>
+        </form>
+
+    {% endif %}
+
+</body>
+</html>
+
+<script>
+
+// Visualization of the results
+
+$('#iframeres').attr('src', "{{dict_visu.0}}" + '?random=' + new Date().getTime())     // insert picture of the processing
+
+
+var underline_current = function(curr){             // underline the selected dataset
+    $('.data').each(function(){
+        $(this).css({'color': dic_col[$(this).attr('kind')]})
+        $(this).css({ 'text-decoration': 'none'})      // remove underline
+    })
+    curr.css({'text-decoration': 'underline'})         // Current dataset colorized in red
+}
+
+// Current dataset underlined
+
+$('#change1dctrl').toggle()
+
+var currdata = ''
+var lpp = ''
+var nbadd = 0
+var datlength = 0
+$('.data').click(function(){                      // when clicking change the current dataset
+    underline_current($(this))                    // underlining the dataset clicked
+    currspec = $(this).attr('spec')               // Setting current map
+    currctrl = $(this).attr('ctrl')               // Setting current control
+    currkind = $(this).attr('kind')               // Setting current kind
+    currpp = $(this).attr('pp')                   // Setting the peakpicking
+    $('.side_results').click()                    // clicking on data name shows the corresponding spectrum
+
+})
+
+// Action with tag to show the results
+
+$('.side_results').click(function(){
+    $('#iframeres').attr('src', currspec + '?random=' + new Date().getTime())   //  Visualizing the spectrum
+    $('#figtitle').text('Spectrum')                                             // Setting the title for spectrum
+    $('#change1dctrl').hide()
+})
+
+// Action with tag to show the controls
+
+$('.side_control').click(function(){
+    $('#iframeres').attr('src', currctrl + '?random=' + new Date().getTime())   // Visualizing the Control
+    $('#figtitle').text('Control')                                              // Setting the title for control
+    if (currkind == 'FID'){
+      $('#change1dctrl').toggle()                                                 // make appear the button
+    }
+})
+
+//------ Download datasets in Download folder
+
+$('#download').click(function(){
+     $('#downloadform').submit()            // call the server to make the download operation
+     $('.download_ok').toggle()             // indicate that the download is done
+})
+
+//------ Open datasets folder
+
+$('#search_data').click(function(){         // open the system navigator where the datasets were downloaded
+     $('#download_open').submit()
+})
+
+$('#results').hide()
+
+// ----------- Change control
+
+var mode_visu = 'control'
+
+$('#change1dctrl').click(function(){
+      if (mode_visu == 'control'){
+            /*
+            Passing from one control to another
+            */
+            if (currkind == 'FID'){
+                    var currentctrl = currctrl.slice(-11,-10)
+                    if (currentctrl == 'd'){
+                        currctrl = currctrl.slice(0,48) +'residual_.html'       // show the residual
+                    }
+                    else{
+                        currctrl = currctrl.slice(0,48) +'decay_.html'          // show the decay
+                    }
+                    $('#iframeres').attr('src', currctrl + '?random=' + new Date().getTime())
+            }
+      }
+})
+$('#butt_pp').click(function(){
+          $('#figtitle').text('Peakpicking')
+          $('#iframeres').attr('src', currpp + '?random=' + new Date().getTime())   // Visualizing the pp
+          }) // show peakpicking
+
+$('.data').click() // select a data automatically
+
+</script>

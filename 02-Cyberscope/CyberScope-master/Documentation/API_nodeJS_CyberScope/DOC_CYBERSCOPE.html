@@ -1,0 +1,810 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>API CyberScope Node.js documentation</title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"><style>@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Inconsolata|Raleway:200');.hljs-comment,.hljs-title{color:#8e908c}.hljs-variable,.hljs-attribute,.hljs-tag,.hljs-regexp,.ruby .hljs-constant,.xml .hljs-tag .hljs-title,.xml .hljs-pi,.xml .hljs-doctype,.html .hljs-doctype,.css .hljs-id,.css .hljs-class,.css .hljs-pseudo{color:#c82829}.hljs-number,.hljs-preprocessor,.hljs-pragma,.hljs-built_in,.hljs-literal,.hljs-params,.hljs-constant{color:#f5871f}.ruby .hljs-class .hljs-title,.css .hljs-rules .hljs-attribute{color:#eab700}.hljs-string,.hljs-value,.hljs-inheritance,.hljs-header,.ruby .hljs-symbol,.xml .hljs-cdata{color:#718c00}.css .hljs-hexcolor{color:#3e999f}.hljs-function,.python .hljs-decorator,.python .hljs-title,.ruby .hljs-function .hljs-title,.ruby .hljs-title .hljs-keyword,.perl .hljs-sub,.javascript .hljs-title,.coffeescript .hljs-title{color:#4271ae}.hljs-keyword,.javascript .hljs-function{color:#8959a8}.hljs{display:block;background:white;color:#4d4d4c;padding:.5em}.coffeescript .javascript,.javascript .xml,.tex .hljs-formula,.xml .javascript,.xml .vbscript,.xml .css,.xml .hljs-cdata{opacity:.5}.right .hljs-comment{color:#969896}.right .css .hljs-class,.right .css .hljs-id,.right .css .hljs-pseudo,.right .hljs-attribute,.right .hljs-regexp,.right .hljs-tag,.right .hljs-variable,.right .html .hljs-doctype,.right .ruby .hljs-constant,.right .xml .hljs-doctype,.right .xml .hljs-pi,.right .xml .hljs-tag .hljs-title{color:#c66}.right .hljs-built_in,.right .hljs-constant,.right .hljs-literal,.right .hljs-number,.right .hljs-params,.right .hljs-pragma,.right .hljs-preprocessor{color:#de935f}.right .css .hljs-rule .hljs-attribute,.right .ruby .hljs-class .hljs-title{color:#f0c674}.right .hljs-header,.right .hljs-inheritance,.right .hljs-name,.right .hljs-string,.right .hljs-value,.right .ruby .hljs-symbol,.right .xml .hljs-cdata{color:#b5bd68}.right .css .hljs-hexcolor,.right .hljs-title{color:#8abeb7}.right .coffeescript .hljs-title,.right .hljs-function,.right .javascript .hljs-title,.right .perl .hljs-sub,.right .python .hljs-decorator,.right .python .hljs-title,.right .ruby .hljs-function .hljs-title,.right .ruby .hljs-title .hljs-keyword{color:#81a2be}.right .hljs-keyword,.right .javascript .hljs-function{color:#b294bb}.right .hljs{display:block;overflow-x:auto;background:#1d1f21;color:#c5c8c6;padding:.5em;-webkit-text-size-adjust:none}.right .coffeescript .javascript,.right .javascript .xml,.right .tex .hljs-formula,.right .xml .css,.right .xml .hljs-cdata,.right .xml .javascript,.right .xml .vbscript{opacity:.5}body{color:black;background:white;font:400 14px / 1.42 'Roboto',Helvetica,sans-serif}header{border-bottom:1px solid #f2f2f2;margin-bottom:12px}h1,h2,h3,h4,h5{color:black;margin:12px 0}h1 .permalink,h2 .permalink,h3 .permalink,h4 .permalink,h5 .permalink{margin-left:0;opacity:0;transition:opacity .25s ease}h1:hover .permalink,h2:hover .permalink,h3:hover .permalink,h4:hover .permalink,h5:hover .permalink{opacity:1}.triple h1 .permalink,.triple h2 .permalink,.triple h3 .permalink,.triple h4 .permalink,.triple h5 .permalink{opacity:.15}.triple h1:hover .permalink,.triple h2:hover .permalink,.triple h3:hover .permalink,.triple h4:hover .permalink,.triple h5:hover .permalink{opacity:.15}h1{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:36px}h2{font:200 36px 'Raleway',Helvetica,sans-serif;font-size:30px}h3{font-size:100%;text-transform:uppercase}h5{font-size:100%;font-weight:normal}p{margin:0 0 10px}p.choices{line-height:1.6}a{color:#428bca;text-decoration:none}li p{margin:0}hr.split{border:0;height:1px;width:100%;padding-left:6px;margin:12px auto;background-image:linear-gradient(to right, rgba(0,0,0,0) 20%, rgba(0,0,0,0.2) 51.4%, rgba(255,255,255,0.2) 51.4%, rgba(255,255,255,0) 80%)}dl dt{float:left;width:130px;clear:left;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}dl dd{margin-left:150px}blockquote{color:rgba(0,0,0,0.5);font-size:15.5px;padding:10px 20px;margin:12px 0;border-left:5px solid #e8e8e8}blockquote p:last-child{margin-bottom:0}pre{background-color:#f5f5f5;padding:12px;border:1px solid #cfcfcf;border-radius:6px;overflow:auto}pre code{color:black;background-color:transparent;padding:0;border:none}code{color:#444;background-color:#f5f5f5;font:'Inconsolata',monospace;padding:1px 4px;border:1px solid #cfcfcf;border-radius:3px}ul,ol{padding-left:2em}table{border-collapse:collapse;border-spacing:0;margin-bottom:12px}table tr:nth-child(2n){background-color:#fafafa}table th,table td{padding:6px 12px;border:1px solid #e6e6e6}.text-muted{opacity:.5}.note,.warning{padding:.3em 1em;margin:1em 0;border-radius:2px;font-size:90%}.note h1,.warning h1,.note h2,.warning h2,.note h3,.warning h3,.note h4,.warning h4,.note h5,.warning h5,.note h6,.warning h6{font-family:200 36px 'Raleway',Helvetica,sans-serif;font-size:135%;font-weight:500}.note p,.warning p{margin:.5em 0}.note{color:black;background-color:#f0f6fb;border-left:4px solid #428bca}.note h1,.note h2,.note h3,.note h4,.note h5,.note h6{color:#428bca}.warning{color:black;background-color:#fbf1f0;border-left:4px solid #c9302c}.warning h1,.warning h2,.warning h3,.warning h4,.warning h5,.warning h6{color:#c9302c}header{margin-top:24px}nav{position:fixed;top:24px;bottom:0;overflow-y:auto}nav .resource-group{padding:0}nav .resource-group .heading{position:relative}nav .resource-group .heading .chevron{position:absolute;top:12px;right:12px;opacity:.5}nav .resource-group .heading a{display:block;color:black;opacity:.7;border-left:2px solid transparent;margin:0}nav .resource-group .heading a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul{list-style-type:none;padding-left:0}nav ul a{display:block;font-size:13px;color:rgba(0,0,0,0.7);padding:8px 12px;border-top:1px solid #d9d9d9;border-left:2px solid transparent;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}nav ul a:hover{text-decoration:none;background-color:bad-color;border-left:2px solid black}nav ul>li{margin:0}nav ul>li:first-child{margin-top:-12px}nav ul>li:last-child{margin-bottom:-12px}nav ul ul a{padding-left:24px}nav ul ul li{margin:0}nav ul ul li:first-child{margin-top:0}nav ul ul li:last-child{margin-bottom:0}nav>div>div>ul>li:first-child>a{border-top:none}.preload *{transition:none !important}.pull-left{float:left}.pull-right{float:right}.badge{display:inline-block;float:right;min-width:10px;min-height:14px;padding:3px 7px;font-size:12px;color:#000;background-color:#f2f2f2;border-radius:10px;margin:-2px 0}.badge.get{color:#70bbe1;background-color:#d9edf7}.badge.head{color:#70bbe1;background-color:#d9edf7}.badge.options{color:#70bbe1;background-color:#d9edf7}.badge.put{color:#f0db70;background-color:#fcf8e3}.badge.patch{color:#f0db70;background-color:#fcf8e3}.badge.post{color:#93cd7c;background-color:#dff0d8}.badge.delete{color:#ce8383;background-color:#f2dede}.collapse-button{float:right}.collapse-button .close{display:none;color:#428bca;cursor:pointer}.collapse-button .open{color:#428bca;cursor:pointer}.collapse-button.show .close{display:inline}.collapse-button.show .open{display:none}.collapse-content{max-height:0;overflow:hidden;transition:max-height .3s ease-in-out}nav{width:220px}.container{max-width:940px;margin-left:auto;margin-right:auto}.container .row .content{margin-left:244px;width:696px}.container .row:after{content:'';display:block;clear:both}.container-fluid nav{width:22%}.container-fluid .row .content{margin-left:24%}.container-fluid.triple nav{width:16.5%;padding-right:1px}.container-fluid.triple .row .content{position:relative;margin-left:16.5%;padding-left:24px}.middle:before,.middle:after{content:'';display:table}.middle:after{clear:both}.middle{box-sizing:border-box;width:51.5%;padding-right:12px}.right{box-sizing:border-box;float:right;width:48.5%;padding-left:12px}.right a{color:#428bca}.right h1,.right h2,.right h3,.right h4,.right h5,.right p,.right div{color:white}.right pre{background-color:#1d1f21;border:1px solid #1d1f21}.right pre code{color:#c5c8c6}.right .description{margin-top:12px}.triple .resource-heading{font-size:125%}.definition{margin-top:12px;margin-bottom:12px}.definition .method{font-weight:bold}.definition .method.get{color:#2e8ab8}.definition .method.head{color:#2e8ab8}.definition .method.options{color:#2e8ab8}.definition .method.post{color:#56b82e}.definition .method.put{color:#b8a22e}.definition .method.patch{color:#b8a22e}.definition .method.delete{color:#b82e2e}.definition .uri{word-break:break-all;word-wrap:break-word}.definition .hostname{opacity:.5}.example-names{background-color:#eee;padding:12px;border-radius:6px}.example-names .tab-button{cursor:pointer;color:black;border:1px solid #ddd;padding:6px;margin-left:12px}.example-names .tab-button.active{background-color:#d5d5d5}.right .example-names{background-color:#444}.right .example-names .tab-button{color:white;border:1px solid #666;border-radius:6px}.right .example-names .tab-button.active{background-color:#5e5e5e}#nav-background{position:fixed;left:0;top:0;bottom:0;width:16.5%;padding-right:14.4px;background-color:#fbfbfb;border-right:1px solid #f0f0f0;z-index:-1}#right-panel-background{position:absolute;right:-12px;top:-12px;bottom:-12px;width:48.6%;background-color:#333;z-index:-1}@media (max-width:1200px){nav{width:198px}.container{max-width:840px}.container .row .content{margin-left:224px;width:606px}}@media (max-width:992px){nav{width:169.4px}.container{max-width:720px}.container .row .content{margin-left:194px;width:526px}}@media (max-width:768px){nav{display:none}.container{width:95%;max-width:none}.container .row .content,.container-fluid .row .content,.container-fluid.triple .row .content{margin-left:auto;margin-right:auto;width:95%}#nav-background{display:none}#right-panel-background{width:48.6%}}.back-to-top{position:fixed;z-index:1;bottom:0;right:24px;padding:4px 8px;color:rgba(0,0,0,0.5);background-color:#f2f2f2;text-decoration:none !important;border-top:1px solid #d9d9d9;border-left:1px solid #d9d9d9;border-right:1px solid #d9d9d9;border-top-left-radius:3px;border-top-right-radius:3px}.resource-group{padding:12px;margin-bottom:12px;background-color:white;border:1px solid #d9d9d9;border-radius:6px}.resource-group h2.group-heading,.resource-group .heading a{padding:12px;margin:-12px -12px 12px -12px;background-color:#f2f2f2;border-bottom:1px solid #d9d9d9;border-top-left-radius:6px;border-top-right-radius:6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.triple .content .resource-group{padding:0;border:none}.triple .content .resource-group h2.group-heading,.triple .content .resource-group .heading a{margin:0 0 12px 0;border:1px solid #d9d9d9}nav .resource-group .heading a{padding:12px;margin-bottom:0}nav .resource-group .collapse-content{padding:0}.action{margin-bottom:12px;padding:12px 12px 0 12px;overflow:hidden;border:1px solid transparent;border-radius:6px}.action h4.action-heading{padding:6px 12px;margin:-12px -12px 12px -12px;border-bottom:1px solid transparent;border-top-left-radius:6px;border-top-right-radius:6px;overflow:hidden}.action h4.action-heading .name{float:right;font-weight:normal;padding:6px 0}.action h4.action-heading .method{padding:6px 12px;margin-right:12px;border-radius:3px;display:inline-block}.action h4.action-heading .method.get{color:#fff;background-color:#337ab7}.action h4.action-heading .method.head{color:#fff;background-color:#337ab7}.action h4.action-heading .method.options{color:#fff;background-color:#337ab7}.action h4.action-heading .method.put{color:#fff;background-color:#ed9c28}.action h4.action-heading .method.patch{color:#fff;background-color:#ed9c28}.action h4.action-heading .method.post{color:#fff;background-color:#5cb85c}.action h4.action-heading .method.delete{color:#fff;background-color:#d9534f}.action h4.action-heading code{color:#444;background-color:#f5f5f5;border-color:#cfcfcf;font-weight:normal;word-break:break-all;display:inline-block;margin-top:2px}.action dl.inner{padding-bottom:2px}.action .title{border-bottom:1px solid white;margin:0 -12px -1px -12px;padding:12px}.action.get{border-color:#bce8f1}.action.get h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.head{border-color:#bce8f1}.action.head h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.options{border-color:#bce8f1}.action.options h4.action-heading{color:#337ab7;background:#d9edf7;border-bottom-color:#bce8f1}.action.post{border-color:#d6e9c6}.action.post h4.action-heading{color:#5cb85c;background:#dff0d8;border-bottom-color:#d6e9c6}.action.put{border-color:#faebcc}.action.put h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.patch{border-color:#faebcc}.action.patch h4.action-heading{color:#ed9c28;background:#fcf8e3;border-bottom-color:#faebcc}.action.delete{border-color:#ebccd1}.action.delete h4.action-heading{color:#d9534f;background:#f2dede;border-bottom-color:#ebccd1}</style></head><body class="preload"><a href="#top" class="text-muted back-to-top"><i class="fa fa-toggle-up"></i>&nbsp;Back to top</a><div class="container"><div class="row"><nav><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#users-management">Users management</a></div><div class="collapse-content"><ul><li><a href="#users-management-user-registration-post"><span class="badge post"><i class="fa fa-plus"></i></span>Register to the API</a></li><li><a href="#users-management-user-connexion-login-post"><span class="badge post"><i class="fa fa-plus"></i></span>Login to the API and get the access_token</a></li><li><a href="#users-management-update-password-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update user's password</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#cyberscope-administration">CyberScope Administration</a></div><div class="collapse-content"><ul><li><a href="#cyberscope-administration-list-all-microscopes-post"><span class="badge post"><i class="fa fa-plus"></i></span>List all microscopes</a></li><li><a href="#cyberscope-administration-add-a-new-microscope-post"><span class="badge post"><i class="fa fa-plus"></i></span>Add a new microscope</a></li><li><a href="#cyberscope-administration-remove-a-new-microscope-post"><span class="badge post"><i class="fa fa-plus"></i></span>Remove a microscope</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#main-informations">Main informations</a></div><div class="collapse-content"><ul><li><a href="#main-informations-get-devices-status-post"><span class="badge post"><i class="fa fa-plus"></i></span>Get devices status</a></li><li><a href="#main-informations-get-manual-panel-post"><span class="badge post"><i class="fa fa-plus"></i></span>Get manual control's panel</a></li><li><a href="#main-informations-book-a-microscope-post"><span class="badge post"><i class="fa fa-plus"></i></span>Book a microscope</a></li><li><a href="#main-informations-release-a-microscope-post"><span class="badge post"><i class="fa fa-plus"></i></span>Release a microscope</a></li><li><a href="#main-informations-show-microscope-reservation-table-post"><span class="badge post"><i class="fa fa-plus"></i></span>Show microscope reservation table</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#update-devices">Update Devices</a></div><div class="collapse-content"><ul><li><a href="#update-devices-update-andor-mosaic-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update Andor Mosaic</a></li><li><a href="#update-devices-update-olympusix81-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update OlympusIX81</a></li><li><a href="#update-devices-update-x-cite-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update X-Cite</a></li><li><a href="#update-devices-update-z-axis-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update Z-Axis</a></li><li><a href="#update-devices-update-priormotionstage-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update PriorMotionStage</a></li><li><a href="#update-devices-update-coolled-pe4000-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update CoolLed-pE4000</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#settings-channels">Settings channels</a></div><div class="collapse-content"><ul><li><a href="#settings-channels-create-a-settings-channel-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create a settings channel</a></li><li><a href="#settings-channels-update-a-settings-channel-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update a settings channel</a></li><li><a href="#settings-channels-show-settings-channels-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create a settings channel</a></li><li><a href="#settings-channels-remove-settings-channels-post"><span class="badge post"><i class="fa fa-plus"></i></span>Remove a settings channel</a></li><li><a href="#settings-channels-get-settings-channel-data-post"><span class="badge post"><i class="fa fa-plus"></i></span>Get a settings channel data</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#mosaics-masks">Mosaics Masks</a></div><div class="collapse-content"><ul><li><a href="#mosaics-masks-show-mosaics-masks-panel-post"><span class="badge post"><i class="fa fa-plus"></i></span>Show Mosaics masks panel</a></li><li><a href="#mosaics-masks-get-user-s-masks-post"><span class="badge post"><i class="fa fa-plus"></i></span>Get user's masks</a></li><li><a href="#mosaics-masks-get-user-mask-from-name-post"><span class="badge post"><i class="fa fa-plus"></i></span>Get user mask from name</a></li><li><a href="#mosaics-masks-create-a-mosaic-mask-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create a mosaic mask</a></li><li><a href="#mosaics-masks-delete-a-mosaic-mask-post"><span class="badge post"><i class="fa fa-plus"></i></span>Delete a mosaic mask</a></li><li><a href="#mosaics-masks-update-a-mosaic-mask-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update a mosaic mask</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#protocols">Protocols</a></div><div class="collapse-content"><ul><li><a href="#protocols-get-protocol-from-name-post"><span class="badge post"><i class="fa fa-plus"></i></span>Get a protocol</a></li><li><a href="#protocols-create-a-protocol-post"><span class="badge post"><i class="fa fa-plus"></i></span>Create a protocol</a></li><li><a href="#protocols-update-a-protocol-post"><span class="badge post"><i class="fa fa-plus"></i></span>Update a protocol</a></li><li><a href="#protocols-remove-a-protocol-post"><span class="badge post"><i class="fa fa-plus"></i></span>Remove a protocol</a></li></ul></div></div><div class="resource-group"><div class="heading"><div class="chevron"><i class="open fa fa-angle-down"></i></div><a href="#mda">MDA</a></div><div class="collapse-content"><ul><li><a href="#mda-show-mda-panel-s-mid-column-post"><span class="badge post"><i class="fa fa-plus"></i></span>Show MDA panel's mid column</a></li><li><a href="#mda-reload-settings-channels-in-the-mda-panel-post"><span class="badge post"><i class="fa fa-plus"></i></span>Reload Settings channels in the MDA panel</a></li><li><a href="#mda-reload-mosaics-masks-in-the-mda-panel-post"><span class="badge post"><i class="fa fa-plus"></i></span>Reload Mosaics masks in the MDA panel</a></li><li><a href="#mda-show-mda-panel-s-left-column-post"><span class="badge post"><i class="fa fa-plus"></i></span>Show MDA panel's left column</a></li><li><a href="#mda-run-a-protocol-post"><span class="badge post"><i class="fa fa-plus"></i></span>Run a protocol</a></li></ul></div></div></nav><div class="content"><header><h1 id="top">API CyberScope Node.js documentation</h1></header><p>CyberScope’s API is a web application to communicate with Node-RED’s API</p>
+<section id="users-management" class="resource-group"><h2 class="group-heading">Users management <a href="#users-management" class="permalink">&para;</a></h2><div id="users-management-user-registration" class="resource"><h3 class="resource-heading">User registration <a href="#users-management-user-registration" class="permalink">&nbsp;&para;</a></h3><div id="users-management-user-registration-post" class="action post"><h4 class="action-heading"><div class="name">Register to the API</div><a href="#users-management-user-registration-post" class="method post">POST</a><code class="uri">/users/register</code></h4><ul>
+<li>
+<p>Location : ./routes/users.js</p>
+</li>
+<li>
+<p>If the user doesnt already exist, a new entry will be added on the MongoDB collection : User</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/users/register</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Exemple&quot;</span></span><p>User’s name</p>
+</dd><dt>email</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;exemple@exemple.fr&quot;</span></span><p>User’s email address</p>
+</dd><dt>password</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;3x3MP13&quot;</span></span><p>User’s password</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    _id: <span class="hljs-string">"5d2712015710972914c17ef9"</span>,
+    name: <span class="hljs-string">"Exemple"</span>,
+    email: <span class="hljs-string">"exemple@exemple.fr"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="users-management-user-connexion-login" class="resource"><h3 class="resource-heading">User connexion / login <a href="#users-management-user-connexion-login" class="permalink">&nbsp;&para;</a></h3><div id="users-management-user-connexion-login-post" class="action post"><h4 class="action-heading"><div class="name">Login to the API and get the access_token</div><a href="#users-management-user-connexion-login-post" class="method post">POST</a><code class="uri">/users/auth</code></h4><ul>
+<li>
+<p>Location : ./routes/auth.js</p>
+</li>
+<li>
+<p>If the password is correct,  the new token will be stored on the MongoDB collection : Token</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/users/auth</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>email</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;exemple@exemple.fr&quot;</span></span><p>User’s email address</p>
+</dd><dt>password</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Exemple&quot;</span></span><p>User’s password</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    access_token: <span class="hljs-string">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDI3MTIwMTU3MTA5NzI5MTRjMTdlZjkiLCJpYXQiOjE1NjI4NDI0NDZ9.0FOC0-TElZPp8UTdwA6bA6RyWMZpEetkVAfZCBduw3M"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="users-management-update-password" class="resource"><h3 class="resource-heading">Update password <a href="#users-management-update-password" class="permalink">&nbsp;&para;</a></h3><div id="users-management-update-password-post" class="action post"><h4 class="action-heading"><div class="name">Update user's password</div><a href="#users-management-update-password-post" class="method post">POST</a><code class="uri">/users-settings/update-password</code></h4><ul>
+<li>
+<p>Location : ./routes/users-settings.js</p>
+</li>
+<li>
+<p>If the access_token is valid, the new password will be stored on the MongoDB collection : User</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/users-settings/update-password</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>password</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;3x3MP13&quot;</span></span><p>User’s NEW password</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    message: <span class="hljs-string">"password successfully updated"</span>,
+    name: <span class="hljs-string">"Exemple"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="cyberscope-administration" class="resource-group"><h2 class="group-heading">CyberScope Administration <a href="#cyberscope-administration" class="permalink">&para;</a></h2><div id="cyberscope-administration-list-all-microscopes" class="resource"><h3 class="resource-heading">List all microscopes <a href="#cyberscope-administration-list-all-microscopes" class="permalink">&nbsp;&para;</a></h3><div id="cyberscope-administration-list-all-microscopes-post" class="action post"><h4 class="action-heading"><div class="name">List all microscopes</div><a href="#cyberscope-administration-list-all-microscopes-post" class="method post">POST</a><code class="uri">/admin/list-microscope</code></h4><ul>
+<li>
+<p>Location : ./routes/admin.js</p>
+</li>
+<li>
+<p>Return a HTML table with the microscope’s informations</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/admin/list-microscope</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="cyberscope-administration-add-a-new-microscope" class="resource"><h3 class="resource-heading">Add a new microscope <a href="#cyberscope-administration-add-a-new-microscope" class="permalink">&nbsp;&para;</a></h3><div id="cyberscope-administration-add-a-new-microscope-post" class="action post"><h4 class="action-heading"><div class="name">Add a new microscope</div><a href="#cyberscope-administration-add-a-new-microscope-post" class="method post">POST</a><code class="uri">/admin/add-microscope</code></h4><ul>
+<li>
+<p>Location : ./routes/admin.js</p>
+</li>
+<li>
+<p>If the access_token is valid, the new microscope will be stored on the MongoDB collection : Equipement</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/admin/add-microscope</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>microscope_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope’s name</p>
+</dd><dt>microscope_ip</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;172.21.1.183:1880&quot;</span></span><p>Microscope’s IP</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    success: <span class="hljs-string">"Miss Marple has been added."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="cyberscope-administration-remove-a-new-microscope" class="resource"><h3 class="resource-heading">remove a new microscope <a href="#cyberscope-administration-remove-a-new-microscope" class="permalink">&nbsp;&para;</a></h3><div id="cyberscope-administration-remove-a-new-microscope-post" class="action post"><h4 class="action-heading"><div class="name">Remove a microscope</div><a href="#cyberscope-administration-remove-a-new-microscope-post" class="method post">POST</a><code class="uri">/admin/remove-microscope</code></h4><ul>
+<li>
+<p>Location : ./routes/admin.js</p>
+</li>
+<li>
+<p>If the access_token is valid, the microscope will be remove on the MongoDB collection : Equipement</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/admin/remove-microscope</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>microscope_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope’s name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    success: <span class="hljs-string">"Miss Marple has been removed."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="main-informations" class="resource-group"><h2 class="group-heading">Main informations <a href="#main-informations" class="permalink">&para;</a></h2><div id="main-informations-get-devices-status" class="resource"><h3 class="resource-heading">Get devices status <a href="#main-informations-get-devices-status" class="permalink">&nbsp;&para;</a></h3><div id="main-informations-get-devices-status-post" class="action post"><h4 class="action-heading"><div class="name">Get devices status</div><a href="#main-informations-get-devices-status-post" class="method post">POST</a><code class="uri">/equipements/get-main</code></h4><ul>
+<li>
+<p>Location : ./routes/equipements.js</p>
+</li>
+<li>
+<p>If the access_token is valid, the devices status will be sent as HTML</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/equipements/get-main</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="main-informations-get-manual-panel" class="resource"><h3 class="resource-heading">Get manual panel <a href="#main-informations-get-manual-panel" class="permalink">&nbsp;&para;</a></h3><div id="main-informations-get-manual-panel-post" class="action post"><h4 class="action-heading"><div class="name">Get manual control's panel</div><a href="#main-informations-get-manual-panel-post" class="method post">POST</a><code class="uri">/equipements/get-manuel</code></h4><ul>
+<li>
+<p>Location : ./routes/equipements.js</p>
+</li>
+<li>
+<p>If the access_token is valid, the manual panel will be sent as HTML</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/equipements/get-manuel</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="main-informations-book-a-microscope" class="resource"><h3 class="resource-heading">Book a microscope <a href="#main-informations-book-a-microscope" class="permalink">&nbsp;&para;</a></h3><div id="main-informations-book-a-microscope-post" class="action post"><h4 class="action-heading"><div class="name">Book a microscope</div><a href="#main-informations-book-a-microscope-post" class="method post">POST</a><code class="uri">/equipements/book</code></h4><ul>
+<li>
+<p>Location : ./routes/equipements.js</p>
+</li>
+<li>
+<p>If the access_token and the microscope are valid, the microscope will be book for the user and MongoDB will be updated</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/equipements/book</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>equipement_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser (Same code as the /get-main route)</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="main-informations-release-a-microscope" class="resource"><h3 class="resource-heading">Release a microscope <a href="#main-informations-release-a-microscope" class="permalink">&nbsp;&para;</a></h3><div id="main-informations-release-a-microscope-post" class="action post"><h4 class="action-heading"><div class="name">Release a microscope</div><a href="#main-informations-release-a-microscope-post" class="method post">POST</a><code class="uri">/equipements/release</code></h4><ul>
+<li>
+<p>Location : ./routes/equipements.js</p>
+</li>
+<li>
+<p>If the access_token and the microscope are valid, the microscope will be released for the user and MongoDB will be updated</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/equipements/release</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>equipement_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser (Same code as the /list-microscope route)</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="main-informations-show-microscope-reservation-table" class="resource"><h3 class="resource-heading">Show microscope reservation table <a href="#main-informations-show-microscope-reservation-table" class="permalink">&nbsp;&para;</a></h3><div id="main-informations-show-microscope-reservation-table-post" class="action post"><h4 class="action-heading"><div class="name">Show microscope reservation table</div><a href="#main-informations-show-microscope-reservation-table-post" class="method post">POST</a><code class="uri">/equipements/infos</code></h4><ul>
+<li>
+<p>Location : ./routes/equipements.js</p>
+</li>
+<li>
+<p>If the access_token is valid, a reservation table will be return to the client</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/equipements/infos</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="update-devices" class="resource-group"><h2 class="group-heading">Update Devices <a href="#update-devices" class="permalink">&para;</a></h2><div id="update-devices-update-andor-mosaic" class="resource"><h3 class="resource-heading">Update Andor Mosaic <a href="#update-devices-update-andor-mosaic" class="permalink">&nbsp;&para;</a></h3><div id="update-devices-update-andor-mosaic-post" class="action post"><h4 class="action-heading"><div class="name">Update Andor Mosaic</div><a href="#update-devices-update-andor-mosaic-post" class="method post">POST</a><code class="uri">/devices/update/mosaic</code></h4><ul>
+<li>
+<p>Location : ./routes/update-devices.js</p>
+</li>
+<li>
+<p>If the access_token is valid, a request to the Node-RED API will be made to update the mosaic mask with the base64 image</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/devices/update/mosaic</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>microscope_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope’s name</p>
+</dd><dt>mask</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;data:image/png;base64,iVBO...2eEWAA&quot;</span></span></dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"ok"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="update-devices-update-olympusix81" class="resource"><h3 class="resource-heading">Update OlympusIX81 <a href="#update-devices-update-olympusix81" class="permalink">&nbsp;&para;</a></h3><div id="update-devices-update-olympusix81-post" class="action post"><h4 class="action-heading"><div class="name">Update OlympusIX81</div><a href="#update-devices-update-olympusix81-post" class="method post">POST</a><code class="uri">/devices/update/olympusix81</code></h4><ul>
+<li>
+<p>Location : ./routes/update-devices.js</p>
+</li>
+<li>
+<p>If the access_token is valid, a request to the Node-RED API will be made to update the Olympus IX81 with the new parameters</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/devices/update/olympusix81</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>microscope_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope’s name</p>
+</dd><dt>shutter</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Shutter status ON or OFF</p>
+</dd><dt>intensity</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;45&quot;</span></span><p>Lamp intensity</p>
+</dd><dt>wheel_filter</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;2&quot;</span></span><p>Filter to use 1 to 6</p>
+</dd><dt>lamp</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"ok"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="update-devices-update-x-cite" class="resource"><h3 class="resource-heading">Update X-Cite <a href="#update-devices-update-x-cite" class="permalink">&nbsp;&para;</a></h3><div id="update-devices-update-x-cite-post" class="action post"><h4 class="action-heading"><div class="name">Update X-Cite</div><a href="#update-devices-update-x-cite-post" class="method post">POST</a><code class="uri">/devices/update/xcite</code></h4><ul>
+<li>
+<p>Location : ./routes/update-devices.js</p>
+</li>
+<li>
+<p>If the access_token is valid, a request to the Node-RED API will be made to update the X-Cite with the new parameters</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/devices/update/xcite</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>microscope_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope’s name</p>
+</dd><dt>shutter</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Shutter status ON or OFF</p>
+</dd><dt>intensity</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;45&quot;</span></span><p>Lamp intensity</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"ok"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="update-devices-update-z-axis" class="resource"><h3 class="resource-heading">Update Z-Axis <a href="#update-devices-update-z-axis" class="permalink">&nbsp;&para;</a></h3><div id="update-devices-update-z-axis-post" class="action post"><h4 class="action-heading"><div class="name">Update Z-Axis</div><a href="#update-devices-update-z-axis-post" class="method post">POST</a><code class="uri">/devices/update/z-axis</code></h4><ul>
+<li>
+<p>Location : ./routes/update-devices.js</p>
+</li>
+<li>
+<p>If the access_token is valid, a request to the Node-RED API will be made to update the Z-Axis attitude with the new parameters</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/devices/update/z-axis</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>microscope_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope’s name</p>
+</dd><dt>type</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>zValue</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO maybe ZPosition</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"ok"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="update-devices-update-priormotionstage" class="resource"><h3 class="resource-heading">Update PriorMotionStage <a href="#update-devices-update-priormotionstage" class="permalink">&nbsp;&para;</a></h3><div id="update-devices-update-priormotionstage-post" class="action post"><h4 class="action-heading"><div class="name">Update PriorMotionStage</div><a href="#update-devices-update-priormotionstage-post" class="method post">POST</a><code class="uri">/devices/update/priormotionstage</code></h4><ul>
+<li>
+<p>Location : ./routes/update-devices.js</p>
+</li>
+<li>
+<p>If the access_token is valid, a request to the Node-RED API will be made to update the Prior Motion Stage with the new parameters</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/devices/update/priormotionstage</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>microscope_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope’s name</p>
+</dd><dt>X</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;5124.152&quot;</span></span><p>X postion</p>
+</dd><dt>Y</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;187.486&quot;</span></span><p>Y postion</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"ok"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="update-devices-update-coolled-pe4000" class="resource"><h3 class="resource-heading">Update CoolLed-pE4000 <a href="#update-devices-update-coolled-pe4000" class="permalink">&nbsp;&para;</a></h3><div id="update-devices-update-coolled-pe4000-post" class="action post"><h4 class="action-heading"><div class="name">Update CoolLed-pE4000</div><a href="#update-devices-update-coolled-pe4000-post" class="method post">POST</a><code class="uri">/devices/update/coolledpe4000</code></h4><ul>
+<li>
+<p>Location : ./routes/update-devices.js</p>
+</li>
+<li>
+<p>If the access_token is valid, a request to the Node-RED API will be made to update the CoolLed-pE4000 with the new parameters</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/devices/update/coolledpe4000</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>microscope_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;Miss Marple&quot;</span></span><p>Microscope’s name</p>
+</dd><dt>auto_close</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>action</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>mode</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>La</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>Lb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>Lc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>Ld</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>Ia</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;42&quot;</span></span><p>Intensity of channel A</p>
+</dd><dt>Ib</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;25&quot;</span></span><p>Intensity of channel B</p>
+</dd><dt>Ic</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;87&quot;</span></span><p>Intensity of channel C</p>
+</dd><dt>Id</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;16&quot;</span></span><p>Intensity of channel D</p>
+</dd><dt>Sa</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Shutter status of channel A</p>
+</dd><dt>Sb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Shutter status of channel B</p>
+</dd><dt>Sc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Shutter status of channel C</p>
+</dd><dt>Sd</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Shutter status of channel D</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"ok"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="settings-channels" class="resource-group"><h2 class="group-heading">Settings channels <a href="#settings-channels" class="permalink">&para;</a></h2><div id="settings-channels-create-a-settings-channel" class="resource"><h3 class="resource-heading">Create a settings channel <a href="#settings-channels-create-a-settings-channel" class="permalink">&nbsp;&para;</a></h3><div id="settings-channels-create-a-settings-channel-post" class="action post"><h4 class="action-heading"><div class="name">Create a settings channel</div><a href="#settings-channels-create-a-settings-channel-post" class="method post">POST</a><code class="uri">/settings-channels/add-settings-channels</code></h4><ul>
+<li>
+<p>Location : ./routes/settings-channels.js</p>
+</li>
+<li>
+<p>If the access_token is valid, the new setting channel will be stored on the MongoDB’s collection: Setting_channel</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/settings-channels/add-settings-channels</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>channel_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_setting_channel&quot;</span></span><p>Settings channel’s name</p>
+</dd><dt>is4000f</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;true&quot;</span></span><p>Is there a CoolLed-pE4000 in fluo on the settings channel ?</p>
+</dd><dt>is4000m</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE4000 in mosaic on the settings channel ?</p>
+</dd><dt>is100f</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE100 in fluo on the settings channel ?</p>
+</dd><dt>is100m</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE100 in mosaic on the settings channel ?</p>
+</dd><dt>is300f</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE300 in fluo on the settings channel ?</p>
+</dd><dt>is300m</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE300 in mosaic on the settings channel ?</p>
+</dd><dt>isxc120pcf</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a X-Cite in fluo on the settings channel ?</p>
+</dd><dt>isxc120pcm</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a X-Cite in mosaic on the settings channel ?</p>
+</dd><dt>isix81</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;true&quot;</span></span><p>Is there an Olympus IX81 on the settings channel ?</p>
+</dd><dt>isix83</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there an Olympus IX83 on the settings channel ?</p>
+</dd><dt>isix71</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there an Olympus IX71 on the settings channel ?</p>
+</dd><dt>cl4000fla</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;525&quot;</span></span><p>Value of the lambda A for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000flb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;625&quot;</span></span><p>Value of the lambda B for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000flc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;695&quot;</span></span><p>Value of the lambda C for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fld</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;715&quot;</span></span><p>Value of the lambda D for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fia</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;54&quot;</span></span><p>Value of the intensity A for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fib</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;41&quot;</span></span><p>Value of the intensity B for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fic</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;78&quot;</span></span><p>Value of the intensity C for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fid</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;54&quot;</span></span><p>Value of the intensity D for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fsa</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter A for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fsb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Value of the shutter B for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fsc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Value of the shutter C for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fsd</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter D for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000mla</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;525&quot;</span></span><p>Value of the lambda A for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mlb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;625&quot;</span></span><p>Value of the lambda B for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mlc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;695&quot;</span></span><p>Value of the lambda C for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mld</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;715&quot;</span></span><p>Value of the lambda D for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mia</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;54&quot;</span></span><p>Value of the intensity A for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mib</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;41&quot;</span></span><p>Value of the intensity B for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mic</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;78&quot;</span></span><p>Value of the intensity C for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mid</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;54&quot;</span></span><p>Value of the intensity D for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000msa</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter A for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000msb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Value of the shutter B for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000msc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Value of the shutter C for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000msd</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter D for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl100fb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl100fs</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the CoolLedpE100 FLUO</p>
+</dd><dt>cl100fi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;55&quot;</span></span><p>Value of the intensity for the CoolLedpE100 FLUO</p>
+</dd><dt>cl100mb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl100ms</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the CoolLedpE100 MOSAIC</p>
+</dd><dt>cl100mi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;55&quot;</span></span><p>Value of the intensity for the CoolLedpE100 MOSAIC</p>
+</dd><dt>cl300fba</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300fbb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300fbc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300fs</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the CoolLedpE300 FLUO</p>
+</dd><dt>cl300fi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;88&quot;</span></span><p>Value of the intensity for the CoolLedpE300 FLUO</p>
+</dd><dt>cl300mba</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300mbb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300mbc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300ms</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the CoolLedpE300 MOSAIC</p>
+</dd><dt>cl300mi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;88&quot;</span></span><p>Value of the intensity for the CoolLedpE300 MOSAIC</p>
+</dd><dt>xc120pcfs</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the X-CITE FLUO</p>
+</dd><dt>xc120PCfi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;12&quot;</span></span><p>Value of the intensity for the X-CITE FLUO</p>
+</dd><dt>xc120pcms</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the X-CITE MOSAIC</p>
+</dd><dt>xc120PCmi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;12&quot;</span></span><p>Value of the intensity for the X-CITE MOSAIC</p>
+</dd><dt>olix81i</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;56&quot;</span></span><p>Value of the intensity for the Olympus IX-81</p>
+</dd><dt>olix81s</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the Olympus IX-81</p>
+</dd><dt>olix81l</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix81w</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix83i</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;56&quot;</span></span><p>Value of the intensity for the Olympus IX-83</p>
+</dd><dt>olix83s</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the Olympus IX-83</p>
+</dd><dt>olix83l</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix83w</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix71i</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;56&quot;</span></span><p>Value of the intensity for the Olympus IX-71</p>
+</dd><dt>olix71s</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the Olympus IX-71</p>
+</dd><dt>olix71l</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix71w</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"Channel my_settings_channel has been created."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="settings-channels-update-a-settings-channel" class="resource"><h3 class="resource-heading">Update a settings channel <a href="#settings-channels-update-a-settings-channel" class="permalink">&nbsp;&para;</a></h3><div id="settings-channels-update-a-settings-channel-post" class="action post"><h4 class="action-heading"><div class="name">Update a settings channel</div><a href="#settings-channels-update-a-settings-channel-post" class="method post">POST</a><code class="uri">/settings-channels/update-settings-channels</code></h4><ul>
+<li>
+<p>Location : ./routes/settings-channels.js</p>
+</li>
+<li>
+<p>If the access_token is valid, the setting channel will be updated on the MongoDB’s collection: Setting_channel</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/settings-channels/update-settings-channels</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>channel_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_setting_channel&quot;</span></span><p>Settings channel’s name</p>
+</dd><dt>is4000f</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;true&quot;</span></span><p>Is there a CoolLed-pE4000 in fluo on the settings channel ?</p>
+</dd><dt>is4000m</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE4000 in mosaic on the settings channel ?</p>
+</dd><dt>is100f</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE100 in fluo on the settings channel ?</p>
+</dd><dt>is100m</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE100 in mosaic on the settings channel ?</p>
+</dd><dt>is300f</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE300 in fluo on the settings channel ?</p>
+</dd><dt>is300m</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a CoolLed-pE300 in mosaic on the settings channel ?</p>
+</dd><dt>isxc120pcf</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a X-Cite in fluo on the settings channel ?</p>
+</dd><dt>isxc120pcm</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there a X-Cite in mosaic on the settings channel ?</p>
+</dd><dt>isix81</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;true&quot;</span></span><p>Is there an Olympus IX81 on the settings channel ?</p>
+</dd><dt>isix83</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there an Olympus IX83 on the settings channel ?</p>
+</dd><dt>isix71</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;false&quot;</span></span><p>Is there an Olympus IX71 on the settings channel ?</p>
+</dd><dt>cl4000fla</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;525&quot;</span></span><p>Value of the lambda A for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000flb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;625&quot;</span></span><p>Value of the lambda B for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000flc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;695&quot;</span></span><p>Value of the lambda C for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fld</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;715&quot;</span></span><p>Value of the lambda D for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fia</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;54&quot;</span></span><p>Value of the intensity A for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fib</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;41&quot;</span></span><p>Value of the intensity B for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fic</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;78&quot;</span></span><p>Value of the intensity C for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fid</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;54&quot;</span></span><p>Value of the intensity D for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fsa</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter A for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fsb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Value of the shutter B for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fsc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Value of the shutter C for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000fsd</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter D for the CoolLedpE4000 FLUO</p>
+</dd><dt>cl4000mla</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;525&quot;</span></span><p>Value of the lambda A for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mlb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;625&quot;</span></span><p>Value of the lambda B for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mlc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;695&quot;</span></span><p>Value of the lambda C for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mld</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;715&quot;</span></span><p>Value of the lambda D for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mia</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;54&quot;</span></span><p>Value of the intensity A for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mib</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;41&quot;</span></span><p>Value of the intensity B for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mic</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;78&quot;</span></span><p>Value of the intensity C for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000mid</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;54&quot;</span></span><p>Value of the intensity D for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000msa</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter A for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000msb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Value of the shutter B for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000msc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;OFF&quot;</span></span><p>Value of the shutter C for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl4000msd</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter D for the CoolLedpE4000 MOSAIC</p>
+</dd><dt>cl100fb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl100fs</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the CoolLedpE100 FLUO</p>
+</dd><dt>cl100fi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;55&quot;</span></span><p>Value of the intensity for the CoolLedpE100 FLUO</p>
+</dd><dt>cl100mb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl100ms</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the CoolLedpE100 MOSAIC</p>
+</dd><dt>cl100mi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;55&quot;</span></span><p>Value of the intensity for the CoolLedpE100 MOSAIC</p>
+</dd><dt>cl300fba</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300fbb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300fbc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300fs</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the CoolLedpE300 FLUO</p>
+</dd><dt>cl300fi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;88&quot;</span></span><p>Value of the intensity for the CoolLedpE300 FLUO</p>
+</dd><dt>cl300mba</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300mbb</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300mbc</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>cl300ms</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the CoolLedpE300 MOSAIC</p>
+</dd><dt>cl300mi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;88&quot;</span></span><p>Value of the intensity for the CoolLedpE300 MOSAIC</p>
+</dd><dt>xc120pcfs</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the X-CITE FLUO</p>
+</dd><dt>xc120PCfi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;12&quot;</span></span><p>Value of the intensity for the X-CITE FLUO</p>
+</dd><dt>xc120pcms</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the X-CITE MOSAIC</p>
+</dd><dt>xc120PCmi</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;12&quot;</span></span><p>Value of the intensity for the X-CITE MOSAIC</p>
+</dd><dt>olix81i</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;56&quot;</span></span><p>Value of the intensity for the Olympus IX-81</p>
+</dd><dt>olix81s</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the Olympus IX-81</p>
+</dd><dt>olix81l</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix81w</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix83i</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;56&quot;</span></span><p>Value of the intensity for the Olympus IX-83</p>
+</dd><dt>olix83s</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the Olympus IX-83</p>
+</dd><dt>olix83l</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix83w</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix71i</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;56&quot;</span></span><p>Value of the intensity for the Olympus IX-71</p>
+</dd><dt>olix71s</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;ON&quot;</span></span><p>Value of the shutter for the Olympus IX-71</p>
+</dd><dt>olix71l</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd><dt>olix71w</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;idk&quot;</span></span><p>I don’t remember what it is, TODO</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"Channel my_settings_channel has been updated."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="settings-channels-show-settings-channels" class="resource"><h3 class="resource-heading">Show settings channels <a href="#settings-channels-show-settings-channels" class="permalink">&nbsp;&para;</a></h3><div id="settings-channels-show-settings-channels-post" class="action post"><h4 class="action-heading"><div class="name">Create a settings channel</div><a href="#settings-channels-show-settings-channels-post" class="method post">POST</a><code class="uri">/settings-channels/get-settings-channels</code></h4><ul>
+<li>
+<p>Location : ./routes/settings-channels.js</p>
+</li>
+<li>
+<p>Return a panel to manage settings channels as HTML</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/settings-channels/get-settings-channels</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>channel_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_setting_channel&quot;</span></span><p>Settings channel’s name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="settings-channels-remove-settings-channels" class="resource"><h3 class="resource-heading">Remove settings channels <a href="#settings-channels-remove-settings-channels" class="permalink">&nbsp;&para;</a></h3><div id="settings-channels-remove-settings-channels-post" class="action post"><h4 class="action-heading"><div class="name">Remove a settings channel</div><a href="#settings-channels-remove-settings-channels-post" class="method post">POST</a><code class="uri">/settings-channels/remove-settings-channels</code></h4><ul>
+<li>
+<p>Location : ./routes/settings-channels.js</p>
+</li>
+<li>
+<p>Remove a settings channel from MongoDB</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/settings-channels/remove-settings-channels</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>channel_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_setting_channel&quot;</span></span><p>Settings channel’s name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    success: <span class="hljs-string">"Channel my_settings_channel successfully removed."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="settings-channels-get-settings-channel-data" class="resource"><h3 class="resource-heading">Get settings channel data <a href="#settings-channels-get-settings-channel-data" class="permalink">&nbsp;&para;</a></h3><div id="settings-channels-get-settings-channel-data-post" class="action post"><h4 class="action-heading"><div class="name">Get a settings channel data</div><a href="#settings-channels-get-settings-channel-data-post" class="method post">POST</a><code class="uri">/settings-channels/get-settings-channels-from-db</code></h4><ul>
+<li>
+<p>Location : ./routes/settings-channels.js</p>
+</li>
+<li>
+<p>Get a settings channel from MongoDB</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/settings-channels/get-settings-channels-from-db</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>channel_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_setting_channel&quot;</span></span><p>Settings channel’s name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Full settings channel data <span class="hljs-keyword">as</span> a <span class="hljs-built_in">JSON</span></code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="mosaics-masks" class="resource-group"><h2 class="group-heading">Mosaics Masks <a href="#mosaics-masks" class="permalink">&para;</a></h2><div id="mosaics-masks-show-mosaics-masks-panel" class="resource"><h3 class="resource-heading">Show Mosaics masks panel <a href="#mosaics-masks-show-mosaics-masks-panel" class="permalink">&nbsp;&para;</a></h3><div id="mosaics-masks-show-mosaics-masks-panel-post" class="action post"><h4 class="action-heading"><div class="name">Show Mosaics masks panel</div><a href="#mosaics-masks-show-mosaics-masks-panel-post" class="method post">POST</a><code class="uri">/mosaic-masks/get-mosaic-masks</code></h4><ul>
+<li>
+<p>Location : ./routes/mosaic-masks.js</p>
+</li>
+<li>
+<p>Return mosaics masks panel as HTML</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mosaic-masks/get-mosaic-masks</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>HTML code to show on the user's Web browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mosaics-masks-get-user-s-masks" class="resource"><h3 class="resource-heading">Get user's masks <a href="#mosaics-masks-get-user-s-masks" class="permalink">&nbsp;&para;</a></h3><div id="mosaics-masks-get-user-s-masks-post" class="action post"><h4 class="action-heading"><div class="name">Get user's masks</div><a href="#mosaics-masks-get-user-s-masks-post" class="method post">POST</a><code class="uri">/mosaic-masks/get-user-mosaic-masks</code></h4><ul>
+<li>
+<p>Location : ./routes/mosaic-masks.js</p>
+</li>
+<li>
+<p>Return mosaics masks of a user as JSON</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mosaic-masks/get-user-mosaic-masks</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    {
+        author: <span class="hljs-string">"exemple@exemple.fr"</span>,
+        mask_name: <span class="hljs-string">"my_mask"</span>,
+        b64_mask: <span class="hljs-string">"data:image/png;base64,iVBO...2eEWAA"</span>
+    }
+    {
+        author: <span class="hljs-string">"exemple@exemple.fr"</span>,
+        mask_name: <span class="hljs-string">"my_mask2"</span>,
+        b64_mask: <span class="hljs-string">"data:image/png;base64,sd=0...s8flJu"</span>
+    }
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mosaics-masks-get-user-mask-from-name" class="resource"><h3 class="resource-heading">Get user mask from name <a href="#mosaics-masks-get-user-mask-from-name" class="permalink">&nbsp;&para;</a></h3><div id="mosaics-masks-get-user-mask-from-name-post" class="action post"><h4 class="action-heading"><div class="name">Get user mask from name</div><a href="#mosaics-masks-get-user-mask-from-name-post" class="method post">POST</a><code class="uri">/mosaic-masks/get-mosaic-mask-from-name</code></h4><ul>
+<li>
+<p>Location : ./routes/mosaic-masks.js</p>
+</li>
+<li>
+<p>Return the mosaic mask as JSON</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mosaic-masks/get-mosaic-mask-from-name</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>mask_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_mask&quot;</span></span><p>Mosaic mask name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    author: <span class="hljs-string">"exemple@exemple.fr"</span>,
+    mask_name: <span class="hljs-string">"my_mask"</span>,
+    b64_mask: <span class="hljs-string">"data:image/png;base64,iVBO...2eEWAA"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mosaics-masks-create-a-mosaic-mask" class="resource"><h3 class="resource-heading">Create a mosaic mask <a href="#mosaics-masks-create-a-mosaic-mask" class="permalink">&nbsp;&para;</a></h3><div id="mosaics-masks-create-a-mosaic-mask-post" class="action post"><h4 class="action-heading"><div class="name">Create a mosaic mask</div><a href="#mosaics-masks-create-a-mosaic-mask-post" class="method post">POST</a><code class="uri">/mosaic-masks/create-mosaic-masks</code></h4><ul>
+<li>
+<p>Location : ./routes/mosaic-masks.js</p>
+</li>
+<li>
+<p>Create a new mosaic mask in the MongoDB collection : Mosaic_mask</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mosaic-masks/create-mosaic-masks</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>mask_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_mask&quot;</span></span><p>Mosaic mask name</p>
+</dd><dt>b64_mask</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;data:image/png;base64,iVBO...2eEWAA&quot;</span></span><p>Mosaic mask data as base64</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"Mask my_mask created."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mosaics-masks-delete-a-mosaic-mask" class="resource"><h3 class="resource-heading">Delete a mosaic mask <a href="#mosaics-masks-delete-a-mosaic-mask" class="permalink">&nbsp;&para;</a></h3><div id="mosaics-masks-delete-a-mosaic-mask-post" class="action post"><h4 class="action-heading"><div class="name">Delete a mosaic mask</div><a href="#mosaics-masks-delete-a-mosaic-mask-post" class="method post">POST</a><code class="uri">/mosaic-masks/delete-mosaic-masks</code></h4><ul>
+<li>
+<p>Location : ./routes/mosaic-masks.js</p>
+</li>
+<li>
+<p>Remove a mosaic mask in the MongoDB collection : Mosaic_mask</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mosaic-masks/delete-mosaic-masks</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>mask_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_mask&quot;</span></span><p>Mosaic mask name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"Mask my_mask successfully deleted."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mosaics-masks-update-a-mosaic-mask" class="resource"><h3 class="resource-heading">Update a mosaic mask <a href="#mosaics-masks-update-a-mosaic-mask" class="permalink">&nbsp;&para;</a></h3><div id="mosaics-masks-update-a-mosaic-mask-post" class="action post"><h4 class="action-heading"><div class="name">Update a mosaic mask</div><a href="#mosaics-masks-update-a-mosaic-mask-post" class="method post">POST</a><code class="uri">/mosaic-masks/update-mosaic-masks</code></h4><ul>
+<li>
+<p>Location : ./routes/mosaic-masks.js</p>
+</li>
+<li>
+<p>Update a mosaic mask in the MongoDB collection : Mosaic_mask</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mosaic-masks/update-mosaic-masks</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>mask_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_mask&quot;</span></span><p>Mosaic mask name</p>
+</dd><dt>b64_mask</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;data:image/png;base64,ifRL...8eRt1Y&quot;</span></span><p>Mosaic mask data as base64</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    status: <span class="hljs-string">"Mask my_mask successfully updated."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="protocols" class="resource-group"><h2 class="group-heading">Protocols <a href="#protocols" class="permalink">&para;</a></h2><div id="protocols-get-protocol-from-name" class="resource"><h3 class="resource-heading">Get protocol from name <a href="#protocols-get-protocol-from-name" class="permalink">&nbsp;&para;</a></h3><div id="protocols-get-protocol-from-name-post" class="action post"><h4 class="action-heading"><div class="name">Get a protocol</div><a href="#protocols-get-protocol-from-name-post" class="method post">POST</a><code class="uri">/protocols/get-protocol</code></h4><ul>
+<li>
+<p>Location : ./routes/protocols.js</p>
+</li>
+<li>
+<p>Return a protocol as JSON</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/protocols/get-protocol</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>protocol_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_protocol&quot;</span></span><p>User’s protocol name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    todo: <span class="hljs-string">"TODODODODOODODODO"</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="protocols-create-a-protocol" class="resource"><h3 class="resource-heading">Create a protocol <a href="#protocols-create-a-protocol" class="permalink">&nbsp;&para;</a></h3><div id="protocols-create-a-protocol-post" class="action post"><h4 class="action-heading"><div class="name">Create a protocol</div><a href="#protocols-create-a-protocol-post" class="method post">POST</a><code class="uri">/protocols/create-protocol</code></h4><ul>
+<li>
+<p>Location : ./routes/protocols.js</p>
+</li>
+<li>
+<p>Create a protocol in the MongoDB collection : Protocol</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/protocols/create-protocol</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>protocol_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_protocol&quot;</span></span><p>User’s protocol name</p>
+</dd><dt>protocol_data</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;TODODODODODO&quot;</span></span><p>User’s protocol data</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    success: <span class="hljs-string">"my_protocol has been added."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="protocols-update-a-protocol" class="resource"><h3 class="resource-heading">Update a protocol <a href="#protocols-update-a-protocol" class="permalink">&nbsp;&para;</a></h3><div id="protocols-update-a-protocol-post" class="action post"><h4 class="action-heading"><div class="name">Update a protocol</div><a href="#protocols-update-a-protocol-post" class="method post">POST</a><code class="uri">/protocols/update-protocol</code></h4><ul>
+<li>
+<p>Location : ./routes/protocols.js</p>
+</li>
+<li>
+<p>Update a protocol in the MongoDB collection : Protocol</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/protocols/update-protocol</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>protocol_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_protocol&quot;</span></span><p>User’s protocol name</p>
+</dd><dt>protocol_data</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;TODODODODODO&quot;</span></span><p>User’s protocol data</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    success: <span class="hljs-string">"my_protocol has been updated."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="protocols-remove-a-protocol" class="resource"><h3 class="resource-heading">Remove a protocol <a href="#protocols-remove-a-protocol" class="permalink">&nbsp;&para;</a></h3><div id="protocols-remove-a-protocol-post" class="action post"><h4 class="action-heading"><div class="name">Remove a protocol</div><a href="#protocols-remove-a-protocol-post" class="method post">POST</a><code class="uri">/protocols/remove-protocol</code></h4><ul>
+<li>
+<p>Location : ./routes/protocols.js</p>
+</li>
+<li>
+<p>Remove a protocol in the MongoDB collection : Protocol</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/protocols/remove-protocol</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>protocol_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;my_protocol&quot;</span></span><p>User’s protocol name</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
+    success: <span class="hljs-string">"my_protocol has been removed."</span>
+}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="mda" class="resource-group"><h2 class="group-heading">MDA <a href="#mda" class="permalink">&para;</a></h2><div id="mda-show-mda-panel-s-mid-column" class="resource"><h3 class="resource-heading">Show MDA panel's mid column <a href="#mda-show-mda-panel-s-mid-column" class="permalink">&nbsp;&para;</a></h3><div id="mda-show-mda-panel-s-mid-column-post" class="action post"><h4 class="action-heading"><div class="name">Show MDA panel's mid column</div><a href="#mda-show-mda-panel-s-mid-column-post" class="method post">POST</a><code class="uri">/mda/show-mid-col</code></h4><ul>
+<li>
+<p>Location : ./routes/mda.js</p>
+</li>
+<li>
+<p>Return the mid column as HTML</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mda/show-mid-col</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mda-reload-settings-channels-in-the-mda-panel" class="resource"><h3 class="resource-heading">Reload Settings channels in the MDA panel <a href="#mda-reload-settings-channels-in-the-mda-panel" class="permalink">&nbsp;&para;</a></h3><div id="mda-reload-settings-channels-in-the-mda-panel-post" class="action post"><h4 class="action-heading"><div class="name">Reload Settings channels in the MDA panel</div><a href="#mda-reload-settings-channels-in-the-mda-panel-post" class="method post">POST</a><code class="uri">/mda/reload-settings-channels-list</code></h4><ul>
+<li>
+<p>Location : ./routes/mda.js</p>
+</li>
+<li>
+<p>Return the updated select menu</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mda/reload-settings-channels-list</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mda-reload-mosaics-masks-in-the-mda-panel" class="resource"><h3 class="resource-heading">Reload Mosaics masks in the MDA panel <a href="#mda-reload-mosaics-masks-in-the-mda-panel" class="permalink">&nbsp;&para;</a></h3><div id="mda-reload-mosaics-masks-in-the-mda-panel-post" class="action post"><h4 class="action-heading"><div class="name">Reload Mosaics masks in the MDA panel</div><a href="#mda-reload-mosaics-masks-in-the-mda-panel-post" class="method post">POST</a><code class="uri">/mda/reload-mosaic-masks-list</code></h4><ul>
+<li>
+<p>Location : ./routes/mda.js</p>
+</li>
+<li>
+<p>Return the updated select menu</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mda/reload-mosaic-masks-list</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mda-show-mda-panel-s-left-column" class="resource"><h3 class="resource-heading">Show MDA panel's left column <a href="#mda-show-mda-panel-s-left-column" class="permalink">&nbsp;&para;</a></h3><div id="mda-show-mda-panel-s-left-column-post" class="action post"><h4 class="action-heading"><div class="name">Show MDA panel's left column</div><a href="#mda-show-mda-panel-s-left-column-post" class="method post">POST</a><code class="uri">/mda/show-left-col</code></h4><ul>
+<li>
+<p>Location : ./routes/mda.js</p>
+</li>
+<li>
+<p>Return the left column as HTML</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mda/show-left-col</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="mda-run-a-protocol" class="resource"><h3 class="resource-heading">Run a protocol <a href="#mda-run-a-protocol" class="permalink">&nbsp;&para;</a></h3><div id="mda-run-a-protocol-post" class="action post"><h4 class="action-heading"><div class="name">Run a protocol</div><a href="#mda-run-a-protocol-post" class="method post">POST</a><code class="uri">/mda/run-protocol</code></h4><ul>
+<li>
+<p>Location : ./routes/mda.js</p>
+</li>
+<li>
+<p>Run a protocol</p>
+</li>
+</ul>
+<h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/mda/run-protocol</span></div><div class="title"><strong>URI Parameters</strong><div class="collapse-button show"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><dl class="inner"><dt>access_token</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>User’s access_token</p>
+</dd><dt>protocol_name</dt><dd><code>string</code>&nbsp;<span class="required">(required)</span>&nbsp;<span class="text-muted example"><strong>Example:&nbsp;</strong><span>&quot;eyJhbG...AfZCBduw3M&quot;</span></span><p>Protocol name to run</p>
+</dd></dl></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json; charset=utf-8</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>Code HTML to show on the client's WEB browser</code></pre><div style="height: 1px;"></div></div></div></div></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 11 Jul 2019</p><script>/* eslint-env browser */
+/* eslint quotes: [2, "single"] */
+'use strict';
+
+/*
+  Determine if a string ends with another string.
+*/
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
+/*
+  Get a list of direct child elements by class name.
+*/
+function childrenByClass(element, name) {
+  var filtered = [];
+
+  for (var i = 0; i < element.children.length; i++) {
+    var child = element.children[i];
+    var classNames = child.className.split(' ');
+    if (classNames.indexOf(name) !== -1) {
+      filtered.push(child);
+    }
+  }
+
+  return filtered;
+}
+
+/*
+  Get an array [width, height] of the window.
+*/
+function getWindowDimensions() {
+  var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.body,
+      x = w.innerWidth || e.clientWidth || g.clientWidth,
+      y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+  return [x, y];
+}
+
+/*
+  Collapse or show a request/response example.
+*/
+function toggleCollapseButton(event) {
+    var button = event.target.parentNode;
+    var content = button.parentNode.nextSibling;
+    var inner = content.children[0];
+
+    if (button.className.indexOf('collapse-button') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+        // Currently showing, so let's hide it
+        button.className = 'collapse-button';
+        content.style.maxHeight = '0px';
+    } else {
+        // Currently hidden, so let's show it
+        button.className = 'collapse-button show';
+        content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+function toggleTabButton(event) {
+    var i, index;
+    var button = event.target;
+
+    // Get index of the current button.
+    var buttons = childrenByClass(button.parentNode, 'tab-button');
+    for (i = 0; i < buttons.length; i++) {
+        if (buttons[i] === button) {
+            index = i;
+            button.className = 'tab-button active';
+        } else {
+            buttons[i].className = 'tab-button';
+        }
+    }
+
+    // Hide other tabs and show this one.
+    var tabs = childrenByClass(button.parentNode.parentNode, 'tab');
+    for (i = 0; i < tabs.length; i++) {
+        if (i === index) {
+            tabs[i].style.display = 'block';
+        } else {
+            tabs[i].style.display = 'none';
+        }
+    }
+}
+
+/*
+  Collapse or show a navigation menu. It will not be hidden unless it
+  is currently selected or `force` has been passed.
+*/
+function toggleCollapseNav(event, force) {
+    var heading = event.target.parentNode;
+    var content = heading.nextSibling;
+    var inner = content.children[0];
+
+    if (heading.className.indexOf('heading') === -1) {
+      // Clicked without hitting the right element?
+      return;
+    }
+
+    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+      // Currently showing, so let's hide it, but only if this nav item
+      // is already selected. This prevents newly selected items from
+      // collapsing in an annoying fashion.
+      if (force || window.location.hash && endsWith(event.target.href, window.location.hash)) {
+        content.style.maxHeight = '0px';
+      }
+    } else {
+      // Currently hidden, so let's show it
+      content.style.maxHeight = inner.offsetHeight + 12 + 'px';
+    }
+}
+
+/*
+  Refresh the page after a live update from the server. This only
+  works in live preview mode (using the `--server` parameter).
+*/
+function refresh(body) {
+    document.querySelector('body').className = 'preload';
+    document.body.innerHTML = body;
+
+    // Re-initialize the page
+    init();
+    autoCollapse();
+
+    document.querySelector('body').className = '';
+}
+
+/*
+  Determine which navigation items should be auto-collapsed to show as many
+  as possible on the screen, based on the current window height. This also
+  collapses them.
+*/
+function autoCollapse() {
+  var windowHeight = getWindowDimensions()[1];
+  var itemsHeight = 64; /* Account for some padding */
+  var itemsArray = Array.prototype.slice.call(
+    document.querySelectorAll('nav .resource-group .heading'));
+
+  // Get the total height of the navigation items
+  itemsArray.forEach(function (item) {
+    itemsHeight += item.parentNode.offsetHeight;
+  });
+
+  // Should we auto-collapse any nav items? Try to find the smallest item
+  // that can be collapsed to show all items on the screen. If not possible,
+  // then collapse the largest item and do it again. First, sort the items
+  // by height from smallest to largest.
+  var sortedItems = itemsArray.sort(function (a, b) {
+    return a.parentNode.offsetHeight - b.parentNode.offsetHeight;
+  });
+
+  while (sortedItems.length && itemsHeight > windowHeight) {
+    for (var i = 0; i < sortedItems.length; i++) {
+      // Will collapsing this item help?
+      var itemHeight = sortedItems[i].nextSibling.offsetHeight;
+      if ((itemsHeight - itemHeight <= windowHeight) || i === sortedItems.length - 1) {
+        // It will, so let's collapse it, remove its content height from
+        // our total and then remove it from our list of candidates
+        // that can be collapsed.
+        itemsHeight -= itemHeight;
+        toggleCollapseNav({target: sortedItems[i].children[0]}, true);
+        sortedItems.splice(i, 1);
+        break;
+      }
+    }
+  }
+}
+
+/*
+  Initialize the interactive functionality of the page.
+*/
+function init() {
+    var i, j;
+
+    // Make collapse buttons clickable
+    var buttons = document.querySelectorAll('.collapse-button');
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].onclick = toggleCollapseButton;
+
+        // Show by default? Then toggle now.
+        if (buttons[i].className.indexOf('show') !== -1) {
+            toggleCollapseButton({target: buttons[i].children[0]});
+        }
+    }
+
+    var responseCodes = document.querySelectorAll('.example-names');
+    for (i = 0; i < responseCodes.length; i++) {
+        var tabButtons = childrenByClass(responseCodes[i], 'tab-button');
+        for (j = 0; j < tabButtons.length; j++) {
+            tabButtons[j].onclick = toggleTabButton;
+
+            // Show by default?
+            if (j === 0) {
+                toggleTabButton({target: tabButtons[j]});
+            }
+        }
+    }
+
+    // Make nav items clickable to collapse/expand their content.
+    var navItems = document.querySelectorAll('nav .resource-group .heading');
+    for (i = 0; i < navItems.length; i++) {
+        navItems[i].onclick = toggleCollapseNav;
+
+        // Show all by default
+        toggleCollapseNav({target: navItems[i].children[0]});
+    }
+}
+
+// Initial call to set up buttons
+init();
+
+window.onload = function () {
+    autoCollapse();
+    // Remove the `preload` class to enable animations
+    document.querySelector('body').className = '';
+};
+</script></body></html>

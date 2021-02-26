@@ -1,0 +1,34 @@
+<div class="row" style="margin-top:10%">
+
+  <div class="col-md-3 "> </div>   <!-- Bootstrap spacing column -->
+
+  <div class="col-md-3 ">         <!-- Bootstrap column for processing list -->
+
+    <div id="drop_folders" class="folders">
+
+      <!--  Title for the Dropzone loaded files  -->
+
+      <div align="Center" style="margin-left:-20%"> <i class="fa fa-folder-open fa-2x" aria-hidden="true"></i> </div>
+      <div align="Center" style="margin-left:-20%"> <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i> </div>
+
+
+      <!-- Files list -->
+
+          <!--  DropZone -->
+
+         <form id ="dropz" action="{{ url_for('upload_file') }}" class="dropzone" method="POST" enctype="multipart/form-data" ></form>      <!-- end form dropzone -->
+
+    </div> <!-- end folders -->
+
+  </div>  <!-- end col-md-3 dropzone-->
+
+  <!-- list of the loaded folders -->
+
+      <ul class='listfiles'></ul>
+
+  <div class="col-md-3 ">
+
+
+  </div>  <!-- end col-md-3 -->
+
+</div> <!--  end row -->

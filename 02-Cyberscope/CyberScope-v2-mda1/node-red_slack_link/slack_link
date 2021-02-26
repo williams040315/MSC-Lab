@@ -1,0 +1,7 @@
+ 
+[{"id":"c784e150.c6b23","type":"tab","label":"node-red link to slack","disabled":false,"info":""},
+{"id":"95ee73d9.dd618","type":"inject","z":"c784e150.c6b23","name":"","topic":"","payload":"message depuis node red",
+"payloadType":"str","repeat":"","crontab":"","once":false,"onceDelay":0.1,"x":410,"y":400,"wires":[["a32db849.bde9d8"]]},
+{"id":"a32db849.bde9d8","type":"slack","z":"c784e150.c6b23","name":"",
+"channelURL":"https://hooks.slack.com/services/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","username":"",
+"emojiIcon":"","channel":"","x":620,"y":420,"wires":[]}]

@@ -1,0 +1,834 @@
+# API CyberScope Node.js documentation
+
+CyberScope's API is a web application to communicate with Node-RED's API
+
+# Group Users management
+
+## User registration [/users/register]
+
+### Register to the API [POST]
+
++ Location : ./routes/users.js
++ If the user doesnt already exist, a new entry will be added on the MongoDB collection : User
+
++ Parameters
+    + name: "Exemple" (required, string) - User's name
+    + email: "exemple@exemple.fr" (required, string) - User's email address
+    + password: "3x3MP13" (required, string) - User's password
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                _id: "5d2712015710972914c17ef9",
+                name: "Exemple",
+                email: "exemple@exemple.fr"
+            }
+
+## User connexion / login [/users/auth]
+
+### Login to the API and get the access_token [POST]
+
++ Location : ./routes/auth.js
++ If the password is correct,  the new token will be stored on the MongoDB collection : Token
+
++ Parameters
+    + email: "exemple@exemple.fr" (required, string) - User's email address
+    + password: "Exemple" (required, string) - User's password
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDI3MTIwMTU3MTA5NzI5MTRjMTdlZjkiLCJpYXQiOjE1NjI4NDI0NDZ9.0FOC0-TElZPp8UTdwA6bA6RyWMZpEetkVAfZCBduw3M"
+            }
+
+## Update password [/users-settings/update-password]
+
+### Update user's password [POST]
+
++ Location : ./routes/users-settings.js
++ If the access_token is valid, the new password will be stored on the MongoDB collection : User
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + password: "3x3MP13" (required, string) - User's NEW password
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                message: "password successfully updated",
+                name: "Exemple"
+            }
+
+# Group CyberScope Administration
+
+## List all microscopes [/admin/list-microscope]
+
+### List all microscopes [POST]
+
++ Location : ./routes/admin.js
++ Return a HTML table with the microscope's informations
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+## Add a new microscope [/admin/add-microscope]
+
+### Add a new microscope [POST]
+
++ Location : ./routes/admin.js
++ If the access_token is valid, the new microscope will be stored on the MongoDB collection : Equipement
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `microscope_name`: "Miss Marple" (required, string) - Microscope's name
+    + `microscope_ip`: "172.21.1.183:1880" (required, string) - Microscope's IP
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                success: "Miss Marple has been added."
+            }
+
+## remove a new microscope [/admin/remove-microscope]
+
+### Remove a microscope [POST]
+
++ Location : ./routes/admin.js
++ If the access_token is valid, the microscope will be remove on the MongoDB collection : Equipement
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `microscope_name`: "Miss Marple" (required, string) - Microscope's name
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                success: "Miss Marple has been removed."
+            }
+
+# Group Main informations
+
+## Get devices status [/equipements/get-main]
+
+### Get devices status [POST]
+
++ Location : ./routes/equipements.js
++ If the access_token is valid, the devices status will be sent as HTML
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+## Get manual panel [/equipements/get-manuel]
+
+### Get manual control's panel [POST]
+
++ Location : ./routes/equipements.js
++ If the access_token is valid, the manual panel will be sent as HTML
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+## Book a microscope [/equipements/book]
+
+### Book a microscope [POST]
+
++ Location : ./routes/equipements.js
++ If the access_token and the microscope are valid, the microscope will be book for the user and MongoDB will be updated
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `equipement_name`: "Miss Marple" (required, string) - Microscope name
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser (Same code as the /get-main route)
+
+## Release a microscope [/equipements/release]
+
+### Release a microscope [POST]
+
++ Location : ./routes/equipements.js
++ If the access_token and the microscope are valid, the microscope will be released for the user and MongoDB will be updated
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `equipement_name`: "Miss Marple" (required, string) - Microscope name
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser (Same code as the /list-microscope route)
+
+## Show microscope reservation table [/equipements/infos]
+
+### Show microscope reservation table [POST]
+
++ Location : ./routes/equipements.js
++ If the access_token is valid, a reservation table will be return to the client
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+# Group Update Devices
+
+## Update Andor Mosaic [/devices/update/mosaic]
+
+### Update Andor Mosaic [POST]
+
++ Location : ./routes/update-devices.js
++ If the access_token is valid, a request to the Node-RED API will be made to update the mosaic mask with the base64 image
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `microscope_name`: "Miss Marple" (required, string) - Microscope's name
+    + mask: "data:image/png;base64,iVBO...2eEWAA"
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "ok"
+            }
+
+## Update OlympusIX81 [/devices/update/olympusix81]
+
+### Update OlympusIX81 [POST]
+
++ Location : ./routes/update-devices.js
++ If the access_token is valid, a request to the Node-RED API will be made to update the Olympus IX81 with the new parameters
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `microscope_name`: "Miss Marple" (required, string) - Microscope's name
+    + shutter: "ON" (required, string) - Shutter status ON or OFF
+    + intensity: "45" (required, string) - Lamp intensity
+    + `wheel_filter`: "2" (required, string) - Filter to use 1 to 6
+    + lamp: "idk" (required, string) - I don't remember what it is, TODO
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "ok"
+            }
+
+## Update X-Cite [/devices/update/xcite]
+
+### Update X-Cite [POST]
+
++ Location : ./routes/update-devices.js
++ If the access_token is valid, a request to the Node-RED API will be made to update the X-Cite with the new parameters
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `microscope_name`: "Miss Marple" (required, string) - Microscope's name
+    + shutter: "ON" (required, string) - Shutter status ON or OFF
+    + intensity: "45" (required, string) - Lamp intensity
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "ok"
+            }
+
+## Update Z-Axis [/devices/update/z-axis]
+
+### Update Z-Axis [POST]
+
++ Location : ./routes/update-devices.js
++ If the access_token is valid, a request to the Node-RED API will be made to update the Z-Axis attitude with the new parameters
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `microscope_name`: "Miss Marple" (required, string) - Microscope's name
+    + type: "idk" (required, string) - I don't remember what it is, TODO
+    + zValue: "idk" (required, string) - I don't remember what it is, TODO maybe ZPosition
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "ok"
+            }
+
+## Update PriorMotionStage [/devices/update/priormotionstage]
+
+### Update PriorMotionStage [POST]
+
++ Location : ./routes/update-devices.js
++ If the access_token is valid, a request to the Node-RED API will be made to update the Prior Motion Stage with the new parameters
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `microscope_name`: "Miss Marple" (required, string) - Microscope's name
+    + X: "5124.152" (required, string) - X postion
+    + Y: "187.486" (required, string) - Y postion
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "ok"
+            }
+
+## Update CoolLed-pE4000 [/devices/update/coolledpe4000]
+
+### Update CoolLed-pE4000 [POST]
+
++ Location : ./routes/update-devices.js
++ If the access_token is valid, a request to the Node-RED API will be made to update the CoolLed-pE4000 with the new parameters
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `microscope_name`: "Miss Marple" (required, string) - Microscope's name
+    + `auto_close`: "idk" (required, string) - I don't remember what it is, TODO
+    + action: "idk" (required, string) - I don't remember what it is, TODO
+    + mode: "idk" (required, string) - I don't remember what it is, TODO
+    + La: "idk" (required, string) - I don't remember what it is, TODO
+    + Lb: "idk" (required, string) - I don't remember what it is, TODO
+    + Lc: "idk" (required, string) - I don't remember what it is, TODO
+    + Ld: "idk" (required, string) - I don't remember what it is, TODO
+    + Ia: "42" (required, string) - Intensity of channel A
+    + Ib: "25" (required, string) - Intensity of channel B
+    + Ic: "87" (required, string) - Intensity of channel C
+    + Id: "16" (required, string) - Intensity of channel D
+    + Sa: "ON" (required, string) - Shutter status of channel A
+    + Sb: "OFF" (required, string) - Shutter status of channel B
+    + Sc: "ON" (required, string) - Shutter status of channel C
+    + Sd: "OFF" (required, string) - Shutter status of channel D
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "ok"
+            }
+
+# Group Settings channels
+
+## Create a settings channel [/settings-channels/add-settings-channels]
+
+### Create a settings channel [POST]
+
++ Location : ./routes/settings-channels.js
++ If the access_token is valid, the new setting channel will be stored on the MongoDB's collection: Setting_channel
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `channel_name`: "my_setting_channel" (required, string) - Settings channel's name
+    + `is4000f`: "true" (required, string) - Is there a CoolLed-pE4000 in fluo on the settings channel ?
+    + `is4000m`: "false" (required, string) - Is there a CoolLed-pE4000 in mosaic on the settings channel ?
+    + `is100f`: "false" (required, string) - Is there a CoolLed-pE100 in fluo on the settings channel ?
+    + `is100m`: "false" (required, string) - Is there a CoolLed-pE100 in mosaic on the settings channel ?
+    + `is300f`: "false" (required, string) - Is there a CoolLed-pE300 in fluo on the settings channel ?
+    + `is300m`: "false" (required, string) - Is there a CoolLed-pE300 in mosaic on the settings channel ?
+    + `isxc120pcf`: "false" (required, string) - Is there a X-Cite in fluo on the settings channel ?
+    + `isxc120pcm`: "false" (required, string) - Is there a X-Cite in mosaic on the settings channel ?
+    + `isix81`: "true" (required, string) - Is there an Olympus IX81 on the settings channel ?
+    + `isix83`: "false" (required, string) - Is there an Olympus IX83 on the settings channel ?
+    + `isix71`: "false" (required, string) - Is there an Olympus IX71 on the settings channel ?
+    + cl4000fla: "525" (required, string) - Value of the lambda A for the CoolLedpE4000 FLUO
+    + cl4000flb: "625" (required, string) - Value of the lambda B for the CoolLedpE4000 FLUO
+    + cl4000flc: "695" (required, string) - Value of the lambda C for the CoolLedpE4000 FLUO
+    + cl4000fld: "715" (required, string) - Value of the lambda D for the CoolLedpE4000 FLUO
+    + cl4000fia: "54" (required, string) - Value of the intensity A for the CoolLedpE4000 FLUO
+    + cl4000fib: "41" (required, string) - Value of the intensity B for the CoolLedpE4000 FLUO
+    + cl4000fic: "78" (required, string) - Value of the intensity C for the CoolLedpE4000 FLUO
+    + cl4000fid: "54" (required, string) - Value of the intensity D for the CoolLedpE4000 FLUO
+    + cl4000fsa: "ON" (required, string) - Value of the shutter A for the CoolLedpE4000 FLUO
+    + cl4000fsb: "OFF" (required, string) - Value of the shutter B for the CoolLedpE4000 FLUO
+    + cl4000fsc: "OFF" (required, string) - Value of the shutter C for the CoolLedpE4000 FLUO
+    + cl4000fsd: "ON" (required, string) - Value of the shutter D for the CoolLedpE4000 FLUO
+    + cl4000mla: "525" (required, string) - Value of the lambda A for the CoolLedpE4000 MOSAIC
+    + cl4000mlb: "625" (required, string) - Value of the lambda B for the CoolLedpE4000 MOSAIC
+    + cl4000mlc: "695" (required, string) - Value of the lambda C for the CoolLedpE4000 MOSAIC
+    + cl4000mld: "715" (required, string) - Value of the lambda D for the CoolLedpE4000 MOSAIC
+    + cl4000mia: "54" (required, string) - Value of the intensity A for the CoolLedpE4000 MOSAIC
+    + cl4000mib: "41" (required, string) - Value of the intensity B for the CoolLedpE4000 MOSAIC
+    + cl4000mic: "78" (required, string) - Value of the intensity C for the CoolLedpE4000 MOSAIC
+    + cl4000mid: "54" (required, string) - Value of the intensity D for the CoolLedpE4000 MOSAIC
+    + cl4000msa: "ON" (required, string) - Value of the shutter A for the CoolLedpE4000 MOSAIC
+    + cl4000msb: "OFF" (required, string) - Value of the shutter B for the CoolLedpE4000 MOSAIC
+    + cl4000msc: "OFF" (required, string) - Value of the shutter C for the CoolLedpE4000 MOSAIC
+    + cl4000msd: "ON" (required, string) - Value of the shutter D for the CoolLedpE4000 MOSAIC
+    + cl100fb: "idk" (required, string) - I don't remember what it is, TODO
+    + cl100fs: "ON" (required, string) - Value of the shutter for the CoolLedpE100 FLUO
+    + cl100fi: "55" (required, string) - Value of the intensity for the CoolLedpE100 FLUO
+    + cl100mb: "idk" (required, string) - I don't remember what it is, TODO
+    + cl100ms: "ON" (required, string) - Value of the shutter for the CoolLedpE100 MOSAIC
+    + cl100mi: "55" (required, string) - Value of the intensity for the CoolLedpE100 MOSAIC
+    + cl300fba: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300fbb: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300fbc: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300fs: "ON" (required, string) - Value of the shutter for the CoolLedpE300 FLUO
+    + cl300fi: "88" (required, string) - Value of the intensity for the CoolLedpE300 FLUO
+    + cl300mba: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300mbb: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300mbc: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300ms: "ON" (required, string) - Value of the shutter for the CoolLedpE300 MOSAIC
+    + cl300mi: "88" (required, string) - Value of the intensity for the CoolLedpE300 MOSAIC
+    + xc120pcfs: "ON" (required, string) - Value of the shutter for the X-CITE FLUO
+    + xc120PCfi: "12" (required, string) - Value of the intensity for the X-CITE FLUO
+    + xc120pcms: "ON" (required, string) - Value of the shutter for the X-CITE MOSAIC
+    + xc120PCmi: "12" (required, string) - Value of the intensity for the X-CITE MOSAIC
+    + olix81i: "56" (required, string) - Value of the intensity for the Olympus IX-81
+    + olix81s: "ON" (required, string) - Value of the shutter for the Olympus IX-81
+    + olix81l: "idk" (required, string) - I don't remember what it is, TODO
+    + olix81w: "idk" (required, string) - I don't remember what it is, TODO
+    + olix83i: "56" (required, string) - Value of the intensity for the Olympus IX-83
+    + olix83s: "ON" (required, string) - Value of the shutter for the Olympus IX-83
+    + olix83l: "idk" (required, string) - I don't remember what it is, TODO
+    + olix83w: "idk" (required, string) - I don't remember what it is, TODO
+    + olix71i: "56" (required, string) - Value of the intensity for the Olympus IX-71
+    + olix71s: "ON" (required, string) - Value of the shutter for the Olympus IX-71
+    + olix71l: "idk" (required, string) - I don't remember what it is, TODO
+    + olix71w: "idk" (required, string) - I don't remember what it is, TODO
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "Channel my_settings_channel has been created."
+            }
+
+## Update a settings channel [/settings-channels/update-settings-channels]
+
+### Update a settings channel [POST]
+
++ Location : ./routes/settings-channels.js
++ If the access_token is valid, the setting channel will be updated on the MongoDB's collection: Setting_channel
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `channel_name`: "my_setting_channel" (required, string) - Settings channel's name
+    + `is4000f`: "true" (required, string) - Is there a CoolLed-pE4000 in fluo on the settings channel ?
+    + `is4000m`: "false" (required, string) - Is there a CoolLed-pE4000 in mosaic on the settings channel ?
+    + `is100f`: "false" (required, string) - Is there a CoolLed-pE100 in fluo on the settings channel ?
+    + `is100m`: "false" (required, string) - Is there a CoolLed-pE100 in mosaic on the settings channel ?
+    + `is300f`: "false" (required, string) - Is there a CoolLed-pE300 in fluo on the settings channel ?
+    + `is300m`: "false" (required, string) - Is there a CoolLed-pE300 in mosaic on the settings channel ?
+    + `isxc120pcf`: "false" (required, string) - Is there a X-Cite in fluo on the settings channel ?
+    + `isxc120pcm`: "false" (required, string) - Is there a X-Cite in mosaic on the settings channel ?
+    + `isix81`: "true" (required, string) - Is there an Olympus IX81 on the settings channel ?
+    + `isix83`: "false" (required, string) - Is there an Olympus IX83 on the settings channel ?
+    + `isix71`: "false" (required, string) - Is there an Olympus IX71 on the settings channel ?
+    + cl4000fla: "525" (required, string) - Value of the lambda A for the CoolLedpE4000 FLUO
+    + cl4000flb: "625" (required, string) - Value of the lambda B for the CoolLedpE4000 FLUO
+    + cl4000flc: "695" (required, string) - Value of the lambda C for the CoolLedpE4000 FLUO
+    + cl4000fld: "715" (required, string) - Value of the lambda D for the CoolLedpE4000 FLUO
+    + cl4000fia: "54" (required, string) - Value of the intensity A for the CoolLedpE4000 FLUO
+    + cl4000fib: "41" (required, string) - Value of the intensity B for the CoolLedpE4000 FLUO
+    + cl4000fic: "78" (required, string) - Value of the intensity C for the CoolLedpE4000 FLUO
+    + cl4000fid: "54" (required, string) - Value of the intensity D for the CoolLedpE4000 FLUO
+    + cl4000fsa: "ON" (required, string) - Value of the shutter A for the CoolLedpE4000 FLUO
+    + cl4000fsb: "OFF" (required, string) - Value of the shutter B for the CoolLedpE4000 FLUO
+    + cl4000fsc: "OFF" (required, string) - Value of the shutter C for the CoolLedpE4000 FLUO
+    + cl4000fsd: "ON" (required, string) - Value of the shutter D for the CoolLedpE4000 FLUO
+    + cl4000mla: "525" (required, string) - Value of the lambda A for the CoolLedpE4000 MOSAIC
+    + cl4000mlb: "625" (required, string) - Value of the lambda B for the CoolLedpE4000 MOSAIC
+    + cl4000mlc: "695" (required, string) - Value of the lambda C for the CoolLedpE4000 MOSAIC
+    + cl4000mld: "715" (required, string) - Value of the lambda D for the CoolLedpE4000 MOSAIC
+    + cl4000mia: "54" (required, string) - Value of the intensity A for the CoolLedpE4000 MOSAIC
+    + cl4000mib: "41" (required, string) - Value of the intensity B for the CoolLedpE4000 MOSAIC
+    + cl4000mic: "78" (required, string) - Value of the intensity C for the CoolLedpE4000 MOSAIC
+    + cl4000mid: "54" (required, string) - Value of the intensity D for the CoolLedpE4000 MOSAIC
+    + cl4000msa: "ON" (required, string) - Value of the shutter A for the CoolLedpE4000 MOSAIC
+    + cl4000msb: "OFF" (required, string) - Value of the shutter B for the CoolLedpE4000 MOSAIC
+    + cl4000msc: "OFF" (required, string) - Value of the shutter C for the CoolLedpE4000 MOSAIC
+    + cl4000msd: "ON" (required, string) - Value of the shutter D for the CoolLedpE4000 MOSAIC
+    + cl100fb: "idk" (required, string) - I don't remember what it is, TODO
+    + cl100fs: "ON" (required, string) - Value of the shutter for the CoolLedpE100 FLUO
+    + cl100fi: "55" (required, string) - Value of the intensity for the CoolLedpE100 FLUO
+    + cl100mb: "idk" (required, string) - I don't remember what it is, TODO
+    + cl100ms: "ON" (required, string) - Value of the shutter for the CoolLedpE100 MOSAIC
+    + cl100mi: "55" (required, string) - Value of the intensity for the CoolLedpE100 MOSAIC
+    + cl300fba: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300fbb: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300fbc: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300fs: "ON" (required, string) - Value of the shutter for the CoolLedpE300 FLUO
+    + cl300fi: "88" (required, string) - Value of the intensity for the CoolLedpE300 FLUO
+    + cl300mba: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300mbb: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300mbc: "idk" (required, string) - I don't remember what it is, TODO
+    + cl300ms: "ON" (required, string) - Value of the shutter for the CoolLedpE300 MOSAIC
+    + cl300mi: "88" (required, string) - Value of the intensity for the CoolLedpE300 MOSAIC
+    + xc120pcfs: "ON" (required, string) - Value of the shutter for the X-CITE FLUO
+    + xc120PCfi: "12" (required, string) - Value of the intensity for the X-CITE FLUO
+    + xc120pcms: "ON" (required, string) - Value of the shutter for the X-CITE MOSAIC
+    + xc120PCmi: "12" (required, string) - Value of the intensity for the X-CITE MOSAIC
+    + olix81i: "56" (required, string) - Value of the intensity for the Olympus IX-81
+    + olix81s: "ON" (required, string) - Value of the shutter for the Olympus IX-81
+    + olix81l: "idk" (required, string) - I don't remember what it is, TODO
+    + olix81w: "idk" (required, string) - I don't remember what it is, TODO
+    + olix83i: "56" (required, string) - Value of the intensity for the Olympus IX-83
+    + olix83s: "ON" (required, string) - Value of the shutter for the Olympus IX-83
+    + olix83l: "idk" (required, string) - I don't remember what it is, TODO
+    + olix83w: "idk" (required, string) - I don't remember what it is, TODO
+    + olix71i: "56" (required, string) - Value of the intensity for the Olympus IX-71
+    + olix71s: "ON" (required, string) - Value of the shutter for the Olympus IX-71
+    + olix71l: "idk" (required, string) - I don't remember what it is, TODO
+    + olix71w: "idk" (required, string) - I don't remember what it is, TODO
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "Channel my_settings_channel has been updated."
+            }
+
+## Show settings channels [/settings-channels/get-settings-channels]
+
+### Create a settings channel [POST]
+
++ Location : ./routes/settings-channels.js
++ Return a panel to manage settings channels as HTML
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `channel_name`: "my_setting_channel" (required, string) - Settings channel's name
+
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+## Remove settings channels [/settings-channels/remove-settings-channels]
+
+### Remove a settings channel [POST]
+
++ Location : ./routes/settings-channels.js
++ Remove a settings channel from MongoDB
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `channel_name`: "my_setting_channel" (required, string) - Settings channel's name
+
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                success: "Channel my_settings_channel successfully removed."
+            }
+
+## Get settings channel data [/settings-channels/get-settings-channels-from-db]
+
+### Get a settings channel data [POST]
+
++ Location : ./routes/settings-channels.js
++ Get a settings channel from MongoDB
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `channel_name`: "my_setting_channel" (required, string) - Settings channel's name
+
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Full settings channel data as a JSON
+
+# Group Mosaics Masks
+
+## Show Mosaics masks panel [/mosaic-masks/get-mosaic-masks]
+
+### Show Mosaics masks panel [POST]
+
++ Location : ./routes/mosaic-masks.js
++ Return mosaics masks panel as HTML
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            HTML code to show on the user's Web browser
+
+## Get user's masks [/mosaic-masks/get-user-mosaic-masks]
+
+### Get user's masks [POST]
+
++ Location : ./routes/mosaic-masks.js
++ Return mosaics masks of a user as JSON
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                {
+                    author: "exemple@exemple.fr",
+                    mask_name: "my_mask",
+                    b64_mask: "data:image/png;base64,iVBO...2eEWAA"
+                }
+                {
+                    author: "exemple@exemple.fr",
+                    mask_name: "my_mask2",
+                    b64_mask: "data:image/png;base64,sd=0...s8flJu"
+                }
+            }
+
+## Get user mask from name [/mosaic-masks/get-mosaic-mask-from-name]
+
+### Get user mask from name [POST]
+
++ Location : ./routes/mosaic-masks.js
++ Return the mosaic mask as JSON
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `mask_name`: "my_mask" (required, string) - Mosaic mask name
+
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                author: "exemple@exemple.fr",
+                mask_name: "my_mask",
+                b64_mask: "data:image/png;base64,iVBO...2eEWAA"
+            }
+
+## Create a mosaic mask [/mosaic-masks/create-mosaic-masks]
+
+### Create a mosaic mask [POST]
+
++ Location : ./routes/mosaic-masks.js
++ Create a new mosaic mask in the MongoDB collection : Mosaic_mask
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `mask_name`: "my_mask" (required, string) - Mosaic mask name
+    + `b64_mask`: "data:image/png;base64,iVBO...2eEWAA" (required, string) - Mosaic mask data as base64
+
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "Mask my_mask created."
+            }
+
+## Delete a mosaic mask [/mosaic-masks/delete-mosaic-masks]
+
+### Delete a mosaic mask [POST]
+
++ Location : ./routes/mosaic-masks.js
++ Remove a mosaic mask in the MongoDB collection : Mosaic_mask
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `mask_name`: "my_mask" (required, string) - Mosaic mask name
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "Mask my_mask successfully deleted."
+            }
+
+## Update a mosaic mask [/mosaic-masks/update-mosaic-masks]
+
+### Update a mosaic mask [POST]
+
++ Location : ./routes/mosaic-masks.js
++ Update a mosaic mask in the MongoDB collection : Mosaic_mask
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `mask_name`: "my_mask" (required, string) - Mosaic mask name
+    + `b64_mask`: "data:image/png;base64,ifRL...8eRt1Y" (required, string) - Mosaic mask data as base64
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                status: "Mask my_mask successfully updated."
+            }
+
+# Group Protocols
+
+## Get protocol from name [/protocols/get-protocol]
+
+### Get a protocol [POST]
+
++ Location : ./routes/protocols.js
++ Return a protocol as JSON
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `protocol_name`: "my_protocol" (required, string) - User's protocol name
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                todo: "TODODODODOODODODO"
+            }
+
+## Create a protocol [/protocols/create-protocol]
+
+### Create a protocol [POST]
+
++ Location : ./routes/protocols.js
++ Create a protocol in the MongoDB collection : Protocol
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `protocol_name`: "my_protocol" (required, string) - User's protocol name
+    + `protocol_data`: "TODODODODODO" (required, string) - User's protocol data
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                success: "my_protocol has been added."
+            }
+
+## Update a protocol [/protocols/update-protocol]
+
+### Update a protocol [POST]
+
++ Location : ./routes/protocols.js
++ Update a protocol in the MongoDB collection : Protocol
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `protocol_name`: "my_protocol" (required, string) - User's protocol name
+    + `protocol_data`: "TODODODODODO" (required, string) - User's protocol data
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                success: "my_protocol has been updated."
+            }
+
+## Remove a protocol [/protocols/remove-protocol]
+
+### Remove a protocol [POST]
+
++ Location : ./routes/protocols.js
++ Remove a protocol in the MongoDB collection : Protocol
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `protocol_name`: "my_protocol" (required, string) - User's protocol name
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            {
+                success: "my_protocol has been removed."
+            }
+
+# Group MDA
+
+## Show MDA panel's mid column [/mda/show-mid-col]
+
+### Show MDA panel's mid column [POST]
+
++ Location : ./routes/mda.js
++ Return the mid column as HTML
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+## Reload Settings channels in the MDA panel [/mda/reload-settings-channels-list]
+
+### Reload Settings channels in the MDA panel [POST]
+
++ Location : ./routes/mda.js
++ Return the updated select menu
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+## Reload Mosaics masks in the MDA panel [/mda/reload-mosaic-masks-list]
+
+### Reload Mosaics masks in the MDA panel [POST]
+
++ Location : ./routes/mda.js
++ Return the updated select menu
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+## Show MDA panel's left column [/mda/show-left-col]
+
+### Show MDA panel's left column [POST]
+
++ Location : ./routes/mda.js
++ Return the left column as HTML
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser
+
+## Run a protocol [/mda/run-protocol]
+
+### Run a protocol [POST]
+
++ Location : ./routes/mda.js
++ Run a protocol
+
++ Parameters
+    + `access_token`: "eyJhbG...AfZCBduw3M" (required, string) - User's access_token
+    + `protocol_name`: "eyJhbG...AfZCBduw3M" (required, string) - Protocol name to run
+
++ Response 200 (application/json; charset=utf-8)
+    + Body
+
+            Code HTML to show on the client's WEB browser

@@ -1,0 +1,180 @@
+<div>
+<div class="form-group"><br>
+<table style="text-align: left;"
+ border="0" cellpadding="2" cellspacing="5">
+  <tbody>
+    <tr>
+<td
+ style="height: 550px; vertical-align: top; width: 595px;"
+ colspan="1" rowspan="14"><iframe
+ src="http://127.0.0.1:5000/" frameborder="0"
+ height="550" width="650"></iframe></td>      <td style="width: 200px;">Actual
+Z position</td>
+      <td><input
+ style="width: 136px;" class="zPosition"
+ readonly="readonly" type="number"></td>
+      <td style="width: 56px;"></td>
+    </tr>
+    <tr>
+      <td style="width: 200px;">Upper
+limit [um]</td>
+      <td><input
+ style="width: 136px;" class="upper" 
+ type="number"></td>
+      <td style="width: 56px;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="width: 200px;">Lower
+limit [um]</td>
+      <td><input
+ style="width: 136px;" class="lower" required=""
+ min="0" max="100000" step="1" type="number"></td>
+      <td style="width: 56px;"></td>
+    </tr>
+    <tr>
+      <td style="width: 200px;">Update
+the objective</td>
+      <td>
+      <select class="aftbl"
+ style="width: 150px;">
+      <option name="LCPlanFl 20x"
+ value="75">LCPlanFl 20x</option>
+      <option name="LCPlanFl 40x"
+ value="76">LCPlanFl 40x</option>
+      <option name="LCPlanFl 60x"
+ value="79">LCPlanFl 60x</option>
+      <option name="LUCPlanFl 40x"
+ value="78">LUCPlanFl 40x</option>
+      <option name="LUCPlanFlN 20x"
+ value="75">LUCPlanFlN 20x</option>
+      <option name="LUCPlanFlN 40x"
+ value="76">LUCPlanFlN 40x</option>
+      <option name="LUCPlanFlN 60x"
+ value="79">LUCPlanFlN 60x</option>
+      <option name="PlanApo 100x O3"
+ value="31">PlanApo 100x O3</option>
+      <option name="PlanApo 60x O TIRFM-SP"
+ value="70">PlanApo 60x O TIRFM-SP</option>
+      <option name="PlanApo 60x O/LSM"
+ value="62">PlanApo 60x O/LSM</option>
+      <option name="PlanApo 60x O3"
+ value="30">PlanApo 60x O3</option>
+      <option name="PlanApo 40x W/LSM"
+ value="60">PlanApo 40x W/LSM</option>
+      <option name="PlanApoN 60x O"
+ value="30">PlanApoN 60x O</option>
+      <option name="SLCPlanFl 40x"
+ value="77">SLCPlanFl 40x</option>
+      <option name="UApo 30x 3/340"
+ value="45">UApo 30x 3/340</option>
+      <option name="UApo 40x 3/340"
+ value="47">UApo 40x 3/340</option>
+      <option name="UApo 40x W"
+ value="48">UApo 40x W</option>
+      <option name="UPlanFl 60x OI3"
+ value="57">UPlanFl 60x OI3</option>
+      <option name="UPlanApo 20x"
+ value="36">UPlanApo 20x</option>
+      <option name="UPlanApo 100x OI3"
+ value="43">UPlanApo 100x OI3</option>
+      <option name="UPlanApo 40x OI3"
+ value="39">UPlanApo 40x OI3</option>
+      <option name="UPlanApo 60x"
+ value="40">UPlanApo 60x</option>
+      <option name="UPlanApo 60x W"
+ value="41">UPlanApo 60x W</option>
+      <option name="UPlanApo 60x W/IR"
+ value="42">UPlanApo 60x W/IR</option>
+      <option name="UplanFl 100x O3"
+ value="58">UplanFl 100x O3</option>
+      <option name="UPlanFl 20x"
+ value="55">UPlanFl 20x</option>
+      <option name="UPlanFl 40x O-SP"
+ value="71">UPlanFl 40x O-SP</option>
+      <option name="UPlanFl 40x"
+ value="56">UPlanFl 40x</option>
+      <option name="UPlanFlN 100x O"
+ value="58">UPlanFlN 100x O</option>
+      <option name="UPlanFlN 100x OI"
+ value="58">UPlanFlN 100x OI</option>
+      <option name="UPlanFlN 20x"
+ value="55">UPlanFlN 20x</option>
+      <option name="UPlanFlN 40x O"
+ value="39">UPlanFlN 40x O</option>
+      <option name="UPlanFl 60x"
+ value="40">UPlanFl 60x</option>
+      <option name="UPlanFlN 60x OI"
+ value="57">UPlanFlN 60x OI</option>
+      <option name="UPlanSApo 100x O"
+ value="43">UPlanSApo 100x O</option>
+      <option name="UPlanSApo 20x"
+ value="36">UPlanSApo 20x</option>
+      <option name="UPlanSApo 40x"
+ value="47">UPlanSApo 40x</option>
+      <option name="UPlanSApo 60x O"
+ value="30">UPlanSApo 60x O</option>
+      <option name="UPlanSApo 60x W"
+ value="41">UPlanSApo 60x W</option>
+      <option name="UPlanFlN 40x"
+ value="56">UPlanFlN 40x</option>
+      </select>
+      </td>
+      <td style="width: 56px;"></td>
+    </tr>
+    <tr>
+      <td>make Zstack if auto focus failed else take a simple picture</td>
+      <td><input class='option1' 
+ type="checkbox"><br>
+      </td>
+      <td style="width: 56px;"></td>
+    </tr>
+    <tr>
+      <td>take previous auto focus success *</td>
+      <td><input class='option2' 
+ type="checkbox">
+      </td>
+      <td style="width: 56px;"></td>
+    </tr>
+<!----><tr>
+      <td>Status</td>
+      <td><input style="width: 136px;" readonly type='text' class='status'></input></td>
+      <td style="width: 56px;"
+ colspan="1"></td>
+    </tr>
+    <tr>
+      <td>Offset calculated</td>
+      <td><input style="width: 136px;"  readonly type='number' class='offset'></input></td>
+      <td style="width: 56px;"
+ colspan="1"></td>
+    </tr>
+    <tr>
+      <td style="width: 56px;"
+ colspan="3" rowspan="1"><hr/></td>
+    </tr>
+    <tr>
+      <td>Time exposure<br>Invert color<br>Active color mapping</td>
+      <td><input type='number' value='100' min='1' max='1000' step='1' id='posExposure'></input><br><select id='posInvert'><option selected value='OFF'>OFF</option><option value='ON'>ON</option></select><br><select id='posMap'><option  value='OFF'>OFF</option><option selected value='ON'>ON</option></select></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><br>Enligthing</td>
+      <td><br><div id='posEnligth'></div></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><br><div id='posAdjustName'></td>
+      <td style="text-align: left; vertical-align: top;" colspan="2" ><br><div id='posAdjust'></td>
+    </tr>
+    <tr>
+      <td>* not available yet</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+</div>
+

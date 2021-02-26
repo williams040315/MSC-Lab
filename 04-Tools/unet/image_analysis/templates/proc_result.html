@@ -1,0 +1,67 @@
+<!-- Panel for controlling the processing -->
+
+<!-- inserted in index_folder.html -->
+
+<div class='proc_pics_panel' hidden>
+
+    <!-- inserted image -->
+
+    <img id="curr_proc_pic" style="line-height : 20px;" ></img>
+
+    <!-- navigate in the pictures  -->
+
+    <img id="butt_img_up"  src="static/icons/capicon/svg/276.svg"  >
+    <img id="butt_img_down"  src="static/icons/capicon/svg/277.svg"  >
+
+    <!-- minimize, maximize or close window -->
+
+    <i id="win_maxi" class="fa fa-window-maximize" ></i>
+    <i id="win_mini" class="fa fa-window-minimize"></i>
+    <i id='win_close' class="fa fa-window-close"></i>
+
+    <!-- num of the current processed image -->
+
+    <div id='win_num_im' ></div>
+
+</div>
+
+<!-- actions on the panel for processed images -->
+
+<script >
+
+  $(".proc_pics_panel").draggable()                                          // make the window draggable
+  $('#win_mini').click(function(){
+      $('.proc_pics_panel').css({'height':'75px', 'width':'300px'})          // reduce the size of the window
+      $('#curr_proc_pic').hide()
+  })
+  $('#win_maxi').click(function(){
+      $('.proc_pics_panel').css({'height':'600px', 'width':'600px'})         // reduce the size of the window
+      $('#curr_proc_pic').show()
+  })
+  $('#win_close').click(function(){
+      $('.proc_pics_panel').hide()                                           // close the window
+      $('#curr_proc_pic').hide()
+  })
+
+  // Change image
+
+  var img_up_dwn = function(arg){
+      /*
+      Go up and down in the images..
+      */
+      var curr_pic = $('#curr_proc_pic').attr('src').split('?')[0]
+      var strnum = curr_pic.match(/frame(\d+?)\.png/)[1]
+      //alert(strnum)
+      //console.log("strnum " + strnum)
+      var num = parseInt(strnum)
+      if (arg == 'down'){if ( num > 0 ){ curr_pic = curr_pic.replace(/frame\d+\.png/, 'frame' + (num-1) + '.png')} }                      // decrement
+      else {curr_pic =  curr_pic.replace( /frame\d+\.png/, 'frame' + (num+1) + '.png')  }                                  // increment
+      $('#curr_proc_pic').attr('src', curr_pic + '?' + new Date().getTime())
+      var max_nb_im = $('#win_num_im').text().split('/')[1]
+      $('#win_num_im').text(num + '/' + max_nb_im)
+  }
+
+  $('#butt_img_up').click(function(){  img_up_dwn('up') })      // image up
+  $('#butt_img_down').click(function(){  img_up_dwn('down') })  // image down
+
+</script>

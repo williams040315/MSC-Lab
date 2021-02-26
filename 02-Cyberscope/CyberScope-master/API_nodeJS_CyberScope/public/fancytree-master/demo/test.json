@@ -1,0 +1,60 @@
+[
+	{
+    "title": "Protocole 1",
+    "config" : 0,
+    "expanded": true,
+    "type": "PROT",
+    "children": [{
+                "title": "Sequence 2",
+                "expanded": true,
+                "type": "LOOP",
+                "time": 6,
+                "repeat": 10,
+                "children": [{
+                    "title": "Position1",
+                    "expanded": true,
+                    "type": "XYZ",
+                    "xPosition" : 0,
+                    "yPosition" : 0,
+                    "zPosition" : 0,
+                    "res1": 1,
+                    "res2" : 10,
+                    "children": [                    
+                                {
+                                "title":"Channel 1",
+                                "title2":"Channel 1",
+                                "type": "LIGHT",
+                                "time" : 100,
+                                "skip" : 0,
+                                "wheel" : 0,
+                                "color": "#22EE33"
+                                },
+                                {
+                                "title":"Simple picture",
+                                "type": "CAMERA",
+                                "time" : 1000,
+                                "skip" : 0,
+                                "number" : 1,
+                                "zoffset": 0
+                                },
+                                {
+                                "title":"Auto-focus",
+                                "type": "AF",
+                                "lower" : 30,
+                                "upper": 30,
+                                "aftbl" : "LCPlanFl 40x"
+                                },
+                                {
+                                "title":"Z-Stack",
+                                "skip" : 0,
+                                "type": "ZS",
+                                "zstart" : -5,
+                                "zend" : 5,
+                                "zstep" : 1,
+                                "shutter" : true
+                                }
+                    ]}
+                ]
+        }]
+  }
+]

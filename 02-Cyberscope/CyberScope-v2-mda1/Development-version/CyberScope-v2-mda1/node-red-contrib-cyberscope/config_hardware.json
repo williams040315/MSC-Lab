@@ -1,0 +1,111 @@
+{
+    "CoolLed_pE4000_1": {
+        "link": "fluorescence", 
+        "activate" : true,
+        "settings":{
+            "serialPort" : "COM1",
+            "baudRate" : 9600,
+            "dataBits" : 8,
+            "parity" : "Even",
+            "stopBits": 2
+        }
+    },
+    "CoolLed_pE4000_2": {
+        "link": "mosaic",
+        "activate" : false,
+        "settings":{
+            "serialPort" : "COM1",
+            "baudRate" : 4800,
+            "dataBits" : 8,
+            "parity" : "None",
+            "stopBits": 1
+        }
+    },
+    "CoolLed_pE300_1": {
+        "link": "fluorescence",
+        "activate" : false,
+        "settings":{
+            "serialPort" : "COM1",
+            "baudRate" : 4800,
+            "dataBits" : 8,
+            "parity" : "None",
+            "stopBits": 1
+        }
+    },
+    "CoolLed_pE300_2": {
+        "link": "mosaic",
+        "activate" : false,
+        "settings":{
+            "serialPort" : "COM1",
+            "baudRate" : 4800,
+            "dataBits" : 8,
+            "parity" : "None",
+            "stopBits": 1
+        }
+    },
+    "CoolLed_pE100_1": {
+        "link": "fluorescence",
+        "activate" : false,
+        "settings":{
+            "serialPort" : "COM8",
+            "baudRate" : 300,
+            "dataBits" : 5,
+            "parity" : "Odd",
+            "stopBits": 2
+        }
+    },
+    "CoolLed_pE100_2": {
+        "link": "mosaic",
+        "activate" : false,
+        "settings":{
+            "serialPort" : "COM1",
+            "baudRate" : 4800,
+            "dataBits" : 8,
+            "parity" : "None",
+            "stopBits": 1
+        }
+    },
+    "X_Cite_120PC_1": {
+        "link": "fluorescence",
+        "activate" : false,
+        "settings":{
+            "serialPort" : "COM1",
+            "baudRate" : 4800,
+            "dataBits" : 8,
+            "parity" : "None",
+            "stopBits": 1
+        }
+    },
+    "X_Cite_120PC_2": {
+        "link": "mosaic",
+        "activate" : true,
+        "settings":{
+            "serialPort" : "COM1",
+            "baudRate" : 4800,
+            "dataBits" : 8,
+            "parity" : "None",
+            "stopBits": 1
+        }
+    },
+    "Prior_Pro_Scan": {
+        "activate" : true,
+        "settings":{
+            "serialPort" : "COM2",
+            "baudRate" : 4800,
+            "dataBits" : 8,
+            "parity" : "None",
+            "stopBits": 1
+        }
+    },
+    "Olympus_IX_81": {
+        "activate" : true,
+        "settings":{
+            "serialPort" : "COM1",
+            "baudRate" : 19200,
+            "dataBits" : 8,
+            "parity" : "Even",
+            "stopBits": 1
+        }
+    }
+
+}

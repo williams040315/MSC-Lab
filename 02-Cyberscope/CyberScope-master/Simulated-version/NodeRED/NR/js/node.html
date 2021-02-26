@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="bootstrap/favicon.ico">
+    <title>CyberScope | Lab513</title>
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="bootstrap/dashboard.css" rel="stylesheet">
+    <link href="css/style1.css" rel="stylesheet">
+    <script src="bootstrap/assets/js/ie-emulation-modes-warning.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="js/js1.js"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
+    <link href="fancytree-master/src/skin-win8/ui.fancytree.css" rel="stylesheet">
+    <script src="fancytree-master/src/jquery.fancytree.js"></script>
+    <script src="fancytree-master/src/jquery.fancytree.dnd5.js"></script>
+    <script src="fancytree-master/src/jquery.fancytree.edit.js"></script>
+    <script src="fancytree-master/src/jquery.fancytree.gridnav.js"></script>
+    <script src="fancytree-master/src/jquery.fancytree.table.js"></script>
+    <script src="fancytree-master/src/jquery.fancytree.multi.js"></script>
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+  
+    <style type="text/css">
+        img:hover {
+          box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+        }
+        .ui-menu {
+            width: 200px;
+            height: 30px;
+            font-size: 63%;
+        }
+        .ui-menu kbd {
+            float: right;
+        }
+        td.alignRight {
+            text-align: right;
+        }
+        td.alignCenter {
+            text-align: center;
+        }
+        td input[type=input] {
+            width: 40px;
+        }
+        span.drag-source{
+            border: 1px solid lightgray;
+            border-radius: 3px;
+            padding: 2px;
+            background-color: lightgray
+        }
+        ul.fancytree-container {
+            max-height: 200px;
+            overflow-y: scroll;
+        }
+        span.fancytree-node.fancytree-drag-source {
+            outline: 1px dotted grey;
+        }
+        span.fancytree-node.fancytree-drop-accept {
+            outline: 1px dotted green;
+        }
+        span.fancytree-node.fancytree-drop-reject {
+            outline: 1px dotted red;
+        }
+        #my_tree{max-height: 600px; overflow-y:scroll; overflow-x: hidden;}
+        #my_function{max-height: 600px; overflow-y:scroll; overflow-x: hidden;}
+    </style>
+  </head>
+
+  <body  onload="wsConnect();" onunload="ws.onclose();">
+    
+        <div id="wait" style="text-align: center;" >
+            <img style="margin: 0 auto;" src='media/Audit.png'><img style="margin: 0 auto;" src='media/loading.gif'><br>
+            <h2>Loading parameters, please wait a few seconds</h2>
+        </div>
+    
+        <div id="main">
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"><img src="e475238aca49b9f6bb53cc4138fbdb27--funny-caricatures-celebrity-caricatures.jpg" style="width: 40px; height: 50px"></a>
+                        <a class="navbar-brand" href="javascript: setting();"><small>Settings Channels</small></a>
+                        <a class="navbar-brand" href="javascript: mda();"><small>Acquisition</small></a>
+                        <a class="navbar-brand" href="#"></a>
+                        <a class="navbar-brand" href="#"><div id="name_user"></div></a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a style="color: rgb(255, 102, 102);" href="#"><small>Documentation</small></a></li>
+                            <li><a href="#"><small>Lab513</small></a></li>
+                            <li><a href="#"><small><div id="status"></div></small></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="container-fluid">
+                <div class="row">
+                    <div>    
+                        <br>
+                        <div id="receive"></div>
+                        <hr/>
+                        <div id="alert-success" class="alert alert-success" role="alert"></div>
+                
+                        <div id="live_mode">
+                            <h2 class="sub-header">Live mode</h2>
+                            <div id="live_div" class="table-responsive">
+                                <img src='icons/work_in_progress.jpg'>
+                        </div>    
+                    </div>
+    
+                    <div id="settings">
+                        <h2 class="sub-header">Settings channels</h2>
+                        <div id="name_configChannels"></div>
+                        <div id="available_configChannels"></div>
+                        <br>
+                        <button class='setting_button' alt='add channel' id="setting_button_add_channel"><img src='icons/add.png'> Add a new setting channel</button>
+                        <form method="post" id='setting_channel_form' action="/formpost" ajax="true">
+                            <div id="setting_table_channel" class="table-responsive"></div>
+                            <button type='submit' alt='save' class='setting_button' id='setting_button_save_channel'><img src='icons/disk.png'> Save the current settings</button>
+                        </form>
+                        <br>
+                        <hr/>
+                    </div>
+                        
+                    <div id="mda">
+                        <div id="name_configMda"></div>
+                        <div id="available_configMda"></div>
+                        <div id="available_channels_mda"></div>
+
+                        <div id="available_ressources">
+                            <span>&nbsp;&nbsp;&nbsp;Available resources and functions | drag and drop directly on the tree</span><br>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Sequence');"><img src='icons/arrow_rotate_clockwise.png'>&nbsp;Sequence</span>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Group Position');"><img src='icons/plugin.png'>&nbsp;Group-position</span>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'XYZ Position');"><img src='icons/yxz-512.png'>&nbsp;XYZ-position</span>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Imaging');"><img src='icons/image.png'>&nbsp;Imaging</span>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Analysis');"><img src='icons/color_swatch.png'>&nbsp;Analysis</span>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'IF');"><img src='icons/if.png'>&nbsp;IF</span>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Delay');"><img src='icons/clock.png'>&nbsp;Delay</span>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Slack');"><img src='icons/comments.png'>&nbsp;Slack</span>
+                            &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'µFluidic');"><img src='icons/stop.png'>&nbsp;µFluidic</span>
+                            &nbsp;   
+                            <button onclick=test();><img src='icons/package_go.png'>&nbsp;Create a new protocol</button>
+                            <button class='setting_button' alt='save' id="setting_button_save_configMda"><img src='icons/package_link.png'>&nbsp;Save the actual protocol</button>
+                            <button class='setting_button' alt='Tooggle' id="setting_button_toogle"><img src='icons/layout_content.png' >Toggle expand</button>
+                            <button onclick=test();><img src='icons/package_go.png'>&nbsp;Start the acquisition</button><br><br>
+                    
+                            <table id="" class="table table-striped" style="height: 80%;">
+                                <tbody>
+                                    <tr>
+                                        <th style="width:1%;"></th> 
+                                        <th style="width:33%;">                
+                                            <div id='my_tree'>
+                                                <table id="tree" class="sampletree">
+                                                    <colgroup>
+                                                        <col><col><col style="width:100%">
+                                                    </colgroup>
+                                                    <thead>
+                                                        <tr> <th></th> <th></th> <th></th> <!--<th></th> <th>Z-stacks</th> <th>Autofocus</th> <th>Save Images</th> <th>Comment</th> <th>Color</th>--> </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="alignCenter"></td><td></td><td></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </th>
+                                        <th style="width:33%;">                
+                                            <div id='my_function'>
+                                                <p><span id="lblActive"></span></p>
+                                                <p><span id="lblActiveEsttimatedTime"></span></p>
+                                            </div>
+                                        </th>
+                                        <th style="width:33%;">                
+                                            <hr/>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>window.jQuery || document.write('<script src="bootstrap/assets/js/vendor/jquery.min.js"><\/script>')</script>
+        <script src="bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bootstrap/assets/js/vendor/holder.min.js"></script>
+        <script src="bootstrap/assets/js/ie10-viewport-bug-workaround.js"></script>
+        <script type="text/javascript">
+            $.confirm({
+            title: 'WELCOME TO CYBERSCOPE!',
+            theme: "supervan",
+            content: '' +
+            '<form action="" class="formName">' +
+            '<div class="form-group">' +
+            '<label>Log in....</label>' +
+            //'<select id="userLog"><option name=WilliamsB value=0>WilliamsB</option><option name=KalinaH value=1>KalinaH</option><option name=MatthiasL value=2>MatthiasL</option><option name=CélineC value=4>CélineC</option></select>'+
+            '<input type="text" placeholder="Your name" class="name form-control" required />' +
+            '</div>' +
+            '</form>',
+            buttons: {
+                formSubmit: {
+                    text: 'Submit',
+                    btnClass: 'btn-blue',
+                    action: function () {
+                        var name = this.$content.find('.name').val();
+        //                var name = $("#userLog option[value='"+value+"']").prop('selected', true);
+                        }
+                        document.getElementById('name_user').innerHTML = "User:"+name;
+                        }
+                }
+            },
+            onContentReady: function () {
+                // bind to events
+                var jc = this;
+                this.$content.find('form').on('submit', function (e) {
+                    // if the user submits the form by pressing enter in the field.
+                    e.preventDefault();
+                    jc.$$formSubmit.trigger('click'); // reference the button and click it
+                });
+            }
+        });
+        </script>
+    </body>
+</html>

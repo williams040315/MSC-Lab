@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+{% include 'index_head.html' %}
+
+<style>
+
+.dropzone {
+top: 200px;
+width: 200px;
+height: 80px;
+min-height: 0px !important;
+}
+
+</style>
+
+
+<body>
+
+{% include 'header_doc_exit.html' %}
+
+{% include 'proc_result.html' %}
+
+{% include 'dropzone.html' %}
+
+{% include 'settings.html' %}
+
+{% include 'proc_opts.html' %}
+
+<script>
+
+
+$(document).ready(function(){
+    var socket = io.connect('http://' + document.domain + ':' + location.port );  //+ '/test'
+
+    //------- Name of the last processing done..
+
+    {% include 'proc_result_refresh.html' %}
+
+    //--------
+
+    {% include 'settings_actions.html' %}
+
+    {% include 'hard_soft_infos_refresh.html' %}
+
+    {% include 'proc_opts_actions.html' %}
+
+
+
+});
+
+manage_drop()   // manage the Dropzone
+
+$('#refresh').hide()
+
+</script>
+
+   {% include 'footer.html' %}
+
+</body>
+</html>

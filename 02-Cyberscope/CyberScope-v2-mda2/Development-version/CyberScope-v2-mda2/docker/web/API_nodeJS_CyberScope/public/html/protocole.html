@@ -1,0 +1,373 @@
+<!--
+Filename: protocole.html
+Created Date: 03/05/2020
+Author: Pierre ANTOINE
+Author email: pierre.antoine@epitech.eu
+Description: GUI to perform MDA
+
+OpenSource
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>DashBoard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="../css/styleProtocole.css">
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+
+  <!-- FANCY TREE -->
+
+  <!-- This demo uses an 3rd-party, jQuery UI based context menu -->
+  <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <!-- jquery-contextmenu (https://github.com/mar10/jquery-ui-contextmenu/) -->
+  <script src="//cdn.jsdelivr.net/npm/ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
+
+  <link href="../fancytree-master/src/skin-win8/ui.fancytree.css" rel="stylesheet">
+  <script src="../fancytree-master/src/jquery.fancytree.js"></script>
+  <script src="../fancytree-master/src/jquery.fancytree.dnd5.js"></script>
+  <script src="../fancytree-master/src/jquery.fancytree.edit.js"></script>
+  <script src="../fancytree-master/src/jquery.fancytree.gridnav.js"></script>
+  <script src="../fancytree-master/src/jquery.fancytree.table.js"></script>
+  <script src="../fancytree-master/src/jquery.fancytree.multi.js"></script>
+
+
+</head>
+
+<body>
+  <div class=" mt-3 mr-3 ml-3 mb-3">
+    <div class="row">
+
+      <div class="col" id="protocol">
+        <div id="protocol-settings">
+          <p>LOADING...</p>
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+
+
+        <!-- <div id="available_ressources">
+                    <span>Available resources and functions | drag and drop directly on the tree</span><br>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Autofocus');"><img src='../icons/autofocus.png'>&nbsp;Autofocus</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Z-Stack + Setting channel');"><img src='../icons/flag_blue.png'>&nbsp;Z-Stack + Setting channel</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Z-Stack + Setting channel + Mosaic');"><img src='../icons/flag_green.png'>&nbsp;Z-Stack + Setting channel + Mosaic</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Simple Picture + Setting channel');"><img src='../icons/flag_red.png'>&nbsp;Simple Picture + Setting channel</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Simple Picture + Setting channel + Mosaic');"><img src='../icons/flag_purple.png'>&nbsp;Simple Picture + Setting channel + Mosaic</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Delay');"><img src='../icons/clock.png'>&nbsp;Delay</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'XYZ-position');"><img src='../icons/yxz-512.png'>&nbsp;XYZ-position</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Group Position');"><img src='../icons/text_list_numbers.png'>&nbsp;Group Position</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Sequence');"><img src='../icons/arrow_rotate_clockwise.png'>&nbsp;Sequence</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'Function');"><img src='../icons/lightning.png'>&nbsp;Function</span>
+                    &nbsp;<span class="drag-source" draggable="true" ondragstart="event.dataTransfer.setData('text/plain', 'MicroFluidics Valves');"><img src='../icons/controller.png'>&nbsp;MicroFluidics Valves</span>
+                  </div> -->
+
+
+        <div class="dropdown mr-3 mt-2">
+          <button class="dropbtn btn btn-info">Picture Taking</button>
+          <div class="dropdown-content">
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Z-Stack + Setting channel');"><img
+                  src='../icons/flag_blue.png'>&nbsp;Z-Stack + Setting channel</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Z-Stack + Setting channel + Mosaic');"><img
+                  src='../icons/flag_green.png'>&nbsp;Z-Stack + Setting channel + Mosaic</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Simple Picture + Setting channel');"><img
+                  src='../icons/flag_red.png'>&nbsp;Simple Picture + Setting channel</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Simple Picture + Setting channel + Mosaic');"><img
+                  src='../icons/flag_purple.png'>&nbsp;Simple Picture + Setting channel +
+                Mosaic</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Imaging');"><img
+                  src='../icons/flag_purple.png'>&nbsp;Imaging</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Analysis');"><img
+                  src='../icons/flag_purple.png'>&nbsp;Analysis</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'If');"><img
+                  src='../icons/flag_purple.png'>&nbsp;If</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Micro-fluidique');"><img
+                  src='../icons/flag_purple.png'>&nbsp;Micro-fluidique</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Stop');"><img
+                  src='../icons/flag_purple.png'>&nbsp;Stop</span></a>
+          </div>
+        </div>
+
+
+
+        <div class="dropdown mr-3 mt-2">
+          <button class="dropbtn btn btn-info">Actions</button>
+          <div class="dropdown-content">
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Delay');"><img
+                  src='../icons/clock.png'>&nbsp;Delay</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Sequence');"><img
+                  src='../icons/arrow_rotate_clockwise.png'>&nbsp;Sequence</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Function');"><img
+                  src='../icons/lightning.png'>&nbsp;Function</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Slack message');"><img
+                  src='../icons/lightning.png'>&nbsp;Slack message</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Break');"><img
+                  src='../icons/lightning.png'>&nbsp;Break</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Goto');"><img
+                  src='../icons/lightning.png'>&nbsp;Goto</span></a>
+          </div>
+        </div>
+
+
+
+        <div class="dropdown mt-2">
+          <button class="dropbtn btn btn-info">Controllers</button>
+          <div class="dropdown-content">
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Autofocus');"><img
+                  src='../icons/autofocus.png'>&nbsp;Autofocus</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'XYZ-position');"><img
+                  src='../icons/yxz-512.png'>&nbsp;XYZ-position</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'Group Position');"><img
+                  src='../icons/text_list_numbers.png'>&nbsp;Group Position</span></a>
+            <a href="#"><span class="drag-source" draggable="true"
+                ondragstart="event.dataTransfer.setData('text/plain', 'MicroFluidics Valves');"><img
+                  src='../icons/controller.png'>&nbsp;MicroFluidics Valves</span></a>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-sm">
+            <table id="tree" class="sampletree" style="width:100%">
+              <colgroup>
+                <col width="10%">
+                <!--ID-->
+                <col width="40%">
+                <!--Function-->
+                <col width="10%">
+                <!--COLOR-->
+                <col width="40%">
+                <!--BTN CUSTOM-->
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Function</th>
+                  <th> </th>
+                  <th>Info</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="alignCenter"></td>
+                  <td class="alignCenter"></td>
+                  <td class="alignCenter"></td>
+                  <td class="alignCenter"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="Form" class="col-sm">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--MODAL-->
+
+  <!--MODAL ZS+SC-->
+  <div class="modal fade bd-example-modal-lg test" id="myModalZSPSC" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Z-Stack + Setting channel</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="myModalZSPSCContent">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="updateZSPSC()" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--MODAL ZS+SC+M-->
+  <div class="modal fade bd-example-modal-lg test" id="myModalZSPSCPMM" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Z-Stack + Setting channel + Mosaic mask</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="myModalZSPSCPMMContent">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="updateZSPSCPMM()" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--MODAL SP+SC-->
+  <div class="modal fade bd-example-modal-lg test" id="myModalSPPSC" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Simple picture + Setting channel</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="myModalSPPSCContent">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="updateSPPSC()" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--MODAL SP+SC+M-->
+  <div class="modal fade bd-example-modal-lg test" id="myModalSPPSCPMM" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Simple picture + Setting channel + Mosaic mask
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="myModalSPPSCPMMContent">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="updateSPPSCPMM()" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--MODAL Delay-->
+  <div class="modal fade" id="myModalDelay" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Delay</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="myModalDelayContent">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="updateDelay()" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--MODAL Sequence-->
+  <div class="modal fade" id="myModalSequence" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Sequence</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="myModalSequenceContent">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="updateSequence()" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--MODAL MicroFluidices-->
+  <div class="modal fade" id="myModalMFV" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Edit Node Sequence</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="myModalMFVContent">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-success" onclick="updateMicroFluidicsM()" data-dismiss="modal">Save
+            changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--!MODAL-->
+
+  <script src="../js/scriptProtocole.js"></script>
+  <script src="../js/scriptUpdateNodeFancyTree.js"></script>
+  <script src="../js/scriptJtree.js"></script>
+</body>
+
+</html>

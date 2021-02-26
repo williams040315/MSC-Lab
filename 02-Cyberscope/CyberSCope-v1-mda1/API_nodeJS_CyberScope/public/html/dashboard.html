@@ -1,0 +1,122 @@
+<!--
+Filename: c:\Users\Natasha\Desktop\auth-cyberScope\public\html\dashboard.html
+Created Date: Friday, April 5th 2019, 2:08:49 pm
+Author: Pierre-Louis CRESCITZ
+Author email: pierre-louis.crescitz@epitech.eu
+Description: Main Menu
+
+OpenSource
+-->
+
+<!DOCTYPE html>
+<html lang="en" >
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>DashBoard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/styleDashboard.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+   
+    <!-- jQuery UI -->
+  <script type="text/javascript" src="../wpaint/lib/jquery.ui.core.1.10.3.min.js"></script>
+  <script type="text/javascript" src="../wpaint/lib/jquery.ui.widget.1.10.3.min.js"></script>
+  <script type="text/javascript" src="../wpaint/lib/jquery.ui.mouse.1.10.3.min.js"></script>
+  <script type="text/javascript" src="../wpaint/lib/jquery.ui.draggable.1.10.3.min.js"></script>
+  
+  <!-- wColorPicker -->
+  <link rel="Stylesheet" type="text/css" href="../wpaint/lib/wColorPicker.min.css" />
+  <script type="text/javascript" src="../wpaint/lib/wColorPicker.min.js"></script>
+
+  <!-- wPaint -->
+  <link rel="Stylesheet" type="text/css" href="../wpaint/wPaint.min.css" />
+  <script type="text/javascript" src="../wpaint/wPaint.min.js"></script>
+  <script type="text/javascript" src="../wpaint/plugins/main/wPaint.menu.main.min.js"></script>
+  <script type="text/javascript" src="../wpaint/plugins/text/wPaint.menu.text.min.js"></script>
+  <script type="text/javascript" src="../wpaint/plugins/shapes/wPaint.menu.main.shapes.min.js"></script>
+  <script type="text/javascript" src="../wpaint/plugins/file/wPaint.menu.main.file.min.js"></script>
+   
+    <script src="../js/scriptDashboard.js"></script>
+    <script src="../js/scriptUpdateDevice.js"></script>
+    <script src="../js/scriptSettingsChannels.js"></script>
+    <script src="../js/scriptMosaicMasks.js"></script>
+
+</head>
+
+<body>
+
+    <!---<h1 id="UserInfo">Loading ...</h1>
+    <button onclick="logout()">LOGOUT</button>
+    <button onclick="testSendToNodeRed()">TEST COMMUNICATION WITH NODE-RED</button>
+    <h1 id="NodeRedTest"></h1>-->
+
+    <!--TOP BAR NAVIGATION MENU-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+      <a class="navbar-brand" href="#">CyberScope</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/views/dashboard">Home</a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
+            <a class="nav-link" href="/views/mda" target="_blank">MDA</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/views/user-settings">User Settings</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/views/admin-panel">Administration Panel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/views/cyberscope-summurize" target="_blank">Summurize</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/views/credits">Credits</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <span class="navbar-text pr-4" id="UserInfo">Logged in as</span>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-outline-danger my-2 my-sm-0" type="submit" onclick="logout()">Logout</button>
+            </li>
+        </ul>
+      </div>
+    </nav>
+    <div id="body-content" class="container mt-4">
+      <div id="alert-message"></div>
+    <div id="equipements-data">
+      
+      <!--<div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+     </div>-->
+
+     <img src="https://i.gifer.com/4On9.gif"> <!--TRY  align="center" -->
+
+
+   </div>
+   </div>
+   
+
+<!--
+  TEST SECTION
+-->
+
+<!--
+  !TEST SECTION
+-->
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+{
+    "name"         : "node-red-contrib-prior-pro-scan",
+    "version"      : "1.0.0",
+    "description"  : "",
+    "repository": {
+    "type": "git",
+    "url": "https://github.com/................."
+     },
+    "dependencies": {
+     },
+    "keywords": [ "node-red" ],
+    "author": "Williams BRETT",
+     "dependencies":{
+        "serialport":"7.1.0"
+        },
+    "node-red"     : {
+        "nodes": {
+            "PriorProScan": "PriorProScan/PriorProScan.js"
+        }
+    },
+    "license": "MSC"
+}

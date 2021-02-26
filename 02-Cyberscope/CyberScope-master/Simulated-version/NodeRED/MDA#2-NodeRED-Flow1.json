@@ -1,0 +1,2412 @@
+[
+    {
+        "id": "4ffb80e9.06ef",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "STOP",
+        "topic": "",
+        "payload": "MDA-FINISH",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 1190,
+        "y": 640,
+        "wires": [
+            [
+                "a42a06ab.2c397"
+            ]
+        ]
+    },
+    {
+        "id": "19a32336.5ebe45",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "Sequencer Cyberscope",
+        "func": "if(context.global.activateSeq === true ){\n    \n    if( (context.global.startMDA === 1) && (context.global.initialize === true)){\n        var length = context.global.sequence2[context.global.sync2].length ;\n        //Extent\n        if((msg.payload === 'done')){\n            context.global.extent = msg.extent ;\n            //node.warn(context.global.extent);\n            if(context.global.extent===true){\n                if(length===context.global.sync3) context.global.valid = true ;\n                else context.global.valid = false  ;\n            }\n            if(context.global.extent===false){\n                context.global.valid = true ;\n            }\n            context.global.time = parseInt((Date.now()-context.global.initTime)/1000);\n        }\n        //\n        //Next instruction\n        if( length  !== context.global.sync3 ){\n            var order = context.global.sequence2[context.global.sync2];\n            if((msg.payload === 'done')){\n                context.global.checkFinish = context.global.checkFinish + 1 ;\n                node.status ({fill:\"yellow\",shape:\"dot\", text: global.get('scanTime')+\"-\"+context.global.sync2+\"-\"+context.global.sync3+\"-o-\"+context.global.finish+\"-\"+context.global.checkFinish});\n                if(context.global.checkFinish === context.global.finish){\n                    context.global.checkFinish = 0 ;\n                    if(order.length !==1) {\n                        //node.warn('1');\n                        context.global.finish = order[context.global.sync3].length ; // nombre d'instructions dans la branche la plus profonde de l'object sequencer\n                        for(var i=0;i<order[context.global.sync3].length;i++){ \n                            //Conditionnel\n                            \n                            var calculIf = true ;\n                            for(var idIf in context.global.if){\n                                    var findIf = order[context.global.sync3][i]['if'].indexOf(idIf) ;\n                                    if(findIf!==-1){ \n                                        calculIf = calculIf && context.global.if[idIf] ;\n                                        break;\n                                    }\n                                \n                            }\n                            //Break\n                            var calculBreak = true ;\n                            for(var idBreak in context.global.break){\n                                    var findBreak = order[context.global.sync3][i]['loop'].indexOf(idBreak) ;\n                                    //node.send({'payload':context.global.break});\n                                    //node.warn(idBreak +'-'+ findBreak);\n                                    if(findBreak!==-1){ \n                                        calculBreak = ! (calculBreak && context.global.break[idBreak]) ;\n                                        break;\n                                    }\n                            }\n                            //ici on regarde si le break est le premier du tableau\n                            //si oui ca veut dire qu'on break la boucle principale donc on doit\n                            //jouer le step prochain dans le tableau step en global\n                            //node.warn('1'+findBreak);\n                            node.status ({fill:\"yellow\",shape:\"dot\", text: global.get('scanTime')+\"-\"+context.global.sync2+\"-\"+context.global.sync3+\"-\"+calculIf+\"-\"+context.global.finish+\"-\"+context.global.checkFinish});\n                            if(findBreak===0){\n                                node.send({\n                                    'topic' : 'next',\n                                    'device' : 'next',\n                                    'payload' : 'MDA-NEXT',\n                                    'sync' : order[context.global.sync3][i]['sync'],\n                                    'extent' : true,\n                                    'if' : [],\n                                    'loop' : []\n                                    });\n                            }\n                            else {\n                                context.global.extent = order[context.global.sync3][i].extent ;\n                                //node.warn(context.global.extent);\n                                if(context.global.extent===true){\n                                    if(length===context.global.sync3) context.global.valid = true ;\n                                    else context.global.valid = false  ;\n                                }\n                                if(context.global.extent===false){\n                                    context.global.valid = true ;\n                                }\n                                if(calculBreak&&calculIf) node.send(order[context.global.sync3][i]);\n                                else node.send({'payload' : 'done', 'sync' : order[context.global.sync3][i]['sync']});\n                            }\n                            //\n                        }\n                    }\n                    else{ \n                        //Conditionnel\n                        var calculIf = true ;\n                        for(var idIf in context.global.if){\n                            var findIf = order[context.global.sync3]['if'].indexOf(idIf) ;\n                            if(findIf!==-1){ \n                                calculIf = calculIf && context.global.if[idIf] ;\n                                break ;\n                            }\n                        }\n                        //Break\n                        var calculBreak = true ;\n                        for(var idBreak in context.global.break){\n                                var findBreak = order[context.global.sync3]['loop'].indexOf(idBreak) ;\n                                if(findBreak!==-1){ \n                                    calculBreak = ! (calculBreak && context.global.break[idBreak]) ;\n                                    break;\n                                }\n                            \n                        }\n                        //node.warn('2'+findBreak);\n                        node.status ({fill:\"yellow\",shape:\"dot\", text: global.get('scanTime')+\"-\"+context.global.sync2+\"-\"+context.global.sync3+\"-\"+calculIf+\"-\"+context.global.finish+\"-\"+context.global.checkFinish});\n                        if(findBreak===0){\n                            node.send({\n                                'topic' : 'next',\n                                'device' : 'next',\n                                'payload' : 'MDA-NEXT',\n                                'sync' : order[context.global.sync3]['sync'],\n                                'extent' : true,\n                                'if' : [],\n                                'loop' : []\n                                });\n                        }\n                        else {\n                                context.global.extent = order[context.global.sync3].extent ;\n                                //node.warn(context.global.extent);\n                                if(context.global.extent===true){\n                                    if(length===context.global.sync3) context.global.valid = true ;\n                                    else context.global.valid = false  ;\n                                }\n                                if(context.global.extent===false){\n                                    context.global.valid = true ;\n                                }\n\n                            if(calculBreak&&calculIf) node.send(order[context.global.sync3]);\n                            else node.send({'payload' : 'done', 'sync' : order[context.global.sync3]['sync']});\n                        }\n                        //\n                        //\n                        context.global.finish = 1 ;\n                    }\n                    context.global.sync3 = context.global.sync3 + 1 ;\n                }\n            }\n            //première fois quand on appuie sur start ou première instruction d'un groupe temporaire\n            else{\n                if(order.length !==1) {\n                    context.global.finish = order[context.global.sync3].length ; // nombre d'instructions dans la branche la plus profonde de l'object sequencer\n                    for(var i=0;i<order[context.global.sync3].length;i++){\n                        //Conditionnel\n                        var calculIf = true ;\n                        for(var idIf in context.global.if){\n                            var findIf = order[context.global.sync3][i]['if'].indexOf(idIf) ;\n                            if(findIf!==-1){  \n                                calculIf = calculIf && context.global.if[idIf]  ;\n                                break ;\n                            }\n                        }\n                        //Break\n                        \n                        var calculBreak = true ;\n                        for(var idBreak in context.global.break){\n                                var findBreak = order[context.global.sync3][i]['loop'].indexOf(idBreak) ;\n                                if(false&&(findBreak!==-1)){ \n                                    calculBreak = ! (calculBreak && context.global.break[idBreak]) ;\n                                    break;\n                                }\n                            \n                        }\n                        //node.warn('3'+findBreak);\n                        node.status ({fill:\"yellow\",shape:\"dot\", text: global.get('scanTime')+\"-\"+context.global.sync2+\"-\"+context.global.sync3+\"-\"+calculIf+\"-\"+context.global.finish+\"-\"+context.global.checkFinish});\n                        if(findBreak===0){\n                            node.send({\n                                'topic' : 'next',\n                                'device' : 'next',\n                                'payload' : 'MDA-NEXT',\n                                'sync' : order[context.global.sync3][i]['sync'],\n                                'extent' : true,\n                                'if' : [],\n                                'loop' : []\n                                });\n                        }\n                        else {\n                            //Extent\n                            context.global.extent = order[context.global.sync3][i].extent ;\n                            if(context.global.extent===true){\n                                if(length===context.global.sync3) context.global.valid = true ;\n                                else context.global.valid = false  ;\n                            }\n                            if(context.global.extent===false){\n                                context.global.valid = true ;\n                            }\n                            //context.global.time = parseInt((Date.now()-context.global.timeInit)/1000);\n                            //\n                            if(calculBreak&&calculIf) node.send(order[context.global.sync3][i]);\n                            else node.send({'payload' : 'done', 'sync' : order[context.global.sync3][i]['sync']});\n                        }\n                        //\n                        //\n                    }\n                }\n                else { \n                    //node.warn('4');\n                    //Extent\n                    context.global.extent = order[context.global.sync3][0].extent ;\n                    if(context.global.extent===true){\n                        if(length===context.global.sync3) context.global.valid = true ;\n                        else context.global.valid = false  ;\n                    }\n                    if(context.global.extent===false){\n                        context.global.valid = true ;\n                    }\n                    context.global.time = parseInt((Date.now()-context.global.timeInit)/1000);\n                    //\n                    context.global.finish = 1 ;\n                    //Conditionnel\n                    var calculIf = true ;\n                    for(var idIf in context.global.if){\n                        var findIf = order[context.global.sync3][0]['if'].indexOf(idIf) ;\n                        if(findIf!==-1){ \n                            calculIf = calculIf && context.global.if[idIf] ;\n                            break;\n                        }\n                    }\n                    //Break\n                    var calculBreak = true ;\n                    for(var idBreak in context.global.break){\n                            var findBreak = order[context.global.sync3][0]['loop'].indexOf(idBreak) ;\n                            \n                            if(findBreak!==-1){ \n                                calculBreak = ! (calculBreak && context.global.break[idBreak]) ;\n                                break;\n                            }\n                        \n                    }\n                    //node.warn('4'+findBreak);\n                    node.status ({fill:\"yellow\",shape:\"dot\", text: global.get('scanTime')+\"-\"+context.global.sync2+\"-\"+context.global.sync3+\"-\"+calculIf+\"-\"+context.global.finish+\"-\"+context.global.checkFinish});\n                    if(findBreak===0){\n                        node.send({\n                            'topic' : 'next',\n                            'device' : 'next',\n                            'payload' : 'MDA-NEXT',\n                            'sync' : order[context.global.sync3][0]['sync'],\n                            'extent' : true,\n                            'if' : [],\n                            'loop' : []\n                            });\n                    }\n                    else {\n                        if(calculBreak&&calculIf) node.send(order[context.global.sync3][0]);\n                        else node.send({'payload' : 'done', 'sync' : order[context.global.sync3][0]['sync']});\n                    }\n                    //\n               }\n                context.global.sync3 = context.global.sync3 + 1 ;\n            }\n        }\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1650,
+        "y": 480,
+        "wires": [
+            [
+                "89e4fc3a.a2d8e",
+                "5af2b23.7f308cc"
+            ]
+        ],
+        "icon": "node-red/trigger.png"
+    },
+    {
+        "id": "5e312144.1739f8",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "START",
+        "topic": "",
+        "payload": "MDA-START",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 1050,
+        "y": 520,
+        "wires": [
+            [
+                "7783ece.5c8e414"
+            ]
+        ]
+    },
+    {
+        "id": "a42a06ab.2c397",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "Stepper Cyberscope",
+        "func": "if(msg.payload === 'MDA-START'){\n    \n    global.set('scanTime',0);\n    clearTimeout(global.get('mdaSync')) ; clearTimeout(global.get('mdaSync')) ;\n    \n    context.global.startMDA=1; context.global.checkFinish=0; context.global.valid=false; \n    context.global.sync2=String(0); context.global.sync3=0;\n    context.global.initTime  = Date.now(); context.global.adjust = 0 ; context.global.time = 0;\n    context.global.sequence2 = context.global.step[context.global.nextStep];\n\n    context.global.activateSeq = true ;\n    \n    msg.payload = context.global.sequence2[String(0)];\n    node.send(msg);\n    node.status ({fill:\"green\",shape:\"dot\", text: \"START\"});\n    \n    context.global.keyPlay = [] ; context.global.keyPlay.push(String(0));\n    \n    var mdaSync = setInterval(function(){\n        scanTime = global.get('scanTime') + 0.5 ;\n        global.set('scanTime', scanTime) ;\n        if((context.global.valid)){\n            for(var key in context.global.sequence2){\n                if(true){//(context.global.extent === true)){\n                    if((parseInt(key)<=(scanTime+context.global.adjust))&&(context.global.keyPlay.includes(key)===false)){\n                        context.global.keyPlay.push(key);\n                        context.global.activateSeq = true ;\n                        context.global.adjust = (key) - parseInt((Date.now()-context.global.initTime)/1000);\n                        if(context.global.adjust>=0) context.global.adjust= 0 ;\n                        context.global.sync2 = key;\n                        msg.payload = context.global.sequence2[key];\n                        context.global.sync3 = 0;\n                        context.global.extent = msg.extent ;\n                        node.send(msg);\n                        break ;\n                    }\n                }\n            }\n        }        \n    },500);\n    global.set('mdaSync',mdaSync);\n}\nif(msg.payload === 'MDA-FINISH'){\n    context.global.startMDA = 0 ;\n    clearTimeout(global.get('mdaSync')) ; clearTimeout(global.get('mdaSync')) ;\n    global.set('scanTime',0) ;\n    node.status ({fill:\"red\",shape:\"dot\", text: \"STOP\"});\n    setTimeout(function(){node.status ({fill:\"yellow\",shape:\"dot\",text: \"waiting start ...\"});},2000);\n}\nif(msg.payload === 'MDA-NEXT'){\n    context.global.startMDA = 0 ;\n    clearTimeout(global.get('mdaSync')) ;  clearTimeout(global.get('mdaSync')) ;\n    global.set('scanTime',0) \n    node.status ({fill:\"red\",shape:\"dot\", text: \"STOP\"});\n    setTimeout(function(){node.status ({fill:\"green\",shape:\"dot\",text: \"restart next ...\"});},2000);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1400,
+        "y": 480,
+        "wires": [
+            [
+                "19a32336.5ebe45",
+                "7d04e759.dbf4"
+            ]
+        ]
+    },
+    {
+        "id": "7ec10b27.7b2c3c",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "c8461a1c.478a3"
+            ]
+        ]
+    },
+    {
+        "id": "70df7e5a.2b1b48",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "1",
+        "func": "if(msg.device === '1'){\n    context.global.busy1 = setInterval(function(){\n        if(context.global.busy1Flag === false){\n            context.global.busy1Flag = true ;\n            msg.payload = \"done\";\n            node.status ({fill:\"yellow\",shape:\"dot\", text: \"request\"});\n            setTimeout(function(){\n                node.status ({fill:\"green\",shape:\"dot\", text: \"done\"});\n                node.send(msg);\n            },1000);\n            clearInterval(context.global.busy1);\n        }\n    },10);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 240,
+        "wires": [
+            [
+                "e021f58e.a809e"
+            ]
+        ],
+        "icon": "node-red/contrast.png"
+    },
+    {
+        "id": "a405b8a2.b770a",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "2",
+        "func": "if(msg.device === '2'){\n    context.global.busy2 = setInterval(function(){\n        if(context.global.busy2Flag === false){\n            context.global.busy2Flag = true ;\n            msg.payload = \"done\";\n            node.status ({fill:\"yellow\",shape:\"dot\", text: \"request\"});\n            setTimeout(function(){\n                node.status ({fill:\"green\",shape:\"dot\", text: \"done\"});\n                node.send(msg);\n            },13000);\n            clearInterval(context.global.busy2);\n        }\n    },10);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 280,
+        "wires": [
+            [
+                "73053394.eb4c6c"
+            ]
+        ],
+        "icon": "node-red/contrast.png"
+    },
+    {
+        "id": "fbe223ce.6725e8",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "3",
+        "func": "if(msg.device === '3'){\n    context.global.busy3 = setInterval(function(){\n        if(context.global.busy3Flag === false){\n            context.global.busy3Flag = true ;\n            msg.payload = \"done\";\n            node.status ({fill:\"yellow\",shape:\"dot\", text: \"request\"});\n            setTimeout(function(){\n                node.status ({fill:\"green\",shape:\"dot\", text: \"done\"});\n                node.send(msg);\n            },2000);\n            clearInterval(context.global.busy3);\n        }\n    },10);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 320,
+        "wires": [
+            [
+                "dffba761.41b8f"
+            ]
+        ],
+        "icon": "node-red/contrast.png"
+    },
+    {
+        "id": "5af2b23.7f308cc",
+        "type": "link out",
+        "z": "a2f8d72b.054cc8",
+        "name": "BREAK",
+        "links": [
+            "b67e3abf.6e0218",
+            "e89e18e9.7df118",
+            "9ba82c81.cdfad8",
+            "d7fb7c4.d17f9",
+            "2522582a.cf25c",
+            "47299146.0ac418",
+            "5da08a95.5dccb4",
+            "1ef158d3.b7f7bf",
+            "119a6bb5.b47aec",
+            "872fd45e.b58af8",
+            "617be767.0c4e2",
+            "ea83e4f0.faa4d",
+            "659d82d5.4c2e5c"
+        ],
+        "x": 1795,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "47299146.0ac418",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 955,
+        "y": 360,
+        "wires": [
+            [
+                "d27d657b.327b28"
+            ]
+        ]
+    },
+    {
+        "id": "d27d657b.327b28",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "4",
+        "func": "if(msg.device === '4'){\n    context.global.busy4 = setInterval(function(){\n        if(context.global.busy4Flag === false){\n           context.global.busy4Flag = true ;\n            msg.payload = \"done\";\n            node.status ({fill:\"yellow\",shape:\"dot\", text: \"request\"});\n            setTimeout(function(){\n                node.status ({fill:\"green\",shape:\"dot\", text: \"done\"});\n                node.send(msg);\n            },1000);\n            clearInterval(context.global.busy4);\n        }\n    },10);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 360,
+        "wires": [
+            [
+                "35b65d5b.6fc29a"
+            ]
+        ],
+        "icon": "node-red/contrast.png"
+    },
+    {
+        "id": "43ce80b5.cab46",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "next",
+        "func": "if(msg.device === 'next'){\n    context.global.busyNext = setInterval(function(){\n        if(context.global.busyNextFlag === false){\n            context.global.busyNextFlag = true ;\n            context.global.nextStep = context.global.nextStep + 1 ;\n            node.status ({fill:\"yellow\",shape:\"dot\", text: \"request\"});\n            setTimeout(function(){\n                node.status ({fill:\"green\",shape:\"dot\", text: \"done\"});\n                node.send({'payload':'MDA-START'});\n            },10);\n            clearInterval(context.global.busyNext);    \n        }\n    },10);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 560,
+        "wires": [
+            [
+                "49727fae.f3103"
+            ]
+        ],
+        "icon": "node-red/contrast.png"
+    },
+    {
+        "id": "2d165bb8.67b37c",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "Stepper Extent = NO",
+        "func": "if((msg.payload === 'done')&&(msg.sync===parseInt(context.global.sync2))) {node.send(msg);}\n\n/*\nFiltre pour bloquer un retour de réponse qui aurait été demandé avant que la durée d'une boucle ne soit atteinte\nAinsi on filtre sur msg.sync qui représente la clé de l'object JSON;\nC'est le context.global.sync2 qui dit on on se trouve temporellement\nSi les deux indices ne sont pas égales cela signifit que la réponse qu'on recoit n'appartient pas au temps en \ncours mais à celui d'avant donc on n'envoie pas le message au séquenceur de risque de déclencher l'action suivante et de\ndérégler le séquencement\n*/\n/*\nAttention il faut pense à attendre que l'équipement en attente doit être libre de la communication\nEt veillez à éteindre les sources de lumières, ou fermer les shutters\n*/\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1400,
+        "y": 340,
+        "wires": [
+            [
+                "19a32336.5ebe45"
+            ]
+        ]
+    },
+    {
+        "id": "d7fb7c4.d17f9",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 955,
+        "y": 560,
+        "wires": [
+            [
+                "43ce80b5.cab46"
+            ]
+        ]
+    },
+    {
+        "id": "9ba82c81.cdfad8",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 955,
+        "y": 320,
+        "wires": [
+            [
+                "fbe223ce.6725e8"
+            ]
+        ]
+    },
+    {
+        "id": "b67e3abf.6e0218",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 955,
+        "y": 280,
+        "wires": [
+            [
+                "a405b8a2.b770a"
+            ]
+        ]
+    },
+    {
+        "id": "5da08a95.5dccb4",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 955,
+        "y": 240,
+        "wires": [
+            [
+                "70df7e5a.2b1b48"
+            ]
+        ]
+    },
+    {
+        "id": "2522582a.cf25c",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 1215,
+        "y": 480,
+        "wires": [
+            [
+                "a42a06ab.2c397"
+            ]
+        ]
+    },
+    {
+        "id": "5198b586.722cc4",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 590,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "1ef158d3.b7f7bf",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 1215,
+        "y": 200,
+        "wires": [
+            [
+                "2d165bb8.67b37c"
+            ]
+        ]
+    },
+    {
+        "id": "119a6bb5.b47aec",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 955,
+        "y": 400,
+        "wires": [
+            [
+                "b291d3f4.505158"
+            ]
+        ]
+    },
+    {
+        "id": "b291d3f4.505158",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "If",
+        "func": "if(msg.device === 'if'){\n    context.global.busyIf = setInterval(function(){\n        if(context.global.busyIfFlag === false){\n            context.global.busyIfFlag = true ;\n            //Ici, on rempli notre JSON des condition (référence <> calcul de la condition)\n            var strReplace = msg.cond.replace('NCELL','context.global.globalData.NCELL').replace('STATE_V1','context.global.globalData.STATE_V1').replace('STATE_V2','context.global.globalData.STATE_V2');\n            //if(!context.global.if.hasOwnProperty(msg.id)){\n                //Ici il faut calculer la condition avec la fonction eval\n            context.global.if[msg.id] = eval(strReplace) ;\n            //node.warn(eval(strReplace));\n            //} else context.global.if[msg.id] = eval(strReplace) ;\n            msg.payload = \"done\";\n            node.status ({fill:\"yellow\",shape:\"dot\", text: \"request\"});\n            setTimeout(function(){\n                node.status ({fill:\"green\",shape:\"dot\", text: \"done\"});\n                node.send(msg);\n            },0);\n            clearInterval(context.global.busyIf);\n        }\n    },10);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 400,
+        "wires": [
+            [
+                "b759ffb1.c78688"
+            ]
+        ],
+        "icon": "node-red/contrast.png"
+    },
+    {
+        "id": "89e4fc3a.a2d8e",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1870,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "c8461a1c.478a3",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "Object sequencer 2Bis",
+        "func": "clearTimeout(global.get('mdaSync')) ;\nglobal.set('scanTime',0) ;\ncontext.global.request = false ;\ncontext.global.extent = false ;\ncontext.global.valid = false ;\ncontext.global.initialize = true ;\ncontext.global.nextStep = 0 ;\n\ncontext.global.if = {}\ncontext.global.break = {}\n\ncontext.global.step = [] ;\ncontext.global.step.push({\n    \"0\" : \n        [\n            [{\n            'topic' : 'if',\n            'device' : 'if',\n            'sync' : 0,\n            'extent' : true,\n            'if' : [],\n            'id' : \"0123456789\",\n            'cond' : 'NCELL.POS3_3.BF[0] === 20 && STATE_V1[0] === true && STATE_V2[0] === false',\n            'loop' : [],\n            'iterator' : 0\n            }],\n            [{\n            'topic' : 'break',\n            'device' : 'break',\n            'sync' : 0,\n            'extent' : true,\n            'if' : [],\n            'id' : \"1\",\n            'break' : '2',\n            'loop' : ['1']\n            }],\n            [{\n            'topic' : '4',\n            'device' : '4',\n            'id' : \"01289\",\n            'sync' : 0,\n            'extent' : false,\n            'if' : [],\n            'loop' : ['1']\n            }],\n            [{\n            'topic' : '2',\n            'device' : '2',\n            'sync' : 0,\n            'id' : \"012349\",\n            'extent' : false,\n            'if' : ['0123456789'],\n            'loop' : ['1','2']\n            }],\n            [{\n            'topic' : '1',\n            'device' : '1',\n            'sync' : 0,\n            'id' : \"012349--\",\n            'extent' : false,\n            'if' : [],\n            'loop' : ['1','2']\n            }]\n        ],\n    \"10\" : \n        [\n            \n            [{\n            'topic' : '1',\n            'device' : '1',\n            'sync' : 10,\n            'id' : \"049\",\n            'extent' : true,\n            'if' : [],\n            'loop' : ['1','2']\n            }],\n            /*[{\n            'topic' : 'goto',\n            'device' : 'goto',\n            'sync' : 10,\n            'extent' : true,\n            'if' : [],\n            'where' : ['toto']\n            }],*/\n            [{\n            'topic' : '2',\n            'device' : '2',\n            'sync' : 10,\n            'id': 'rrr',\n            'extent' : true,\n            'if' : [],\n            'loop' : ['1','2']\n            }],\n            [{\n            'topic' : 'next',\n            'device' : 'next',\n            'sync' : 10,\n            'id': 'rrrsss',\n            'extent' : true,\n            'if' : [],\n            'loop' : ['1']\n            }]\n        ],\n    \"20\" : \n        [\n            \n            [{\n            'topic' : '1',\n            'device' : '1',\n            'sync' : 20,\n            'extent' : false,\n            'id' : 'm',\n            'if' : [],\n            'loop' : ['1']\n            }],\n            [{\n            'topic' : 'goto',\n            'device' : 'goto',\n            'sync' : 20,\n            'extent' : false,\n            'if' : ['0123456789'],\n            'where' : ['0123456789']\n            }],\n            [{\n            'topic' : '2',\n            'device' : '2',\n            'sync' : 20,\n            'id' : 'mm',\n            'extent' : true,\n            'if' : [],\n            'loop' : ['1']\n            }]/// a voir si on ne le déplace pas comme pour l'arrêt\n        ],\n        \"30\" : \n        [\n            [{\n            'topic' : '4',\n            'device' : '4',\n            'sync' : 30,\n            'id' : 'pppppp',\n            'extent' : true,\n            'if' : [],\n            'loop' : ['1','2']\n            }]\n        ],\n        \"40\" : \n        [\n            [{\n             'id' : '234324',\n            'topic' : 'stop',\n            'device' : 'stop',\n            'payload' : 'MDA-FINISH',\n            'sync' : 40,\n            'extent' : true,\n            'if' : [],\n            'loop' : []\n            }]\n        ]\n    });\n    //context.global.step[0][0].unshift('Strawberry'); > close tous les shutter, rajoute en premier\n    //pas en dernier\n    //stop mosaic\ncontext.global.step.push({\n    \"0\" : \n        [\n            [{\n            'id' : 'toto' ,\n            'topic' : '4',\n            'device' : '4',\n            'sync' : 0,\n            'extent' : false,\n            'if' : [],\n            'loop' : ['loop1']\n            }],\n             [{\n            'topic' : 'break',\n            'device' : 'break',\n            'sync' : 0,\n            'extent' : false,\n            'if' : ['0123456789'],\n            'id' : \"rtgf\",\n            'break' : 'loop2',\n            'loop' : ['brd']\n            }],\n            [{\n            'topic' : '1',\n            'device' : '1',\n            'sync' : 0,\n            'extent' : false,\n            'if' : [],\n            'loop' : ['loop2']\n            }]\n        ],\n    \"60\" : \n        [\n           \n            [{\n                'id' : 1,\n                'topic' : '4',\n                'device' : '4',\n                'sync' : 60,\n                'extent' : true,\n                'if' : [],\n                'loop' : ['lop1']\n            }],\n            [{\n                'id' : 2,\n                'topic' : '3',\n                'device' : '3',\n                'sync' : 60,\n                'extent' : true,\n                'if' : [],\n                'loop' : ['lop1','lop2']\n            }],\n            [{\n                'id' : 3,\n                'topic' : '2',\n                'device' : '2',\n                'sync' : 60,\n                'extent' : true,\n                'if' : [],\n                'loop' : ['lop1']\n            }],\n            [{\n                'id' : 4,\n                'topic' : 'next',\n                'device' : 'next',\n                'payload' : 'MDA-NEXT',\n                'sync' : 60,\n                'extent' : true,\n                'if' : [],\n                'loop' : []\n            }]\n            \n            // a voir si on ne le déplace pas comme pour l'arrêt\n        ]\n    });\ncontext.global.step.push({\n    \"0\" : \n        [\n            [{\n            'topic' : '3',\n            'device' : '3',\n            'sync' : 0,\n            'extent' : false,\n            'if' : ['0123456789'],\n            'loop' : []\n            }],\n            [{\n            'id' : 4,\n            'topic' : 'next',\n            'device' : 'next',\n            'payload' : 'MDA-NEXT',\n            'sync' : 0,\n            'extent' : false,\n            'if' : [],\n            'loop' : ['']\n            }]// a voir si on ne le déplace pas comme pour l'arrêt\n        ]\n    });\n\ncontext.global.step.push({\n    \"0\" : \n        [\n        [{\n            'id' : '234324',\n            'topic' : 'stop',\n            'device' : 'stop',\n            'payload' : 'MDA-FINISH',\n            'sync' : 0,\n            'extent' : false,\n            'if' : [],\n            'loop' : []\n        }] \n        ]\n    });\n\n\n/*\ncontext.global.sequence2 = {\n    \"0\" : \n        [\n            [{\n            'topic' : 'if',\n            'device' : 'if',\n            'sync' : 0,\n            'extent' : false,\n            'if' : [],\n            'id' : \"0123456789\",\n            'cond' : 'true'\n            }],\n            [{\n            'topic' : '4',\n            'device' : '4',\n            'sync' : 0,\n            'extent' : false,\n            'if' : ['0123456789']\n            }],\n            [{\n            'topic' : '3',\n            'device' : '3',\n            'sync' : 0,\n            'extent' : false,\n            'if' : ['0123456789']\n            }],\n            [{\n            'topic' : '2',\n            'device' : '2',\n            'sync' : 0,\n            'extent' : false,\n            'if' : ['0123456789']\n            }],\n            [{\n            'topic' : '1',\n            'device' : '1',\n            'sync' : 0,\n            'extent' : false,\n            'if' : ['0123456789']\n            }]\n        ],\n    \"10\" : \n        [\n            [{\n            'topic' : 'if',\n            'device' : 'if',\n            'sync' : 10,\n            'extent' : true,\n            'if' : [],\n            'id' : \"012345689\",\n            'cond' : 'true'\n            }],\n            [{\n            'topic' : '4',\n            'device' : '4',\n            'sync' : 10,\n            'extent' : true,\n            'if' : []\n            }],\n            [{\n            'topic' : '3',\n            'device' : '3',\n            'sync' : 10,\n            'extent' : true,\n            'if' : ['012345689']\n            }],\n            [{\n            'topic' : '2',\n            'device' : '2',\n            'sync' : 10,\n            'extent' : true,\n            'if' : []\n            }],\n            [{\n            'topic' : 'next',\n            'device' : 'next',\n            'payload' : 'MDA-NEXT',\n            'sync' : 10,\n            'extent' : true,\n            'if' : []\n            }]\n        ],\n    \"20\" : \n        [\n            [{\n            'topic' : '4',\n            'device' : '4',\n            'sync' : 20,\n            'extent' : false,\n            'if' : []\n            }],\n            [{\n            'topic' : '3',\n            'device' : '3',\n            'sync' : 20,\n            'extent' : false,\n            'if' : []\n            }],\n            [{\n            'topic' : '2',\n            'device' : '2',\n            'sync' : 20,\n            'extent' : false,\n            'if' : []\n            }],\n            [{\n            'topic' : '1',\n            'device' : '1',\n            'sync' : 20,\n            'extent' : false,\n            'if' : []\n            }]\n        ],\n    \"30\" : \n        [\n            [{\n            'topic' : '4',\n            'device' : '4',\n            'sync' : 30,\n            'extent' : true,\n            'if' : []\n            }],\n            [{\n            'topic' : '3',\n            'device' : '3',\n            'sync' : 30,\n            'extent' : true,\n            'if' : []\n            }],\n            [{\n            'topic' : 'if',\n            'device' : 'if',\n            'sync' : 30,\n            'extent' : true,\n            'if' : [],\n            'id' : \"12345689\",\n            'cond' : 'true'\n            }],\n            [{\n            'topic' : '2',\n            'device' : '2',\n            'sync' : 30,\n            'extent' : true,\n            'if' : ['12345689']\n            }],\n            [{\n            'topic' : '1',\n            'device' : '1',\n            'sync' : 30,\n            'extent' : true,\n            'if' : []\n            }]\n        ],\n        \"40\" : \n            [\n                [{\n                'topic' : '4',\n                'device' : '4',\n                'sync' : 40,\n                'extent' : false,\n                'if' : []\n                }]\n            ],\n        \"50\" : \n            [\n                [{\n                'topic' : '4',\n                'device' : '4',\n                'sync' : 50,\n                'extent' : true,\n                'if' : ['12345689','0123456789']\n                }],\n                [{\n                'topic' : '3',\n                'device' : '3',\n                'sync' : 50,\n                'extent' : true,\n                'if' : ['0123456789']\n                }],\n                [{\n                'topic' : '2',\n                'device' : '2',\n                'sync' : 50,\n                'extent' : true,\n                'if' : ['12345689']\n                }],\n                [{\n                'topic' : '1',\n                'device' : '1',\n                'sync' : 50,\n                'extent' : true,\n                'if' : []\n                }],\n                [{\n                'payload' : 'MDA-FINISH',\n                'sync' : 50,\n                'extent' : true,\n                'if' : []\n                }]\n            ]\n}\n*/\nmsg.payload = context.global.step ;\nreturn msg ;\n\n\n/*\nAttention quand on a un extent false et qu'on met un MDA finish il n'est pas pris en compte\ncar le extent false ne prend pas en compte les instructions suivantes !!!!\n*/",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 180,
+        "wires": [
+            [
+                "5198b586.722cc4"
+            ]
+        ]
+    },
+    {
+        "id": "5c5a9db9.2788cc",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "goto",
+        "func": "if(msg.device === 'goto'){\n    context.global.busyGoto = setInterval(function(){\n        if(context.global.busyGotoFlag === false){\n            context.global.busyGotoFlag = true ;\n            for(var i=0; i<context.global.step.length;i++){\n                if(context.global.step[i][0][0][0].id===msg.where[0]){\n                    context.global.nextStep = i ;\n                    node.status ({fill:\"yellow\",shape:\"dot\", text: \"request\"});\n                    setTimeout(function(){\n                        node.status ({fill:\"green\",shape:\"dot\", text: \"done\"});\n                        node.send({'payload':'MDA-START'});\n                    },10);\n                    break ;\n                }\n            }\n            clearInterval(context.global.busyGoto);    \n        }\n    },10);   \n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 600,
+        "wires": [
+            [
+                "a183235.4d8576"
+            ]
+        ],
+        "icon": "node-red/contrast.png"
+    },
+    {
+        "id": "617be767.0c4e2",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 955,
+        "y": 600,
+        "wires": [
+            [
+                "5c5a9db9.2788cc"
+            ]
+        ]
+    },
+    {
+        "id": "ea83e4f0.faa4d",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 955,
+        "y": 440,
+        "wires": [
+            [
+                "1527c8fa.3a2d57"
+            ]
+        ]
+    },
+    {
+        "id": "1527c8fa.3a2d57",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "break",
+        "func": "if(msg.device === 'break'){\n    context.global.busyBreak = setInterval(function(){\n        if(context.global.busyBreakFlag === false){\n            context.global.busyBreakFlag = true ;\n            //if(!context.global.break.hasOwnProperty(msg.break)){\n            context.global.break[msg.break] = true ; //false ça veut qu'on ne le fait pas\n            //} else context.global.break[msg.break] = true ; //false ça veut dire qu'on ne le fait pas\n            msg.payload = \"done\";\n            node.status ({fill:\"yellow\",shape:\"dot\", text: \"request\"});\n            setTimeout(function(){\n                node.status ({fill:\"green\",shape:\"dot\", text: \"done\"});\n                node.send(msg);\n            },0);\n            clearInterval(context.global.busyBreak);    \n        }\n    },10);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1050,
+        "y": 440,
+        "wires": [
+            [
+                "e7221f91.a64b1"
+            ]
+        ],
+        "icon": "node-red/contrast.png"
+    },
+    {
+        "id": "29a3026b.6f799e",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "{\"expanded\":true,\"key\":\"root_1\",\"title\":\"root\",\"children\":[{\"expanded\":true,\"key\":\"_2\",\"selected\":false,\"title\":\"Protocol\",\"type\":\"PROT\",\"data\":{\"config\":0,\"comment\":\"\",\"prefix\":\"\"},\"children\":[{\"expanded\":true,\"key\":\"_3\",\"selected\":false,\"title\":\"Group Position\",\"type\":\"GROUP\",\"skeep\":1,\"children\":[{\"expanded\":true,\"key\":\"_4\",\"selected\":false,\"title\":\"List of positions\",\"type\":\"LIST\",\"children\":[{\"expanded\":false,\"key\":\"_5\",\"selected\":false,\"title\":\"XYZ Position -1\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"channel\":\"channel1\",\"res2\":10}},{\"expanded\":false,\"key\":\"_6\",\"selected\":false,\"title\":\"XYZ Position 0\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}},{\"expanded\":false,\"key\":\"_7\",\"selected\":false,\"title\":\"XYZ Position 1\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}}]},{\"expanded\":false,\"key\":\"_8\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}},{\"expanded\":false,\"key\":\"_9\",\"selected\":false,\"title\":\"SC1 +Picture\",\"type\":\"CAMERA\",\"data\":{\"time\":100,\"skip\":0,\"number\":1,\"zoffset\":0}}]},{\"expanded\":true,\"key\":\"_10\",\"selected\":false,\"title\":\"XYZ Position 2\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"expanded\":false,\"key\":\"_11\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}},{\"expanded\":false,\"key\":\"_12\",\"selected\":false,\"title\":\"SC1 +Picture\",\"type\":\"CAMERA\",\"data\":{\"time\":100,\"skip\":0,\"number\":1,\"zoffset\":0}}]},{\"expanded\":true,\"key\":\"_139876\",\"selected\":false,\"title\":\"if\",\"type\":\"if\",\"skeep\":1,\"data\":{\"sync\":0,\"extent\":false,\"if\":[],\"id\":\"0123789\",\"cond\":\"NCELL.POS3_3.BF[0]===200&&STATE_V1[0]===true&&STATE_V2[0]===false\",\"loop\":[]},\"children\":[{\"expanded\":true,\"key\":\"_18\",\"selected\":false,\"title\":\"goto\",\"type\":\"goto\",\"data\":{\"where\":[\"toto\"]}},{\"expanded\":true,\"key\":\"_30\",\"selected\":true,\"title\":\"Sequence 2\",\"type\":\"LOOP\",\"data\":{\"time\":\"2\",\"repeat\":\"6\"},\"children\":[{\"expanded\":true,\"key\":\"_31\",\"selected\":false,\"title\":\"XYZ Position 50\",\"type\":\"XYZ\",\"skeep\":3,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_32\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]},{\"expanded\":true,\"key\":\"_34\",\"selected\":false,\"title\":\"XYZ Position 60\",\"type\":\"XYZ\",\"skeep\":2,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_35\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]},{\"expanded\":true,\"key\":\"_38\",\"selected\":false,\"title\":\"Group Position\",\"type\":\"GROUP\",\"skeep\":3,\"children\":[{\"expanded\":true,\"key\":\"_39\",\"selected\":false,\"title\":\"List of positions\",\"type\":\"LIST\",\"children\":[{\"expanded\":false,\"key\":\"_40\",\"selected\":false,\"title\":\"XYZ Position 70\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}},{\"expanded\":false,\"key\":\"_41\",\"selected\":false,\"title\":\"XYZ Position 80\",\"type\":\"XYZ\",\"skeep\":6,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}}]},{\"expanded\":false,\"key\":\"_42\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]}]},{\"expanded\":true,\"key\":\"_14\",\"selected\":false,\"title\":\"XYZ Position 10\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_15\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]},{\"expanded\":true,\"key\":\"_14\",\"selected\":false,\"title\":\"XYZ Position 100\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_15\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]}]},{\"expanded\":true,\"key\":\"_44\",\"selected\":false,\"title\":\"if\",\"type\":\"if\",\"skeep\":1,\"data\":{\"sync\":0,\"extent\":false,\"if\":[],\"id\":\"0123456789\",\"cond\":\"NCELL.POS3_3.BF[0]===200&&STATE_V1[0]===true&&STATE_V2[0]===false\",\"loop\":[]},\"children\":[{\"key\":\"_45000\",\"selected\":false,\"title\":\"if\",\"type\":\"if\",\"data\":{\"if\":[],\"cond\":\"TOTO\",\"loop\":[]},\"children\":[{\"key\":\"_45\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]}]},{\"expanded\":false,\"key\":\"_42\",\"selected\":false,\"title\":\"break\",\"type\":\"break\",\"data\":{\"break\":\"tata\"}},{\"expanded\":true,\"key\":\"_30\",\"selected\":true,\"title\":\"Sequence 2\",\"type\":\"LOOP\",\"data\":{\"time\":\"2\",\"repeat\":\"6\"},\"children\":[{\"expanded\":true,\"key\":\"_31\",\"selected\":false,\"title\":\"XYZ Position 50\",\"type\":\"XYZ\",\"skeep\":3,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_32\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]},{\"expanded\":true,\"key\":\"_34\",\"selected\":false,\"title\":\"XYZ Position 60\",\"type\":\"XYZ\",\"skeep\":2,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_35\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]},{\"expanded\":true,\"key\":\"_34\",\"selected\":true,\"title\":\"Sequence 2\",\"type\":\"LOOP\",\"data\":{\"time\":\"2\",\"repeat\":\"6\"},\"children\":[{\"expanded\":true,\"key\":\"_31\",\"selected\":false,\"title\":\"XYZ Position --50\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_32\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]},{\"expanded\":true,\"key\":\"_34\",\"selected\":false,\"title\":\"XYZ Position --60\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_35\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]},{\"expanded\":true,\"key\":\"_38\",\"selected\":false,\"title\":\"Group Position\",\"type\":\"GROUP\",\"skeep\":3,\"children\":[{\"expanded\":true,\"key\":\"_39\",\"selected\":false,\"title\":\"List of positions\",\"type\":\"LIST\",\"children\":[{\"expanded\":false,\"key\":\"_40\",\"selected\":false,\"title\":\"XYZ Position --70\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}},{\"expanded\":false,\"key\":\"_41\",\"selected\":false,\"title\":\"XYZ Position --80\",\"type\":\"XYZ\",\"skeep\":6,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}}]},{\"expanded\":false,\"key\":\"_42\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}}]}]}]},{\"expanded\":false,\"key\":\"_6\",\"selected\":false,\"title\":\"XYZ Position 0\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}}]}],\"type\":\"mda\"}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 400,
+        "wires": [
+            [
+                "68115291.8f2934"
+            ]
+        ]
+    },
+    {
+        "id": "930ec0a7.784148",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 590,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "34bc6c98.77168c",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "{\"expanded\":true,\"key\":\"_8\",\"selected\":true,\"title\":\"Sequence 2\",\"type\":\"LOOP\",\"data\":{\"time\":\"2\",\"repeat\":\"4\"},\"children\":[{\"expanded\":true,\"key\":\"_5\",\"selected\":false,\"title\":\"XYZ Position 50\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_13\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}},{\"key\":\"_4\",\"selected\":false,\"title\":\"SC4 + ZS\",\"type\":\"LIGHT\",\"skeep\":1,\"data\":{\"skip\":0,\"zstart\":-5,\"zend\":5,\"zstep\":1,\"shutter\":true}}]},{\"expanded\":true,\"key\":\"_5\",\"selected\":false,\"title\":\"XYZ Position 60\",\"type\":\"XYZ\",\"skeep\":2,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10},\"children\":[{\"key\":\"_13\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}},{\"expanded\":false,\"key\":\"_16\",\"selected\":false,\"title\":\"Mosaic\",\"type\":\"Mosaic\",\"skeep\":1,\"data\":{\"image\":\"\"}},{\"expanded\":false,\"key\":\"_14\",\"selected\":false,\"title\":\"SC6 + Picture\",\"skeep\":1,\"type\":\"LIGHT\",\"data\":{\"time\":100,\"skip\":0,\"number\":1,\"zoffset\":0}}]},{\"expanded\":true,\"key\":\"_5\",\"selected\":false,\"title\":\"Group Position\",\"type\":\"GROUP\",\"skeep\":1,\"children\":[{\"expanded\":true,\"key\":\"_6\",\"selected\":false,\"title\":\"List of positions\",\"type\":\"LIST\",\"children\":[{\"expanded\":false,\"key\":\"_5\",\"selected\":false,\"title\":\"XYZ Position 70\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}},{\"expanded\":false,\"key\":\"_5\",\"selected\":false,\"title\":\"XYZ Position 80\",\"type\":\"XYZ\",\"skeep\":1,\"data\":{\"xPosition\":0,\"yPosition\":0,\"zPosition\":0,\"res1\":1,\"res2\":10}}]},{\"expanded\":false,\"key\":\"_6\",\"selected\":false,\"title\":\"Autofocus\",\"type\":\"AF\",\"skeep\":1,\"data\":{\"lower\":30,\"upper\":30,\"aftbl\":\"LCPlanFl 40x\"}},{\"expanded\":false,\"key\":\"_7\",\"selected\":false,\"title\":\"SC1 +Picture\",\"type\":\"CAMERA\",\"skeep\":1,\"data\":{\"time\":100,\"skip\":0,\"number\":1,\"zoffset\":0}}]}]}",
+        "payloadType": "json",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 360,
+        "wires": [
+            [
+                "4ac9e32d.f26434"
+            ]
+        ]
+    },
+    {
+        "id": "4ac9e32d.f26434",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "splice Children",
+        "func": "msg.payload.children.splice(0,1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380,
+        "y": 360,
+        "wires": [
+            [
+                "930ec0a7.784148"
+            ]
+        ]
+    },
+    {
+        "id": "850c85a4.1bcb38",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 600,
+        "wires": [
+            [
+                "ff5cbc61.473c4"
+            ]
+        ]
+    },
+    {
+        "id": "ff5cbc61.473c4",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "Test EVAL",
+        "func": "var condition = 'NCELL.POS3_3.BF[0]===200&&STATE_V1[0]===false&&STATE_V2[0]===false';\nvar strReplace ;\nvar condition = 'var ncell = NCELL.POS3_3.BF[0]; var z = 20; var result ;if(ncell===20) result = true; else result = false ;';\nstrReplace = condition.replace('NCELL','context.global.globalData.NCELL').replace('STATE_V1','context.global.globalData.STATE_V1').replace('STATE_V2','context.global.globalData.STATE_V2');\nnode.warn(eval(strReplace));\nnode.log(node.id+' '+node.name);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 600,
+        "wires": [
+            [
+                "fa077460.6a4a"
+            ]
+        ]
+    },
+    {
+        "id": "fa077460.6a4a",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 590,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "dacb29df.50bc98",
+        "type": "comment",
+        "z": "a2f8d72b.054cc8",
+        "name": "Gestion du IF",
+        "info": "Ici on simule la gestion du IF grace à la fonction eval qui nous permet de tester du code grace à une chaine de caractère",
+        "x": 150,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "11aed0c5.2e0b8f",
+        "type": "comment",
+        "z": "a2f8d72b.054cc8",
+        "name": "Convertion",
+        "info": "Ici on converti l'arbre JTree HTML/Javascript en liste et plus précisemment un tableau qui alimenteration de context.global.step",
+        "x": 140,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "403c53dd.e3d6dc",
+        "type": "comment",
+        "z": "a2f8d72b.054cc8",
+        "name": "Sequenceur",
+        "info": "",
+        "x": 890,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "da9deb99.646ca",
+        "type": "comment",
+        "z": "a2f8d72b.054cc8",
+        "name": "Initialisation",
+        "info": "",
+        "x": 150,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "e021f58e.a809e",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "context.global.busy1Flag = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 240,
+        "wires": [
+            [
+                "a5e4ae35.f51f98",
+                "2d165bb8.67b37c"
+            ]
+        ]
+    },
+    {
+        "id": "213101b6.ee28be",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "531a43b2.1e91fc"
+            ]
+        ]
+    },
+    {
+        "id": "531a43b2.1e91fc",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag = false",
+        "func": "context.global.busy1Flag        = false ;\ncontext.global.busy2Flag        = false ;\ncontext.global.busy3Flag        = false ;\ncontext.global.busy4Flag        = false ;\ncontext.global.busyIfFlag       = false ;\ncontext.global.busyBreakFlag    = false ;\ncontext.global.busyNextFlag     = false ;\ncontext.global.busyGotoFlag     = false ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "73053394.eb4c6c",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "context.global.busy2Flag = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 280,
+        "wires": [
+            [
+                "a5e4ae35.f51f98",
+                "2d165bb8.67b37c"
+            ]
+        ]
+    },
+    {
+        "id": "dffba761.41b8f",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "context.global.busy3Flag = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 320,
+        "wires": [
+            [
+                "a5e4ae35.f51f98",
+                "2d165bb8.67b37c"
+            ]
+        ]
+    },
+    {
+        "id": "35b65d5b.6fc29a",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "context.global.busy4Flag = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 360,
+        "wires": [
+            [
+                "a5e4ae35.f51f98",
+                "2d165bb8.67b37c"
+            ]
+        ]
+    },
+    {
+        "id": "a5e4ae35.f51f98",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1370,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "b759ffb1.c78688",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "context.global.busyIfFlag = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 400,
+        "wires": [
+            [
+                "2d165bb8.67b37c"
+            ]
+        ]
+    },
+    {
+        "id": "e7221f91.a64b1",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "context.global.busyBreakFlag = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 440,
+        "wires": [
+            [
+                "2d165bb8.67b37c"
+            ]
+        ]
+    },
+    {
+        "id": "49727fae.f3103",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "context.global.busyNextFlag = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 560,
+        "wires": [
+            [
+                "a42a06ab.2c397"
+            ]
+        ]
+    },
+    {
+        "id": "a183235.4d8576",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "context.global.busyGotoFlag = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 600,
+        "wires": [
+            [
+                "a42a06ab.2c397"
+            ]
+        ]
+    },
+    {
+        "id": "8b165db9.7372b8",
+        "type": "comment",
+        "z": "a2f8d72b.054cc8",
+        "name": "Alimentation Data",
+        "info": "",
+        "x": 170,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "96195fe8.445a4",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 500,
+        "wires": [
+            [
+                "26ea05d6.cfd4ea"
+            ]
+        ]
+    },
+    {
+        "id": "26ea05d6.cfd4ea",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "Buffer Data",
+        "func": "var limit = 5;\n\nif(context.global.globalData.STATE_V1.length<limit) context.global.globalData.STATE_V1.push(false);\nelse {\n    \n    context.global.globalData.STATE_V1.unshift(true); //ajout devant / \n    context.global.globalData.STATE_V1.pop() //enlever derriere\n}\nmsg.payload = context.global.globalData ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 500,
+        "wires": [
+            [
+                "961bcd49.4e803"
+            ]
+        ]
+    },
+    {
+        "id": "961bcd49.4e803",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 590,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "62fda6c1.7945a8",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 220,
+        "wires": [
+            [
+                "f5ef4f62.d2861"
+            ]
+        ]
+    },
+    {
+        "id": "f5ef4f62.d2861",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "Init paramControl",
+        "func": "context.global.globalData = {\n    'STATE_V1' : [true] ,\n    'STATE_V2' : [false],\n    'STATE_V3' : [] ,\n    'STATE_V4' : [] ,\n    'STATE_V5' : [] ,\n    'ITERATOR' : 0 ,\n    'NCELL'    : {\n        'POS3_3':{\n            'BF' : [240],\n            'RFP' : []\n        },\n        'POS1_5':{\n            'BF' : [],\n            'RFP' : []\n        }\n    },\n    'ISBLACK'  : {\n        'POS3_3':{\n            'BF' : [],\n            'RFP' : []\n        },\n        'POS1_5':{\n            'BF' : [],\n            'RFP' : []\n        }\n    },\n    'ISWHITE'  : {\n        'POS3_3':{\n            'BF' : [],\n            'RFP' : []\n        },\n        'POS1_5':{\n            'BF' : [],\n            'RFP' : []\n        }\n    },\n    'ISBLURRED': {\n        'POS3_3':{\n            'BF' : [],\n            'RFP' : []\n        },\n        'POS1_5':{\n            'BF' : [],\n            'RFP' : []\n        }\n    },\n};\n//les 5 derniers",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "68115291.8f2934",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "treeToDictAction",
+        "func": "/*\nWilliams BRETT -\nVersion 1: 05/02/2019\nVersion 2: 12/09/2019\nVersion 3: 25/01/2020\nVersion 4: 02/04/2020\n*/\n\ncontext.global.tableInstruction = [] ; \ncontext.global.stepTime = -1 ; \ncontext.global.sequencerTime = -1 ;\n//context.global.insideLoop = false;\n//modifier le nom du old\ncontext.global.old = 0;\n\ncontext.global.keyLoop  = {} ;\ncontext.global.keyIf    = {} ;\n\ncontext.global.level    = 0 ;\ncontext.global.saveLevel= 0;\n\nnode.status ({fill:\"red\",shape:\"dot\", text: \"Build instructions table\"});\nvar protocol = msg.payload.children;\nbuildChildrenTableInstruction(protocol[0].children,buildBooleanTrueTable(getNbChildren(protocol[0].children),1),'PROT'); /*? pk 100 ?*/\nnode.status ({fill:\"green\",shape:\"dot\", text: \"Generate !\"});\n//MDA-STOP instruction\naddStopInstruction();\nnode.send({'payload':context.global.tableInstruction});\n\n\n/* cette fonction permet de construire les instructions du séquenceur */\nfunction buildChildrenTableInstruction(obj,enabledChildren,parent){\n    \n    context.global.level ++ ;\n    var repeat = getNbChildren(obj); //nbre d'enfant du protocole\n    node.status ({fill:\"yellow\",shape:\"dot\", text: \"Progress: \"+repeat+'-'+context.global.level})\n    //node.warn('Call recursive function > Level='+context.global.level+' Nb enfant:'+repeat);\n    \n    var iterator = 1 ; //par défaut on itère une fois sauf dans le cas d'une séquence et d'un groupe de positions\n    while(repeat > 0){\n        \n        var childrenN = obj[getNbChildren(obj)-repeat] ; //on récupère l'enfant courant de la boucle d'occurence\n        \n        node.warn('lg,old,title='+Object.keys(context.global.keyLoop).length+'-'+context.global.old+'-'+childrenN.title);\n        if(((Object.keys(context.global.keyLoop).length===0)&&((context.global.old-Object.keys(context.global.keyLoop).length)===1)))node.warn('out');\n            \n        if(context.global.level===1){ \n            //node.warn('LEVEL1:' + childrenN.type+', step='+context.global.stepTime);\n            //? dans le ,if en dessous \n            createNewStep('0');\n            //node.warn('saveLevel'+context.global.saveLevel);\n            if((context.global.stepTime>0))\n                addNextInstruction();\n        }\n        if(childrenN.type === 'LOOP'){ iterator = parseInt(childrenN.data.repeat) ;} //ici nous sommes en prèsence d'une séquence\n        if(childrenN.type === 'GROUP') {iterator = getNbChildren(childrenN.children[0].children) ;} //ici, nous sommes en présence d'un groupe de positions\n        var iteratorCopy = iterator; //copie de l'itérateur pour balayer l'object JSON\n        while(iterator > 0){\n        \n        \n            if(childrenN.type === 'GROUP'){\n                if(enabledChildren[getNbChildren(obj)-repeat][0]===true){ /* vérification des flags d'activation transmis avant la récurssivité pour un groupe entier de positions*/\n                    var build = false;\n                    if(Object.keys(context.global.keyLoop).length !== 0)\n                        if (enabledChildren[getNbChildren(obj)-repeat][iteratorCopy-iterator+1]===true) build = true ;\n                    if(Object.keys(context.global.keyLoop).length === 0) build = true;\n                    if(build){    \n                        buildMdaInstruction(childrenN.children[0].children[iteratorCopy-iterator]);\n                        buildChildrenTableInstruction(childrenN.children,enabledChildren,childrenN.type);\n                    }\n                }\n            }\n            else {\n                if((childrenN.type === 'LOOP')){\n                    context.global.insideLoop = true;\n                    //si la loop est au level 1, attention il faut que l'itérator soit à 1 sinon on répéte le nombre de fois que le repeat de la loop\n                    if(false&&(context.global.level === 1)&&(iterator===parseInt(childrenN.data.repeat))){ \n                        node.warn('1');\n                        createNewStep('0');\n                    }\n                    //si la la loop n'est pas au premier niveau, on créée un nouveau step si aucune loop n'a été ajouté dans le tableau global et toujours quand l'itérateur est a 1. ce cas se présente dans une boucle ou une boucle de boucle car l'itérator va passer à 1 donc on filtre en plus avec le nb de clé dans l'objet global\n                    if(true&&(context.global.level > 1)&&(iterator===parseInt(childrenN.data.repeat))&&(Object.keys(context.global.keyLoop).length ===0)){ \n                        //node.warn('boucle au level sup > 1');\n                        createNewStep('0');\n                        context.global.saveLevel = context.global.level ;\n                        if(true&&context.global.stepTime>0)\n                            addNextInstruction();\n                    }\n                    //ici on ajoute a l'objet keyLoop les id en fonction des levels dans l'obj\n                    if(!context.global.keyLoop.hasOwnProperty(context.global.level)) context.global.keyLoop[context.global.level] = childrenN.key ;\n                    enabledChildren = buildBooleanTrueTable(getNbChildren(childrenN.children),1); //tableau de validation des enfants\n        \n                    //i c'est le compteur d'occurence de la boucle\n                    for(i=0;i<getNbChildren(childrenN.children);i++){/*Ici on test pour les positions XYZ s'il y a des fréquences d'itérations > 1 si oui, il faut utiliser la fonction modulos, pour supprimer les positions en fonction de la fréquence d'itération de la boucle, Idem pour les groupes de positions, Idem pour les loop*/\n                        if(childrenN.hasOwnProperty('children')&&childrenN.children[i].hasOwnProperty('skeep')&&(childrenN.children[i].type==='XYZ')) //les positions, marquage des positions a ne pas réaliser\n                            if(((iteratorCopy-iterator)%childrenN.children[i].skeep===0)===false)  enabledChildren[i][0] = false;\n                        if(childrenN.hasOwnProperty('children')&&childrenN.children[i].hasOwnProperty('skeep')&&(childrenN.children[i].type==='GROUP')){/*les groupes de positions: idem*/\n                            if(((iteratorCopy-iterator)%childrenN.children[i].skeep===0)===false) enabledChildren[i][0] = false; //groupe entier\n                            for(var k=0;k<getNbChildren(childrenN.children[i].children[0].children);k++){ //pour les positions des groupes de positions, on étend le tableau en terme de colonne pour répliquer le même schéma que pour les groupes de positions ou positions simples\n                                if(((iteratorCopy-iterator)%childrenN.children[i].children[0].children[k].skeep===0)===false) enabledChildren[i].push(false);\n                                else enabledChildren[i].push(true);\n                            }\n                        } \n                    }\n                    /*après suppression, s'il y a des enfants on construit par récurssivité en transmettant les flags d'activation*/\n                    if(childrenN.hasOwnProperty('children')) buildChildrenTableInstruction(childrenN.children,enabledChildren,childrenN.type);\n                    //context.global.insideLoop = false;\n                   //ici on enlève a l'objet keyLoop les id en fonction des levels dans l'obj\n                    delete context.global.keyLoop[context.global.level];\n\n                }\n                else {\n                    if(childrenN.type !== 'LIST'){\n                        if(false&&(context.global.level === context.global.saveLevel)&&(Object.keys(context.global.keyLoop).length ===0)){ \n                            node.warn('Fonction après la boucle');\n                            createNewStep('0');\n                            context.global.saveLevel = 0 ;\n                        }\n                        if(childrenN.type == 'if'){\n                            //ici on ajoute a l'objet keyIf les id en fonction des levels dans l'obj\n                            if(!context.global.keyIf.hasOwnProperty(context.global.level))\n                            context.global.keyIf[context.global.level] = childrenN.key ;\n                        }\n                        build = true ;\n                        //il faut vérifier si la position n'est pas skippée\n                        if ((Object.keys(context.global.keyLoop).length !== 0)&&(childrenN.type==='XYZ')){\n                            //node.warn(childrenN.title + '-' + enabledChildren[getNbChildren(obj)-repeat][0]);\n                            build = enabledChildren[getNbChildren(obj)-repeat][0];\n                        }    \n                        if(build){ \n                            buildMdaInstruction(childrenN);\n                            if(childrenN.hasOwnProperty('children')) {\n                                context.global.old = Object.keys(context.global.keyLoop).length ;\n                            buildChildrenTableInstruction(childrenN.children,enabledChildren,childrenN.type);\n                            }\n                        }\n                        //ici on enléve a l'objet keyIf les id en fonction des levels dans l'obj\n                        if(childrenN.type == 'if') delete context.global.keyIf[context.global.level];\n                    }\n                }\n            }\n            iterator--;\n        }\n        //node.warn('Iterator= '+iterator+' ; Level= '+context.global.level+'; SaveLevel= '+context.global.saveLevel+'; Type= '+childrenN.type+'; KeyLoop= '+Object.keys(context.global.keyLoop).length);\n        //next step après une boucle ou une boucle de boucle attention il faut savoir le level car sinon on ne sais pas ou le level de la loop avait été crée. De plus il faut vérifier qu'il y a des obj aprés la boucle mais au même niveau grace au repeat. Si le repeat est supérieur a 1 c'est qu'il reste des instructions a réaliser\n        if(false&&(context.global.level === context.global.saveLevel)&&(Object.keys(context.global.keyLoop).length ===0)){ \n            node.warn('Fonction après la boucle');\n            createNewStep('0');\n        }\n        iterator = 1 ;\n        repeat--;\n    }\n    context.global.level -- ;\n    context.global.old = Object.keys(context.global.keyLoop).length ;\n                    \n}\n\n/* cette fonction retourne le nombre d'enfants d'une branche */\nfunction getNbChildren(obj){\n    return obj.length ;\n}\n\n/* cette fonction construit la table d'instructions pour controller les équipements de cyberScope en fonction des variables globales */\nfunction buildMdaInstruction(obj){\n    var o = {\n        'key' : '',\n        'title' : 'title',\n        'type' : 'type',\n        'sync' : 0,\n        'extent' : true,\n        'level': 1,\n        'loop' : [],\n        'if' : [],\n        'cond' :[],\n        'break':[],\n        'where':[]\n        } ;\n    o.key = obj.key ;\n    o.type = obj.type ;\n    o.title = obj.title ;\n    o.level = context.global.level ;\n    if(Object.keys(context.global.keyLoop).length !==0){\n        for(var key in context.global.keyLoop) \n            o.loop.push(context.global.keyLoop[key]);\n    }\n    if((Object.keys(context.global.keyIf).length !==0)){\n        for(key in context.global.keyIf) {\n            //node.warn(o.key); node.warn(context.global.keyIf[key]); \n            if(o.key !== context.global.keyIf[key]) o.if.push(context.global.keyIf[key]);\n        }\n    }\n    switch(obj.type){\n        case 'if':\n            o.cond = obj.data.cond ;\n            break;\n        case 'goto':\n            o.where = obj.data.where ;\n            break ;\n        case 'break':\n            o.break = obj.data.break ;\n    }\n    //node.send({'payload' : o});\n    context.global.tableInstruction[context.global.stepTime]['0'].push([o]);\n}\nfunction addStopInstruction(){\n    createNewStep('0');\n    context.global.tableInstruction[context.global.stepTime]['0'] = [{\n        'id' : 'stop',\n        'topic' : 'stop',\n        'device' : 'stop',\n        'payload' : 'MDA-FINISH',\n        'sync' : 0,\n        'extent' : false,\n        'if' : [],\n        'loop' : []\n    }];\n}\nfunction addNextInstruction(){\n    context.global.tableInstruction[context.global.stepTime-1]['0'].push([{\n        'topic' : 'next',\n        'device' : 'next',\n        'payload' : 'MDA-NEXT',\n        'sync' : '',\n        'extent' : '',\n        'if' : [],\n        'loop' : []\n        }]);\n}\nfunction createNewStep(id){\n    context.global.stepTime++ ;\n    context.global.tableInstruction.push({});\n    context.global.tableInstruction[context.global.stepTime][id] = [];\n\n}\n/* fonction de création d'une table 2D en boolean */\nfunction buildBooleanTrueTable(lg1,lg2){\n    var outputTable = [] ;\n    for(var i=0;i<lg1;i++) outputTable[i] = [lg2] ;\n    for(i=0;i<lg1;i++) for(var j=0;j<lg2;j++) outputTable[i][j] = true ;\n    //node.warn({'payload' : outputTable});\n    //node.warn(outputTable);\n    return outputTable;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380,
+        "y": 400,
+        "wires": [
+            [
+                "930ec0a7.784148"
+            ]
+        ]
+    },
+    {
+        "id": "32d45fa2.5e282",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "busyFlag",
+        "func": "msg1 = {}; msg2={}; msg3={}; msg4={}; msgStart={};\n\nif(context.global.busy1Flag === true) msg1.payload =1 ;\nelse msg1.payload = 0;\nif(context.global.busy2Flag === true) msg2.payload =1 ;\nelse msg2.payload = 0;\nif(context.global.busy3Flag === true) msg3.payload =1 ;\nelse msg3.payload = 0;\nif(context.global.busy4Flag === true) msg4.payload =1 ;\nelse msg4.payload = 0;\n\nmsgStart.payload = context.global.startMDA ;\n\n\nmsg1.topic = 'device1' ; \nmsg2.topic = 'device2' ; \nmsg3.topic = 'device3' ; \nmsg4.topic = 'device4' ; \nmsgStart.topic = 'run';\n\nreturn [msg1,msg2,msg3,msg4,msgStart]\n\n",
+        "outputs": 5,
+        "noerr": 0,
+        "x": 2540,
+        "y": 300,
+        "wires": [
+            [
+                "1c68aa3e.907306"
+            ],
+            [
+                "b07aa4b5.fb1d7"
+            ],
+            [
+                "ce7ecb05.a9c888"
+            ],
+            [
+                "f84391be.1b438"
+            ],
+            [
+                "1c68aa3e.907306",
+                "b07aa4b5.fb1d7",
+                "ce7ecb05.a9c888",
+                "f84391be.1b438"
+            ]
+        ]
+    },
+    {
+        "id": "a07df0f1.0d6738",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2150,
+        "y": 300,
+        "wires": [
+            [
+                "5490421e.c57dfc"
+            ]
+        ]
+    },
+    {
+        "id": "1c68aa3e.907306",
+        "type": "ui_chart",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "35f1683b.485eb",
+        "order": 1,
+        "width": "24",
+        "height": "8",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1.2",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 2750,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "29dcc5e2.5dc1ea",
+        "type": "ui_button",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "d87d67f0.5dd31",
+        "order": 2,
+        "width": "5",
+        "height": "1",
+        "passthru": false,
+        "label": "START",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "MDA-START",
+        "payloadType": "str",
+        "topic": "",
+        "x": 1190,
+        "y": 700,
+        "wires": [
+            [
+                "a42a06ab.2c397",
+                "e28e1252.e9566"
+            ]
+        ]
+    },
+    {
+        "id": "eba25719.09e028",
+        "type": "ui_button",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "d87d67f0.5dd31",
+        "order": 4,
+        "width": "5",
+        "height": "1",
+        "passthru": false,
+        "label": "STOP",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "MDA-FINISH",
+        "payloadType": "str",
+        "topic": "",
+        "x": 1190,
+        "y": 740,
+        "wires": [
+            [
+                "a42a06ab.2c397",
+                "e28e1252.e9566"
+            ]
+        ]
+    },
+    {
+        "id": "4d59d056.b99b8",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "[] = NULL",
+        "func": "msg.payload = [] ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2540,
+        "y": 360,
+        "wires": [
+            [
+                "1c68aa3e.907306",
+                "f84391be.1b438",
+                "ce7ecb05.a9c888",
+                "b07aa4b5.fb1d7",
+                "bfe71f61.bac1b",
+                "35c22b36.99a2b4",
+                "81a5ca4f.0a745"
+            ]
+        ]
+    },
+    {
+        "id": "f84391be.1b438",
+        "type": "ui_chart",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "35f1683b.485eb",
+        "order": 4,
+        "width": "24",
+        "height": "8",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1.2",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 2750,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ce7ecb05.a9c888",
+        "type": "ui_chart",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "35f1683b.485eb",
+        "order": 3,
+        "width": "24",
+        "height": "8",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1.2",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 2750,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b07aa4b5.fb1d7",
+        "type": "ui_chart",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "35f1683b.485eb",
+        "order": 2,
+        "width": "24",
+        "height": "8",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1.2",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 2750,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5490421e.c57dfc",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "filtre",
+        "func": "if(context.global.startMDA===1) return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2330,
+        "y": 300,
+        "wires": [
+            [
+                "32d45fa2.5e282"
+            ]
+        ]
+    },
+    {
+        "id": "bfe71f61.bac1b",
+        "type": "ui_chart",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "7c1b7a38.92818c",
+        "order": 3,
+        "width": "24",
+        "height": "8",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "3",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 2750,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "35c22b36.99a2b4",
+        "type": "ui_chart",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "7c1b7a38.92818c",
+        "order": 4,
+        "width": "24",
+        "height": "8",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "3",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 2750,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb703833.ef5758",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "nextStep",
+        "payloadType": "global",
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2170,
+        "y": 440,
+        "wires": [
+            [
+                "2314da8.97d0ca6"
+            ]
+        ]
+    },
+    {
+        "id": "2314da8.97d0ca6",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "filtre",
+        "func": "if(context.global.startMDA===1) { msg.topic = 'syncro-step'; return msg;}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2330,
+        "y": 440,
+        "wires": [
+            [
+                "35c22b36.99a2b4"
+            ]
+        ]
+    },
+    {
+        "id": "2a7b3e40.6204c2",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "sync2",
+        "payloadType": "global",
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2160,
+        "y": 400,
+        "wires": [
+            [
+                "fa055d62.361e1"
+            ]
+        ]
+    },
+    {
+        "id": "fa055d62.361e1",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "filtre",
+        "func": "if(context.global.startMDA===1) { msg.topic = 'syncro-order-time'; return msg;}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2330,
+        "y": 400,
+        "wires": [
+            [
+                "bfe71f61.bac1b"
+            ]
+        ]
+    },
+    {
+        "id": "af87387e.51a56",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "scanTime",
+        "payloadType": "global",
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2170,
+        "y": 540,
+        "wires": [
+            [
+                "916b10a2.5054b"
+            ]
+        ]
+    },
+    {
+        "id": "916b10a2.5054b",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "filtre",
+        "func": "if(context.global.startMDA===1) { return msg;}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2330,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "21b230a0.72b54",
+        "type": "comment",
+        "z": "a2f8d72b.054cc8",
+        "name": "Front-end",
+        "info": "",
+        "x": 2120,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "39be15fe.1dd272",
+        "type": "ui_text_input",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "label": "Output save file",
+        "tooltip": "",
+        "group": "83a600b5.58b5d",
+        "order": 3,
+        "width": "17",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "",
+        "x": 2720,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "71d33739.315dc",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "save_file.txt",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 2150,
+        "y": 780,
+        "wires": [
+            [
+                "39be15fe.1dd272"
+            ]
+        ]
+    },
+    {
+        "id": "395b88ef.8fc978",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "d87d67f0.5dd31",
+        "order": 1,
+        "width": "7",
+        "height": "1",
+        "name": "",
+        "label": "Start the simulator",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2950,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "fe903fb3.18655",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "d87d67f0.5dd31",
+        "order": 3,
+        "width": "7",
+        "height": "1",
+        "name": "",
+        "label": "Stop the simulator",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2950,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "4be51708.bc604",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "83a600b5.58b5d",
+        "order": 1,
+        "width": "7",
+        "height": "1",
+        "name": "",
+        "label": "       Name of simulation",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2950,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "71302b13.18d8c4",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "68c9b292.25a044",
+        "order": 1,
+        "width": "12",
+        "height": "1",
+        "name": "",
+        "label": "Microscope :  ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2730,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "a8e2f576.ff2ef8",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "uScope",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 2160,
+        "y": 580,
+        "wires": [
+            [
+                "71302b13.18d8c4"
+            ]
+        ]
+    },
+    {
+        "id": "eeddfcfc.fd1aa",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "68c9b292.25a044",
+        "order": 3,
+        "width": "12",
+        "height": "1",
+        "name": "",
+        "label": "User :  ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2750,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "606cd2ca.b1b82c",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "user",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 2150,
+        "y": 620,
+        "wires": [
+            [
+                "eeddfcfc.fd1aa"
+            ]
+        ]
+    },
+    {
+        "id": "ef65a25b.516a8",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "68c9b292.25a044",
+        "order": 4,
+        "width": "12",
+        "height": "1",
+        "name": "",
+        "label": "Experimentation type :  ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2700,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "1a3bcc0a.5ca8ac",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "typeManip",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 2170,
+        "y": 660,
+        "wires": [
+            [
+                "ef65a25b.516a8"
+            ]
+        ]
+    },
+    {
+        "id": "dda516c2.a9e4e",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "68c9b292.25a044",
+        "order": 2,
+        "width": "12",
+        "height": "4",
+        "name": "",
+        "label": "Description :  ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2730,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "50133ca9.d2dddc",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "descManip",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 2170,
+        "y": 740,
+        "wires": [
+            [
+                "dda516c2.a9e4e"
+            ]
+        ]
+    },
+    {
+        "id": "cfd54916.efc668",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "sync3",
+        "payloadType": "global",
+        "repeat": "0.5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2160,
+        "y": 480,
+        "wires": [
+            [
+                "cc43ad2c.e1d99"
+            ]
+        ]
+    },
+    {
+        "id": "cc43ad2c.e1d99",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "filtre",
+        "func": "if(context.global.startMDA===1) { msg.topic = 'id-order-device'; return msg;}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2330,
+        "y": 480,
+        "wires": [
+            [
+                "81a5ca4f.0a745"
+            ]
+        ]
+    },
+    {
+        "id": "81a5ca4f.0a745",
+        "type": "ui_chart",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "7c1b7a38.92818c",
+        "order": 2,
+        "width": "24",
+        "height": "8",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "3",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": false,
+        "outputs": 1,
+        "x": 2750,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4df0a0e6.f8dc28",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "68c9b292.25a044",
+        "order": 4,
+        "width": "12",
+        "height": "1",
+        "name": "",
+        "label": "Date :  ",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2750,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "cf51d5c2.df082",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "dateManip",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 2170,
+        "y": 700,
+        "wires": [
+            [
+                "4df0a0e6.f8dc28"
+            ]
+        ]
+    },
+    {
+        "id": "6e4505f4.6b2b3c",
+        "type": "ui_template",
+        "z": "a2f8d72b.054cc8",
+        "group": "e4833903.13f07",
+        "name": "",
+        "order": 1,
+        "width": "48",
+        "height": "9",
+        "format": "<div layout=\"row\" layout-align=\"space-between\">\n    <p>Timestamp: </p>\n    <font color=\"white\">{{msg.timestamp}}\n    </font>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Aquisition - work variable: </p>\n    <font color=\"{{((msg.startMDA || 0) % 2 === 0) ? 'red' : 'green'}}\">{{((msg.startMDA || 0) % 2 === 0) ? 'STOP' : 'START'}}\n    </font>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Extent Loop  - work variable: </p>\n    <font color=\"{{((msg.extent) === true) ? 'green' : 'red'}}\">{{((msg.extent) === true) ? 'TRUE' : 'FALSE'}}\n    </font>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Valid - work variable: </p>\n    <font color=\"{{((msg.valid) === true) ? 'green' : 'red'}}\">{{((msg.valid) === true) ? 'TRUE' : 'FALSE'}}\n    </font>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Initialize - work variable: </p>\n    <font color=\"{{((msg.initialize) === true) ? 'green' : 'red'}}\">{{((msg.initialize) === true) ? 'TRUE' : 'FALSE'}}\n    </font>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>scanTime: </p>\n    <font color=\"white\">{{msg.scanTime}}\n    </font>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>NextStep: </p>\n    <font color=\"white\">{{msg.nextStep}}\n    </font>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>SyncroOrderTime: </p>\n    <font color=\"white\">{{msg.syncroOrderTime}}\n    </font>\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>idOrderDevice: </p>\n    <font color=\"white\">{{msg.idOrderDevice}}\n    </font>\n</div>\n\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>GlobalData: </p>\n    <font color=\"white\">{{msg.globalData}}\n    </font>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 2500,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a397525d.589e18",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "d87d67f0.5dd31",
+        "order": 5,
+        "width": "7",
+        "height": "1",
+        "name": "",
+        "label": "Erase Data",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "x": 2930,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "3922fadc.e1d196",
+        "type": "ui_button",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "group": "d87d67f0.5dd31",
+        "order": 6,
+        "width": "5",
+        "height": "1",
+        "passthru": false,
+        "label": "ERASE",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "empty",
+        "payloadType": "str",
+        "topic": "",
+        "x": 2340,
+        "y": 360,
+        "wires": [
+            [
+                "4d59d056.b99b8",
+                "58696a50.e6e7c4"
+            ]
+        ]
+    },
+    {
+        "id": "c0177ca7.d2d62",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 2150,
+        "y": 900,
+        "wires": [
+            [
+                "b2a6b633.96a008",
+                "b19affe.a37ce8"
+            ]
+        ]
+    },
+    {
+        "id": "748359f7.c7dbd",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "MDA-FINISH",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 910,
+        "y": 700,
+        "wires": [
+            [
+                "60874cbb.273e04"
+            ]
+        ]
+    },
+    {
+        "id": "60874cbb.273e04",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "enbled",
+        "func": "var msg2 = {} ;\nif(msg.payload === 'MDA-FINISH'){\n    msg.enabled = true ;\n    msg2.enabled = false ;\n} else {\n    msg.enabled = false ;\n    msg2.enabled = true ;\n}\nreturn [msg,msg2];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 1070,
+        "y": 720,
+        "wires": [
+            [
+                "29dcc5e2.5dc1ea"
+            ],
+            [
+                "eba25719.09e028"
+            ]
+        ]
+    },
+    {
+        "id": "e28e1252.e9566",
+        "type": "link out",
+        "z": "a2f8d72b.054cc8",
+        "name": "Start/Stop/SIM",
+        "links": [
+            "e0125132.440ca"
+        ],
+        "x": 1295,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "e0125132.440ca",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "e28e1252.e9566"
+        ],
+        "x": 975,
+        "y": 740,
+        "wires": [
+            [
+                "60874cbb.273e04"
+            ]
+        ]
+    },
+    {
+        "id": "b2a6b633.96a008",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "func": "if(context.global.startMDA===1) {\n    var output = {} ;\n    output.timestamp = msg.payload ;\n    output.startMDA = context.global.startMDA ;\n    output.scanTime = global.get('scanTime') ;\n    output.extent = context.global.extent ;\n    output.valid = context.global.valid ;\n    output.initialize = context.global.initialize ;\n    output.nextStep = context.global.nextStep;\n    output.globalData = Object.keys(context.global.globalData).length ;\n    output.syncroOrderTime = context.global.sync2 ;\n    output.idOrderDevice = context.global.sync3 ;\n    return output;\n}\nif(msg.payload==='empty'){\n    var output = {} ;\n    output.timestamp = '' ;\n    output.startMDA = '' ;\n    output.scanTime = '' ;\n    output.extent = '' ;\n    output.valid = '' ;\n    output.initialize = '' ;\n    output.nextStep = '';\n    output.globalData = '' ;\n    output.syncroOrderTime = '' ;\n    output.idOrderDevice = '' ;\n    return output;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2350,
+        "y": 880,
+        "wires": [
+            [
+                "6e4505f4.6b2b3c"
+            ]
+        ]
+    },
+    {
+        "id": "16328122.9cdabf",
+        "type": "ui_template",
+        "z": "a2f8d72b.054cc8",
+        "group": "506eae80.34e9f",
+        "name": "",
+        "order": 1,
+        "width": "48",
+        "height": "20",
+        "format": "<div layout=\"row\" layout-align=\"space-between\">\n    <img src=\"{{msg.img[0]}}\">\n    <img src=\"{{msg.img[1]}}\">\n    <img src=\"{{msg.img[2]}}\">\n</div>\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Analyse d'image: </p>\n</div>\n",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 2500,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6daec34a.66c3dc",
+        "type": "exec",
+        "z": "a2f8d72b.054cc8",
+        "command": "ls lib/fakeImg",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 370,
+        "y": 740,
+        "wires": [
+            [
+                "1ccb8543.19a7bb"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a846769c.c837a8",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 740,
+        "wires": [
+            [
+                "6daec34a.66c3dc"
+            ]
+        ]
+    },
+    {
+        "id": "1ccb8543.19a7bb",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "func": "context.global.fakeImg = msg.payload.split('\\n').sort();\nmsg.payload = context.global.fakeImg;\ncontext.global.output = {} ;\ncontext.global.output.img = [];\ncontext.global.output.request = [];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 740,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b19affe.a37ce8",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "func": "if(context.global.startMDA===1) {\n    var limit = 3;\n    if(context.global.output.img.length<limit) context.global.output.img.unshift('/fakeImg/'+context.global.fakeImg[getRandomInt(4000)]);\n    else {\n        context.global.output.img.unshift('/fakeImg/'+context.global.fakeImg[getRandomInt(4000)]); //ajout devant / \n        context.global.output.img.pop() //enlever derriere\n    }\n    return context.global.output ;\n    \n}\nif(msg.payload==='empty'){\n    context.global.output.img = [] ;\n    return context.global.output ;\n}\nfunction getRandomInt(max){\n    return Math.floor(Math.random() * Math.floor(max));\n}\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2350,
+        "y": 920,
+        "wires": [
+            [
+                "16328122.9cdabf"
+            ]
+        ]
+    },
+    {
+        "id": "e2f29b38.e7a438",
+        "type": "comment",
+        "z": "a2f8d72b.054cc8",
+        "name": "Fake IMage",
+        "info": "",
+        "x": 150,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "659d82d5.4c2e5c",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "5af2b23.7f308cc"
+        ],
+        "x": 2215,
+        "y": 980,
+        "wires": [
+            [
+                "e0388252.03d338"
+            ]
+        ]
+    },
+    {
+        "id": "e0388252.03d338",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "func": "if(context.global.startMDA===1) {\n    msg.timestamp = new Date();\n    var limit = 5;\n    if(context.global.output['request'].length<limit) context.global.output['request'].unshift(msg);\n    else {\n        context.global.output.request.unshift(msg); //ajout devant / \n        context.global.output.request.pop() //enlever derriere\n    }\n    return context.global.output ;\n    \n}\nif(msg.payload==='empty'){\n    context.global.output.request = [] ;\n    return context.global.output ;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2350,
+        "y": 960,
+        "wires": [
+            [
+                "22c9df3b.ee6308",
+                "3acb3728.16207"
+            ]
+        ]
+    },
+    {
+        "id": "22c9df3b.ee6308",
+        "type": "ui_template",
+        "z": "a2f8d72b.054cc8",
+        "group": "6c4b24d.58dc95c",
+        "name": "",
+        "order": 1,
+        "width": "48",
+        "height": "5",
+        "format": "<div layout=\"row\" layout-align=\"space-between\">\n    <p>Timestamp: </p>\n    <font color=\"white\">{{msg.request[0].timestamp}}\n    </font>\n    <p>Device: </p>\n    <font color=\"green\">{{msg.request[0].device}}\n    </font>\n    <p>Topic: </p>\n    <font color=\"green\">{{msg.request[0].topic}}\n    </font>\n    <p>Action: </p>\n    <font color=\"green\">{{msg.request[0].action}}\n    </font>\n    <p>Sync: </p>\n    <font color=\"cyan\">{{msg.request[0].sync}}\n    </font>\n    <p>Extent: </p>\n    <font color=\"cyan\">{{msg.request[0].extent}}\n    </font>\n</div>\n\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Timestamp: </p>\n    <font color=\"white\">{{msg.request[1].timestamp}}\n    </font>\n    <p>Device: </p>\n    <font color=\"green\">{{msg.request[1].device}}\n    </font>\n    <p>Topic: </p>\n    <font color=\"green\">{{msg.request[1].topic}}\n    </font>\n    <p>Action: </p>\n    <font color=\"green\">{{msg.request[1].action}}\n    </font>\n    <p>Sync: </p>\n    <font color=\"cyan\">{{msg.request[1].sync}}\n    </font>\n    <p>Extent: </p>\n    <font color=\"cyan\">{{msg.request[1].extent}}\n    </font>\n</div>\n\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Timestamp: </p>\n    <font color=\"white\">{{msg.request[2].timestamp}}\n    </font>\n    <p>Device: </p>\n    <font color=\"green\">{{msg.request[2].device}}\n    </font>\n    <p>Topic: </p>\n    <font color=\"green\">{{msg.request[2].topic}}\n    </font>\n    <p>Action: </p>\n    <font color=\"green\">{{msg.request[2].action}}\n    </font>\n    <p>Sync: </p>\n    <font color=\"cyan\">{{msg.request[2].sync}}\n    </font>\n    <p>Extent: </p>\n    <font color=\"cyan\">{{msg.request[2].extent}}\n    </font>\n</div>\n\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Timestamp: </p>\n    <font color=\"white\">{{msg.request[3].timestamp}}\n    </font>\n    <p>Device: </p>\n    <font color=\"green\">{{msg.request[3].device}}\n    </font>\n    <p>Topic: </p>\n    <font color=\"green\">{{msg.request[3].topic}}\n    </font>\n    <p>Action: </p>\n    <font color=\"green\">{{msg.request[3].action}}\n    </font>\n    <p>Sync: </p>\n    <font color=\"cyan\">{{msg.request[3].sync}}\n    </font>\n    <p>Extent: </p>\n    <font color=\"cyan\">{{msg.request[3].extent}}\n    </font>\n</div>\n\n<div layout=\"row\" layout-align=\"space-between\">\n    <p>Timestamp: </p>\n    <font color=\"white\">{{msg.request[4].timestamp}}\n    </font>\n    <p>Device: </p>\n    <font color=\"green\">{{msg.request[4].device}}\n    </font>\n    <p>Topic: </p>\n    <font color=\"green\">{{msg.request[4].topic}}\n    </font>\n    <p>Action: </p>\n    <font color=\"green\">{{msg.request[4].action}}\n    </font>\n    <p>Sync: </p>\n    <font color=\"cyan\">{{msg.request[4].sync}}\n    </font>\n    <p>Extent: </p>\n    <font color=\"cyan\">{{msg.request[4].extent}}\n    </font>\n</div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "templateScope": "local",
+        "x": 2500,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "79cae5fc.ad23c4",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "83a600b5.58b5d",
+        "order": 2,
+        "width": "24",
+        "height": "2",
+        "name": "Blank",
+        "label": "",
+        "format": "",
+        "layout": "row-spread",
+        "x": 2910,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "6b57874f.8c9228",
+        "type": "ui_text",
+        "z": "a2f8d72b.054cc8",
+        "group": "d87d67f0.5dd31",
+        "order": 7,
+        "width": "24",
+        "height": "1",
+        "name": "Blank",
+        "label": "",
+        "format": "",
+        "layout": "row-spread",
+        "x": 2910,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "3acb3728.16207",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 2470,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "7783ece.5c8e414",
+        "type": "function",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "func": "context.global.output.img = [] ;\ncontext.global.output.request = [] ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1180,
+        "y": 520,
+        "wires": [
+            [
+                "a42a06ab.2c397"
+            ]
+        ]
+    },
+    {
+        "id": "58696a50.e6e7c4",
+        "type": "link out",
+        "z": "a2f8d72b.054cc8",
+        "name": "EraseBP",
+        "links": [
+            "37c19d5a.e6a78a"
+        ],
+        "x": 2435,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "37c19d5a.e6a78a",
+        "type": "link in",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "links": [
+            "58696a50.e6e7c4"
+        ],
+        "x": 2215,
+        "y": 940,
+        "wires": [
+            [
+                "e0388252.03d338",
+                "b19affe.a37ce8",
+                "b2a6b633.96a008"
+            ]
+        ]
+    },
+    {
+        "id": "37981105.e7436e",
+        "type": "exec",
+        "z": "a2f8d72b.054cc8",
+        "command": "python",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 1590,
+        "y": 920,
+        "wires": [
+            [
+                "720b559e.6eb554"
+            ],
+            [
+                "720b559e.6eb554"
+            ],
+            [
+                "720b559e.6eb554"
+            ]
+        ]
+    },
+    {
+        "id": "23739278.55dc26",
+        "type": "inject",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 1360,
+        "y": 960,
+        "wires": [
+            [
+                "37981105.e7436e"
+            ]
+        ]
+    },
+    {
+        "id": "720b559e.6eb554",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1830,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "7d04e759.dbf4",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1590,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "da27445d.244ac8",
+        "type": "catch",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "scope": [
+            "19a32336.5ebe45"
+        ],
+        "uncaught": false,
+        "x": 790,
+        "y": 960,
+        "wires": [
+            [
+                "90dfce63.cc633"
+            ]
+        ]
+    },
+    {
+        "id": "90dfce63.cc633",
+        "type": "debug",
+        "z": "a2f8d72b.054cc8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 970,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "35f1683b.485eb",
+        "type": "ui_group",
+        "z": "",
+        "name": "Chronogramm-Devices",
+        "tab": "aa25d7d3.542ed",
+        "order": 3,
+        "disp": true,
+        "width": "24",
+        "collapse": false
+    },
+    {
+        "id": "d87d67f0.5dd31",
+        "type": "ui_group",
+        "z": "",
+        "name": "Control-Simulator",
+        "tab": "aa25d7d3.542ed",
+        "order": 1,
+        "disp": true,
+        "width": "24",
+        "collapse": false
+    },
+    {
+        "id": "7c1b7a38.92818c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Syncro-Sequencer",
+        "tab": "aa25d7d3.542ed",
+        "order": 4,
+        "disp": true,
+        "width": "24",
+        "collapse": false
+    },
+    {
+        "id": "83a600b5.58b5d",
+        "type": "ui_group",
+        "z": "",
+        "name": "Sauvegarde",
+        "tab": "aa25d7d3.542ed",
+        "order": 2,
+        "disp": true,
+        "width": "24",
+        "collapse": false
+    },
+    {
+        "id": "68c9b292.25a044",
+        "type": "ui_group",
+        "z": "",
+        "name": "Global",
+        "tab": "abf3f496.e65d58",
+        "order": 1,
+        "disp": true,
+        "width": "24",
+        "collapse": false
+    },
+    {
+        "id": "e4833903.13f07",
+        "type": "ui_group",
+        "z": "",
+        "name": "Output-Global",
+        "tab": "aa25d7d3.542ed",
+        "order": 6,
+        "disp": true,
+        "width": "48",
+        "collapse": false
+    },
+    {
+        "id": "506eae80.34e9f",
+        "type": "ui_group",
+        "z": "",
+        "name": "Output-Image",
+        "tab": "aa25d7d3.542ed",
+        "order": 7,
+        "disp": true,
+        "width": "48",
+        "collapse": false
+    },
+    {
+        "id": "6c4b24d.58dc95c",
+        "type": "ui_group",
+        "z": "",
+        "name": "Request-Device",
+        "tab": "aa25d7d3.542ed",
+        "order": 5,
+        "disp": true,
+        "width": "48",
+        "collapse": false
+    },
+    {
+        "id": "aa25d7d3.542ed",
+        "type": "ui_tab",
+        "z": "",
+        "name": "3. Launch-SIMulator",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "abf3f496.e65d58",
+        "type": "ui_tab",
+        "z": "",
+        "name": "2. Check Global",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    }
+]

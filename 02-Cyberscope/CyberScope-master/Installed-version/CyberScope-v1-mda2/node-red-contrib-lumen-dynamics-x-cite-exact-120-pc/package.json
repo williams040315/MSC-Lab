@@ -1,0 +1,20 @@
+{
+    "name"         : "node-red-contrib-lumen-dynamics-x-cite-exact-120-pc",
+    "version"      : "1.0.0",
+    "description"  : "",
+    "keywords": [ "node-red" ],
+    "author": "Williams BRETT | Lab513",
+    "dependencies":{
+        "serialport":"7.1.0"
+        },
+    "node-red"     : {
+        "nodes": {
+            "LdynamicsXCite": "LdynamicsXCite/LdynamicsXCite.js"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/.........."
+    },
+    "license": "CNRS, University Paris 7, MSC"
+}

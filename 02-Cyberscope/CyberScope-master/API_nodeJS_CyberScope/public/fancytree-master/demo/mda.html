@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <title>Multiple Extensions - Fancytree</title>
+
+  <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+
+  <!-- This demo uses an 3rd-party, jQuery UI based context menu -->
+  <link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <!-- jquery-contextmenu (https://github.com/mar10/jquery-ui-contextmenu/) -->
+  <script src="//cdn.jsdelivr.net/npm/ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
+
+  <link href="../src/skin-win8/ui.fancytree.css" rel="stylesheet">
+  <script src="../src/jquery.fancytree.js"></script>
+  <script src="../src/jquery.fancytree.dnd5.js"></script>
+  <script src="../src/jquery.fancytree.edit.js"></script>
+  <script src="../src/jquery.fancytree.gridnav.js"></script>
+  <script src="../src/jquery.fancytree.table.js"></script>
+<script src="../src/jquery.fancytree.multi.js"></script>
+<!--
+  <script src="../../build/jquery.fancytree-all.min.js"></script>
+-->
+
+  <!-- (Irrelevant source removed.) -->
+
+<style type="text/css">
+  .ui-menu {
+    width: 180px;
+    font-size: 63%;
+  }
+  .ui-menu kbd { /* Keyboard shortcuts for ui-contextmenu titles */
+    float: right;
+  }
+  /* custom alignment (set by 'renderColumns'' event) */
+  td.alignRight {
+     text-align: right;
+  }
+  td.alignCenter {
+     text-align: center;
+  }
+  td input[type=input] {
+    width: 40px;
+  }
+</style>
+
+<script type="text/javascript">
+var CLIPBOARD = null;
+$(function(){
+  $("#tree").fancytree({
+/*    activate: function(event, data){
+        var node = data.node;
+        alert(node);
+    },*/
+    checkbox: false, //function(event, data) {
+    // Hide checkboxes for folders
+      //return data.node.isFolder() ? false : true;
+    //},
+    tooltip: function(event, data) {
+      // Create dynamic tooltips
+      //return data.node.title + " (" + data.node.key + ")";
+      var node = data.node;
+      if( node.type === "XYZ" )   return "XYZ position";
+      if(node.type === "LIGHT")   return "Lighting";
+      if(node.type === "CAMERA")  return "Camera";
+      if(node.type === "AF")      return "Autofocus";
+      if(node.type === "ZS")      return "Z-Stack";
+      //node.title = "toto";
+    },
+    icon: function(event, data) {
+      var node = data.node;
+      if( node.type === "XYZ" )   return "skin-custom/arrow_in.png";
+      if(node.type === "LIGHT")   return "skin-custom/color_wheel.png";
+      if(node.type === "CAMERA")  return "skin-custom/camera.png";
+      if(node.type === "AF")      return "skin-custom/autofocus.png";
+      if(node.type === "ZS")      return "skin-custom/zstack.png";
+      if( node.type === "PROT" )  return "skin-custom/protocol.png";
+      },
+    titlesTabbable: true,
+    quicksearch: true,
+    source: { url: "test.json"},
+    extensions: ["edit", "dnd5", "table", "gridnav","multi"],
+    unselectable: function(event, data) {
+      return data.node.isFolder();
+    },
+    multi: {
+      mode: "sameParent",
+    },
+    activate: function(event, data) {
+      $("#lblActive").text("" + data.node);
+    },
+    dnd5: {
+      preventVoidMoves: true,
+      preventRecursiveMoves: true,
+      autoExpandMS: 400,
+      dragStart: function(node, data) {
+        return true;
+      },
+      dragEnter: function(node, data) {
+        // return ["before", "after"];
+        return true;
+      },
+      dragDrop: function(node, data) {
+        data.otherNode.moveTo(node, data.hitMode);
+      }
+    },
+    edit: {
+      triggerStart: ["dblclick", "f2", "mac+enter", "shift+click"],
+      //node.icon = "accept.png",
+      //node.renderTitle(),
+      close: function(event, data) {
+        if( data.save && data.isNew ){
+          // Quick-enter: add new nodes until we hit [enter] on an empty title
+          $("#tree").trigger("nodeCommand", {cmd: "addSibling"});
+        }
+      }
+    },
+    table: {
+      indentation: 20,
+      nodeColumnIdx: 2,
+      checkboxColumnIdx: 0
+    },
+    gridnav: {
+      autofocusInput: false,
+      handleCursorKeys: true
+    },
+
+/*    lazyLoad: function(event, data) {
+      data.result = {url: "../demo/ajax-sub2.json"};
+    },*/
+    createNode: function(event, data) {
+      var node = data.node,
+        $tdList = $(node.tr).find(">td");
+
+      // Span the remaining columns if it's a folder.
+      // We can do this in createNode instead of renderColumns, because
+      // the `isFolder` status is unlikely to change later
+      if( node.isFolder() ) {
+        $tdList.eq(2)
+          .prop("colspan", 7)
+          .nextAll().remove();
+      }
+    },
+    renderColumns: function(event, data) {
+      var node = data.node,
+        $tdList = $(node.tr).find(">td");
+
+      // (Index #0 is rendered by fancytree by adding the checkbox)
+      // Set column #1 info from node data:
+      $tdList.eq(1).text(node.getIndexHier());
+      // (Index #2 is rendered by fancytree)
+      // Set column #3 info from node data:
+      $tdList.eq(3).find("input").val(node.key);
+      $tdList.eq(4).find("input").val(node.data.foo);
+
+      // Static markup (more efficiently defined as html row template):
+      // $tdList.eq(3).html("<input type='input' value='" + "" + "'>");
+      // ...
+    }
+  }).on("nodeCommand", function(event, data){
+    // Custom event handler that is triggered by keydown-handler and
+    // context menu:
+    var refNode, moveMode,
+      tree = $(this).fancytree("getTree"),
+      node = tree.getActiveNode();
+
+    switch( data.cmd ) {
+    case "moveUp":
+      refNode = node.getPrevSibling();
+      if( refNode ) {
+        node.moveTo(refNode, "before");
+        node.setActive();
+      }
+      break;
+    case "moveDown":
+      refNode = node.getNextSibling();
+      if( refNode ) {
+        node.moveTo(refNode, "after");
+        node.setActive();
+      }
+      break;
+    case "indent":
+      refNode = node.getPrevSibling();
+      if( refNode ) {
+        node.moveTo(refNode, "child");
+        refNode.setExpanded();
+        node.setActive();
+      }
+      break;
+    case "outdent":
+      if( !node.isTopLevel() ) {
+        node.moveTo(node.getParent(), "after");
+        node.setActive();
+      }
+      break;
+    case "rename":
+      node.editStart();
+      break;
+    case "remove":
+      refNode = node.getNextSibling() || node.getPrevSibling() || node.getParent();
+      node.remove();
+      if( refNode ) {
+        refNode.setActive();
+      }
+      break;
+    case "addChild":
+      node.editCreateNode("child", "");
+      break;
+    case "addSibling":
+      node.editCreateNode("after", "");
+      break;
+    case "cut":
+      CLIPBOARD = {mode: data.cmd, data: node};
+      break;
+    case "copy":
+      CLIPBOARD = {
+        mode: data.cmd,
+        data: node.toDict(function(n){
+          delete n.key;
+        })
+      };
+      break;
+    case "clear":
+      CLIPBOARD = null;
+      break;
+    case "paste":
+      if( CLIPBOARD.mode === "cut" ) {
+        // refNode = node.getPrevSibling();
+        CLIPBOARD.data.moveTo(node, "child");
+        CLIPBOARD.data.setActive();
+      } else if( CLIPBOARD.mode === "copy" ) {
+        node.addChildren(CLIPBOARD.data).setActive();
+      }
+      break;
+    default:
+      alert("Unhandled command: " + data.cmd);
+      return;
+    }
+
+   }).on("click", function(e){
+     //alert("youpi");//
+     console.log( e, $.ui.fancytree.eventToString(e) );
+
+  }).on("keydown", function(e){
+    var cmd = null;
+
+    // console.log(e.type, $.ui.fancytree.eventToString(e));
+    switch( $.ui.fancytree.eventToString(e) ) {
+    case "ctrl+shift+b":
+      cmd = "addChild";
+      break;
+    case "ctrl+b":
+      cmd = "addSibling";
+      break;
+    case "meta+shift+n": // mac: cmd+shift+n
+      cmd = "addChild";
+      break;
+    case "ctrl+c":
+    case "meta+c": // mac
+      cmd = "copy";
+      break;
+    case "ctrl+v":
+    case "meta+v": // mac
+      cmd = "paste";
+      break;
+    case "ctrl+x":
+    case "meta+x": // mac
+      cmd = "cut";
+      break;
+    case "ctrl+n":
+    case "meta+n": // mac
+      cmd = "addSibling";
+      break;
+    case "del":
+    case "meta+backspace": // mac
+      cmd = "remove";
+      break;
+    // case "f2":  // already triggered by ext-edit pluging
+    //   cmd = "rename";
+    //   break;
+    case "ctrl+up":
+      cmd = "moveUp";
+      break;
+    case "ctrl+down":
+      cmd = "moveDown";
+      break;
+    case "ctrl+right":
+    case "ctrl+shift+right": // mac
+      cmd = "indent";
+      break;
+    case "ctrl+left":
+    case "ctrl+shift+left": // mac
+      cmd = "outdent";
+    }
+    if( cmd ){
+      $(this).trigger("nodeCommand", {cmd: cmd});
+      // e.preventDefault();
+      // e.stopPropagation();
+      return false;
+    }
+  });
+
+  /*
+   * Tooltips
+   */
+  // $("#tree").tooltip({
+  //   content: function () {
+  //     return $(this).attr("title");
+  //   }
+  // });
+
+  /*
+   * Context menu (https://github.com/mar10/jquery-ui-contextmenu)
+   */
+  $("#tree").contextmenu({
+    delegate: "span.fancytree-node",
+    menu: [
+      {title: "Edit <kbd>[F2]</kbd>", cmd: "rename", uiIcon: "ui-icon-pencil" },
+      {title: "Delete <kbd>[Del]</kbd>", cmd: "remove", uiIcon: "ui-icon-trash" },
+      {title: "----"},
+      {title: "New sibling <kbd>[Ctrl+B]</kbd>", cmd: "addSibling", uiIcon: "ui-icon-plus" },
+      {title: "New child <kbd>[Ctrl+Shift+B]</kbd>", cmd: "addChild", uiIcon: "ui-icon-arrowreturn-1-e" },
+      {title: "----"},
+      {title: "Cut <kbd>Ctrl+X</kbd>", cmd: "cut", uiIcon: "ui-icon-scissors"},
+      {title: "Copy <kbd>Ctrl-C</kbd>", cmd: "copy", uiIcon: "ui-icon-copy"},
+      {title: "Paste as child<kbd>Ctrl+V</kbd>", cmd: "paste", uiIcon: "ui-icon-clipboard", disabled: true }
+      ],
+    beforeOpen: function(event, ui) {
+      var node = $.ui.fancytree.getNode(ui.target);
+      $("#tree").contextmenu("enableEntry", "paste", !!CLIPBOARD);
+      node.setActive();
+    },
+    select: function(event, ui) {
+      var that = this;
+      // delay the event, so the menu can close and the click event does
+      // not interfere with the edit control
+      setTimeout(function(){
+        $(that).trigger("nodeCommand", {cmd: ui.cmd});
+      }, 100);
+    }
+  });
+});
+</script>
+</head>
+
+<body class="example">
+  <table id="tree">
+    <colgroup>
+    <col width="30px">
+    <col width="50px">
+    <col width="350px">
+    <!--<col width="100px">
+    <col width="100px">
+    <col width="100px">
+    <col width="100px">
+    <col width="50px">-->
+    </colgroup>
+    <thead>
+      <tr> <th></th> <th></th> <th></th> <!--<th>Z-stacks</th> <th>Autofocus</th> <th>Save Images</th> <th>Comment</th> <th>Color</th>--> </tr>
+    </thead>
+    <tbody>
+      <!-- Define a row template for all invariant markup: -->
+      <tr>
+        <td class="alignCenter"></td>
+        <td></td>
+        <td></td>
+<!--        <td class="alignCenter"><input name="Z-stacks" type="checkbox"></td>
+        <td class="alignCenter"><input name="Auto-focus" type="checkbox"></td>
+        <td><input name="Save images" type="input"></td>
+        <td><input name="Comment" type="input"></td>
+        <td class="alignCenter"><input name="Color" type="color"></td>-->
+      </tr>
+    </tbody>
+  </table>
+<p>Active: <span id="lblActive">-</span></p>
+<li class="folder">Extensions
+				<ul>
+					<li><a target="content" href="sample-ext-childcounter.html">Child Counter</a></li>
+					<li><a target="content" href="sample-ext-clones.html">Clones</a></li>
+					<li><a target="content" href="sample-ext-columnview.html">Column View</a></li>
+					<li><a target="content" href="sample-ext-menu.html">Context Menu</a></li>
+					<li><a target="content" href="sample-ext-dnd5.html">Drag'n'Drop (HTML5)</a></li>
+					<li><a target="content" href="sample-ext-dnd.html">Drag'n'Drop (jQuery UI)</a></li>
+					<li><a target="content" href="sample-ext-edit.html">Edit</a></li>
+					<li><a target="content" href="sample-ext-filter.html">Filter</a></li>
+					<li><a target="content" href="sample-ext-fixed.html">Fixed Headers</a></li>
+					<li><a target="content" href="sample-ext-glyph-bootstrap3.html">Glyph Fonts</a></li>
+					<li><a target="content" href="sample-ext-logger.html">Logger</a></li>
+					<li><a target="content" href="sample-ext-multi.html">Multi-Select</a></li>
+					<li class="external"><a target="_blank" href="sample-ext-persist.html">Persist</a></li>
+					<li><a target="content" href="sample-ext-table.html">Table</a></li>
+					<li><a target="content" href="sample-ext-themeroller.html">ThemeRoller</a></li>
+					<li><a target="content" href="sample-ext-wide.html">Wide</a></li>
+				</ul>
+			</li>
+<button onclick=test();>TEST</button>
+  <!-- (Irrelevant source removed.) -->
+  
+  <script>
+    function test(){
+      var tree = $("#tree").fancytree("getTree");
+      var d = tree.toDict(true);
+      alert(JSON.stringify(d));
+      alert("cool raoul");
+    }
+  </script>
+</body>
+</html>

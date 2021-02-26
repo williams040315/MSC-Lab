@@ -1,0 +1,22 @@
+[
+    {
+        "id": "1537e2f.89eb61d",
+        "type": "inject",
+        "z": "f2f4179b.10a3e8",
+        "name": "",
+        "topic": "",
+        "payload": "Hello World",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 310,
+        "y": 100,
+        "wires": [
+            [
+                "59ea9365.8f42bc"
+            ]
+        ]
+    }
+]

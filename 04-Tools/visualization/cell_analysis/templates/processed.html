@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>  </title>
+
+    <!-- .js -->
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dropzone.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/manage_drop.js') }}"></script>
+
+    <!-- .css -->
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/dropzone.css">
+    <link rel="stylesheet" href="/static/css/list_processed.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+</head>
+
+<body>
+
+  {% include 'header_doc_exit.html' %}
+
+    <!--  Navbar -->
+
+    <nav class="navbar-custom ">
+    <!-- <nav class="navbar-default ">  -->
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="visu_results"> <i class="fa fa-eye  fa-1x fa-fw" style="line-height : 50px; top:150px" aria-hidden="true"></i> visualisation </a>
+        </div>
+      </div>
+    </nav>
+
+  <div class='processed_names'>
+
+    <!-- Button Reload -->
+
+    <div class="wrapper" style='padding-left:100px'>
+        <button class="btn btn-success" id="reload" > <i class="fa fa-chevron-right" aria-hidden="true"></i> Reload </button>
+    </div>
+
+      {% for name_dir in list_dir %}
+          <h5 class='list_dir' style='padding-left:100px'> {{name_dir}} </h5>
+      {% endfor %}
+
+    <div>
+
+    <!-- Button Erase -->
+
+     <div class="wrapper" style='padding-left:100px'>
+        <button class="btn btn-warning" id="erase" > <i class="fa fa-chevron-right" aria-hidden="true"></i> Erase </button>
+    </div>
+
+    <!-- Form Erase -->
+
+    <form action="/erase_processed" method="post" id='form_erase_proc' hidden>
+          <input name="erase_data" value='blabla' type="submit" id='data_to_erase'  >
+    </form>
+
+    <!-- Form Reloads -->
+
+    <form action="/reload" method="post" id='form_reload' hidden>
+          <input name="reload_data" value='blabla' type="submit" id='data_to_reload'  >
+    </form>
+
+
+    <script>
+
+        // list of the processed datasets with checkbox
+
+        $('.list_dir').each(function(){
+            $(this).append($('<input/>')
+                  .addClass('check')
+                  .attr('type', "checkbox").css({'left':'280px', 'top':'-10px'}))  // checkbox
+                  .attr('id', $(this).text())
+        })
+
+        // Erasing
+
+        var list_check = []                                //
+        $('#erase').click(function(){                      //
+          $('.check').each(function(){
+              if ($(this).is(':checked')){
+                    list_check.push($(this).parent().attr('id'))
+                  }
+             }) // end .check
+          allchecks = JSON.stringify(list_check)          // list of the files to process
+          alert(allchecks)
+          $('#data_to_erase').attr('value', allchecks)    // inject list_checks in the form
+          $('#data_to_erase').click()                     // sending the form to the server (click instead of submit)
+
+
+        })                                                // end click #processing
+
+        // Reloading
+
+        $('#reload').click(function(){                      //
+          $('.check').each(function(){
+              if ($(this).is(':checked')){
+                    list_check.push($(this).parent().attr('id'))
+                  }
+             }) // end .check
+          allchecks = JSON.stringify(list_check)          // list of the files to process
+          alert(allchecks)
+          $('#data_to_reload').attr('value', allchecks)    // inject list_checks in the form
+          $('#data_to_reload').click()                     // sending the form to the server (click instead of submit)
+
+        })                                                // end click #processing
+
+      </script>
+
+   {% include 'footer.html' %}
+
+
+</body>
+</html>

@@ -1,0 +1,487 @@
+ body {
+     background-color: #ffffff;
+ }
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #9abc5e;
+    border-color:#8bb049;
+    background-image: linear-gradient(to bottom, #ffffff 0%, #9abc5e 100%);
+    z-index: 20;
+}
+.centering {
+    text-align: center;
+}
+
+.retrieve {
+    margin-top: -50 px;
+    margin-left: 10%;
+}
+
+.centering_foot {
+    margin-left: 45%;
+}
+
+
+.centered {
+    position: absolute;
+    top: 50%;
+}
+
+/*
+###### Panel (blue) with all names of the file to be processed
+*/
+
+div.folders{
+
+    /* box-shadow: 0.5em 0.5em 0.7em; */
+    /*max-width: 800px;*/
+    width: 500px;
+    height: 400px;
+    background-color: #fffff;/*#f0f5f5 ; #99ccff*/
+    font-size:85%;
+    font-color:#fff;
+    /* overflow-y: scroll; */
+    z-index: 20;
+    }
+
+.dropzone {
+   /*width: 10%; Changing size of the dropzone*/
+   margin-top: 5%;
+   height: 100px; /*Changing size of the dropzone*/
+   min-height: 0px !important;
+}
+
+.dz-message {
+    position: relative;
+    top: -20%;
+}
+
+#processing {
+    position: absolute;
+    bottom: 20%;
+    left: 80%;
+
+}
+
+ /* div.params { */
+    /*position: fixed;*/
+    /*position: relative;*/
+    /* padding-left: 30px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: -0px;
+    left: 45%;
+    margin-left: -230px;
+    margin-top: -300px;
+    height: 300px;
+    width: 250px;
+    background-color: #ddffcc;
+    font-size:85%; */
+    /* } */
+
+#list_files {
+   /* icon for parameters*/
+    position: absolute;
+    top: 10%;
+    left:10%;
+  }
+
+.listfiles {
+
+    position: absolute;
+    top: 300px;
+    left:33%;
+    font-size:15px;
+    width:500px;
+
+    }
+
+.dz-details {
+
+    height: 50px;
+    width: 50px;
+
+}
+
+/* Processings controls */
+
+.proc_controls {
+
+      /* informations about the processings */
+
+      box-shadow: 0.5em 0.5em 0.7em;
+      position: absolute;
+      top: 100px;
+      right: 25%;
+      height: 400px;
+      width: 300px;
+      z-index: : 10;
+      opacity: 1;
+      z-index: : 1000;
+
+}
+
+.state_proc {
+
+      /* indicates the processing being done */
+
+      position: absolute;
+      top: 20px;
+      left:50px;
+
+    }
+
+.curr_state {
+
+      /* indicates the current proc's step */
+
+      position: absolute;
+      top: 200px;
+      left:50px;
+
+    }
+
+.ratio_done {
+
+      /* indicates the ratio of procs done */
+
+      position: absolute;
+      top: 250px;
+      left:50px;
+
+    }
+
+.num_im {
+
+      /* indicates the processing being done */
+
+      position: absolute;
+      top: 300px;
+      left:50px;
+
+    }
+
+.curr_proc {
+
+      /* indicates the file currently processed */
+      position: absolute;
+      top: 450px;
+      right:350px;
+
+    }
+
+/* Time controls */
+
+.time_controls {
+
+      /* time informations about the processings */
+
+      box-shadow: 0.5em 0.5em 0.7em;
+      position: absolute;
+      top: 400px;
+      left: 30%;
+      height: 100px;
+      width: 300px;
+      z-index: : 10;
+
+}
+
+.time_one_proc {
+
+      /* indicates the time used for the last processing */
+
+      position: absolute;
+      top: 30px;
+      left:50px;
+    }
+
+.telapsed {
+
+      /* indicates the file currently processed */
+
+      position: absolute;
+      top: 55px;
+      left:50px;
+
+    }
+
+.all_procs_time {
+
+      /* indicates the total time elapsed */
+
+      position: absolute;
+      top: 55px;
+      left:50px;
+    }
+
+/* Operation selection */
+
+#selectop {
+
+      position: absolute;
+      top: 200px;
+      right:30%;
+
+}
+
+#op  {
+      position: absolute;
+      top: 150px;
+      right: 150px;
+}
+
+#op > .bootstrap-select {
+      width: 150px;
+}
+
+.params {
+      position: absolute;
+      top: 200px;
+      right:80px;
+      height: 300px;
+      width: 150px;
+    }
+
+.lateral_bar {
+     position: fixed;
+     box-shadow: 0.5em 0.5em 0.7em;
+     top: 200px;
+     right: 1%;
+     height: 300px;
+     width: 50px;
+     background-color: #ddffcc;
+     font-size:85%;
+  }
+
+  .icon_save {
+
+    position: absolute;
+    top: 50px;
+    right: 17px;
+    height: 15px;
+    width: 15px;
+
+  }
+
+  .icon_set {
+
+    position: absolute;
+    top: 100px;
+    right: 17px;
+    height: 15px;
+    width: 15px;
+
+  }
+
+  .icon_settings {
+
+    height: 17px;
+    /* width: 20px; */
+
+  }
+
+  .icon_infos_hs {
+
+    position: absolute;
+    top: 150px;
+    right: 20px;
+    height: 15px;
+    width: 15px;
+
+  }
+
+  /* Panel for retrieving the address where are saved the results */
+
+.addr_save_panel {
+
+   position: absolute;
+   box-shadow: 0.5em 0.5em 0.7em;
+   top: 30px;
+   right: 50px;
+   height: 50px;
+   width: 400px;
+   background-color: white;
+   /* font-size:85%; */
+   z-index: 20;
+
+  }
+
+/* Processing configuration panel */
+
+.set_panel {
+     position: absolute;
+     box-shadow: 0.5em 0.5em 0.7em;
+     top: 80px;
+     right: 50px;
+     height: 400px;
+     width: 400px;
+     padding-left: 50px;
+     padding-top: 50px;
+     background-color: white;
+     /* font-size:85%; */
+     z-index: 20;
+  }
+
+/* Processings address */
+
+#addr_save_text {
+
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    height: 30px;
+    width: 380px;
+
+}
+
+/* Panel for examinating the results */
+
+.proc_pics_panel {
+
+     position: absolute;
+     box-shadow: 0.5em 0.5em 0.7em;
+     top: 80px;
+     left: 50px;
+     height: 600px;
+     width: 600px;
+     padding-left: 50px;
+     padding-top: 50px;
+     background-color: white;
+     z-index: 20;
+
+  }
+
+#curr_proc_pic {
+
+    /* Current picture */
+
+    height: 500px;
+    width: 500px;
+
+}
+
+#butt_img_up {
+
+     position: absolute;
+     box-shadow: 0.5em 0.5em 0.7em;
+     top: 50%;
+     right: 10px;
+     width:22px;
+     height:22px;
+     z-index: 1;
+
+  }
+
+#butt_img_down {
+
+     position: absolute;
+     box-shadow: 0.5em 0.5em 0.7em;
+     top: 50%;
+     left: 10px;
+     width:22px;
+     height:22px;
+     z-index: 1;
+
+}
+
+/* maximize the control processing window */
+
+#win_maxi {
+
+     position: absolute;
+     top: 10px;
+     right: 50px;
+     width:25px;
+     height:25px;
+     z-index: 1;
+
+  }
+
+/* minimize the control processing window */
+
+#win_mini {
+
+     position: absolute;
+     top: 10px;
+     right: 30px;
+     width:25px;
+     height:25px;
+     z-index: 1;
+
+  }
+
+/* close the control processing window */
+
+#win_close {
+
+     position: absolute;
+     top: 10px;
+     right: 10px;
+     width:25px;
+     height:25px;
+     z-index: 1;
+
+  }
+
+#win_num_im {
+
+     position: absolute;
+     bottom: 10px;
+     right: 10px;
+     /* width:25px;
+     height:25px; */
+     z-index: 1;
+
+  }
+
+/* Panel with infos about hardware and software */
+
+.hard_soft_infos_panel {
+
+     position: absolute;
+     box-shadow: 0.5em 0.5em 0.7em;
+     top: 300px;
+     right: 50px;
+     height: 300px;
+     width: 300px;
+     padding-left: 50px;
+     padding-top: 50px;
+     background-color: white;
+     z-index: 20;
+
+  }
+
+  /* options for processing */
+
+  .proc_opts {
+
+       position: absolute;
+       box-shadow: 0.5em 0.5em 0.7em;
+       top: 150px;
+       right: 50%;
+       height: 250px;
+       width: 300px;
+       padding-left: 50px;
+       padding-top: 50px;
+       background-color: white;
+       z-index: 20;
+
+    }
+
+    #model  {
+          position: absolute;
+          top: 50px;
+          right: 100px;
+          width: 50px;
+    }
+
+    /* model select */
+
+    #model > .bootstrap-select  {
+          width: 120px;
+    }

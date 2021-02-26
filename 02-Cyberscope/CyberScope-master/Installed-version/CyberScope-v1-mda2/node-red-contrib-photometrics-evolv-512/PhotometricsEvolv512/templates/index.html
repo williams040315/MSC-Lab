@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <!--<title>Video Streaming Demonstration</title>-->
+    <script>
+      function grab(){
+        window.location = "http://127.0.0.1:5000/grab";
+      }
+      function liveOn(){
+        window.location = "http://127.0.0.1:5000/liveOn";
+      }
+      function liveOff(){
+        alert("r");
+        document.getElementById("#camera").src = "liveOff.jpg";
+      }
+    </script>
+  </head>
+  <body>
+    <!--<h1>Video Streaming Demonstration</h1>-->
+      <div style="text-align: center;">
+        <button onclick=grab();>Grab Picture</button>
+        <button onclick=liveOn();>Live ON</button>
+        <button onclick=liveOff();>Live OFF</button>
+        <br><br>
+        <img id="camera" style="margin: 0 auto;" src="{{ url_for('video_feed') }}">
+      </div>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+/*
+ * Filename: c:\Users\Natasha\Desktop\auth-cyberScope\public\css\styleWelcome.css
+ * Created Date: Thursday, April 4th 2019, 4:11:45 pm
+ * Author: Pierre-Louis CRESCITZ
+ * Author email: pierre-louis.crescitz@epitech.eu
+ * Description: Style for welcome.html
+ * 
+ * OpenSource
+ */
+
+
+*, *:before, *:after {
+  box-sizing: border-box !important;
+}
+
+html {
+  overflow-y: scroll !important;
+}
+
+body {
+  background: #c1bdba !important;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+a {
+  text-decoration: none !important;
+  color: #1ab188 !important;
+  transition: .5s ease !important;
+}
+a:hover {
+  color: #179b77 !important;
+}
+
+.form {
+  background: rgba(19, 35, 47, 0.9) !important;
+  padding: 40px !important;
+  max-width: 600px !important;
+  margin: 40px auto !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3) !important;
+}
+
+.tab-group {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+.tab-group:after {
+  content: "" ;
+  display: table;
+  clear: both;
+}
+.tab-group li a {
+  display: block;
+  text-decoration: none;
+  padding: 15px;
+  background: rgba(160, 179, 176, 0.25);
+  color: #a0b3b0;
+  font-size: 20px;
+  float: left;
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  transition: .5s ease;
+}
+.tab-group li a:hover {
+  background: #179b77 !important;
+  color: #ffffff !important;
+}
+.tab-group .active a {
+  background: #1ab188 !important;
+  color: #ffffff !important;
+}
+
+.tab-content > div:last-child {
+  display: none;
+}
+
+h1 {
+  text-align: center !important;
+  color: #ffffff !important;
+  font-weight: 300 !important;
+  margin: 0 0 40px !important;
+}
+
+label {
+  position: absolute !important;
+  -webkit-transform: translateY(6px) !important;
+          transform: translateY(6px) !important;
+  left: 13px !important;
+  color: rgba(255, 255, 255, 0.5) !important;
+  transition: all 0.25s ease !important;
+  -webkit-backface-visibility: hidden !important;
+  pointer-events: none !important;
+  font-size: 22px !important;
+}
+label .req {
+  margin: 2px !important;
+  color: #1ab188 !important;
+}
+
+label.active {
+  -webkit-transform: translateY(50px) !important;
+          transform: translateY(50px) !important;
+  left: 2px !important;
+  font-size: 14px !important;
+}
+label.active .req {
+  opacity: 0 !important;
+}
+
+label.highlight {
+  color: #ffffff !important;
+}
+
+input, textarea {
+  font-size: 22px !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 5px 10px !important;
+  background: none !important;
+  background-image: none !important;
+  border: 1px solid #a0b3b0 !important;
+  color: #ffffff !important;
+  border-radius: 0 !important;
+  transition: border-color .25s ease, box-shadow .25s ease !important;
+}
+input:focus, textarea:focus {
+  outline: 0 !important;
+  border-color: #1ab188 !important;
+}
+
+textarea {
+  border: 2px solid #a0b3b0 !important;
+  resize: vertical !important;
+}
+
+.field-wrap {
+  position: relative !important;
+  margin-bottom: 40px !important;
+}
+
+.top-row:after {
+  content: "" !important;
+  display: table !important;
+  clear: both !important;
+}
+.top-row > div {
+  float: left !important;
+  width: 48% !important;
+  margin-right: 4% !important;
+}
+.top-row > div:last-child {
+  margin: 0 !important;
+}
+
+.button {
+  border: 0 !important;
+  outline: none !important;
+  border-radius: 0 !important;
+  padding: 15px 0 !important;
+  font-size: 2rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: .1em !important;
+  background: #1ab188 !important;
+  color: #ffffff !important;
+  transition: all 0.5s ease !important;
+  -webkit-appearance: none !important;
+}
+.button:hover, .button:focus {
+  background: #179b77 !important;
+}
+
+.button-block {
+  display: block !important;
+  width: 100% !important;
+}
+
+.forgot {
+  margin-top: -20px !important;
+  text-align: right !important;
+}

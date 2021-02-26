@@ -1,0 +1,1951 @@
+[
+    {
+        "id": "b3369b6b.69b598",
+        "type": "pythonshell in",
+        "z": "cb80149c.966208",
+        "pyfile": "C:/Users/Williams/Desktop/flask-video-streaming-master/app.py",
+        "x": 1520,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "824df123.5bcac",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 1340,
+        "y": 340,
+        "wires": [
+            [
+                "b3369b6b.69b598"
+            ]
+        ]
+    },
+    {
+        "id": "42bc3373.ad0abc",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "b04c3fdb.3d97c",
+                "3a4eac6d.b7be14",
+                "36712d46.f2bbb2",
+                "ad8abd92.4ea1d"
+            ]
+        ]
+    },
+    {
+        "id": "7b9203eb.3c718c",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Object sequencer",
+        "func": "context.global.sequence = {\n    \"sync0\": {\n        'topic' : 'Fluorescence1',\n        'device' : context.global.Fluorescence1,\n        'mode' : 'MDA',\n        \"update\" :{\n          \"A\" : [120,100,\"ON\"],\n          \"B\" : [200,100,\"ON\"],\n          \"C\" : [330,100,\"ON\"],\n          \"D\" : [410,100,\"ON\"]\n        }    \n    },\n    'sync1': {\n        'topic' : 'Camera1',\n        'device' : context.global.Camera1,\n        'mode' : 'MDA',\n        'exposure': 20,\n        'fonction' : 'getFrame'\n    },\n    'sync2': {\n        'topic' : 'MotionStage1',\n        'device' : context.global.MotionStage1,\n        'mode' : 'MDA',\n        'x': 1365,\n        'y': 3420,\n        'fonction': 'moveToPositionXY'\n    },\n    'sync3': {\n        'topic' : 'Camera1',\n        'device' : context.global.Camera1,\n        'mode' : 'MDA',\n        'exposure': 20,\n        'fonction' : 'getFrame'\n    },\n    'sync4': {\n        'topic' : 'MotionStage1',\n        'device' : context.global.MotionStage1,\n        'mode' : 'MDA',\n        'x': 20,\n        'y': 50,\n        'fonction' : 'moveAbsoluePosition'\n    }\n};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ffe37292.dc527",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "START",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3330,
+        "y": 280,
+        "wires": [
+            [
+                "f8201b4d.b43878",
+                "e12e2817.d069c8"
+            ]
+        ]
+    },
+    {
+        "id": "92761880.364808",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "STOP",
+        "topic": "",
+        "payload": "MDA-FINISH",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2050,
+        "y": 240,
+        "wires": [
+            [
+                "bace8a16.5d18c8",
+                "f85b62f5.508b3"
+            ]
+        ]
+    },
+    {
+        "id": "bace8a16.5d18c8",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "stop MDA",
+        "func": "if(msg.payload === 'MDA-FINISH'){\n    context.global.startMDA = 0 ;\n    node.status ({fill:\"red\",shape:\"dot\", text: \"STOP\"});\n}\nif(msg.payload === 'MDA-START'){\n    node.status ({text: \"waiting stop ...\"});\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2360,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a7eae48a.24d768",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3340,
+        "y": 520,
+        "wires": [
+            [
+                "92f19dd4.aa54d"
+            ]
+        ]
+    },
+    {
+        "id": "92f19dd4.aa54d",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "sequence",
+        "func": "msg.payload = context.global.sequence;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3520,
+        "y": 520,
+        "wires": [
+            [
+                "90471aad.219f28"
+            ]
+        ]
+    },
+    {
+        "id": "88cb6c3b.12179",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Simu noeud LED",
+        "func": "if(msg.device === context.global.topicFluo1){\n    msg.topic = context.global.topicFluo1 ;\n    msg.payload = \"done\";\n    msg.parameters = {\n        \"1\":\"a\",\n        \"2\":\"b\",\n        \"3\":\"c\"\n    }\n    \n    return [msg];\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1510,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "71c8b2d.caa514c",
+        "type": "http in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "url": "/windowDHTMLX",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 1400,
+        "y": 100,
+        "wires": [
+            [
+                "e8a6022.d16e3"
+            ]
+        ]
+    },
+    {
+        "id": "254e58a4.09d568",
+        "type": "http response",
+        "z": "cb80149c.966208",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1730,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "e8a6022.d16e3",
+        "type": "template",
+        "z": "cb80149c.966208",
+        "name": "HTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n\t<title>Minimal init</title>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"codebase/fonts/font_roboto/roboto.css\"/>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"codebase/dhtmlx.css\"/>\n\t<script src=\"codebase/dhtmlx.js\"></script>\n\t\n\t<script>\n\t\t\n\t\tvar dhxWins\n\t\tfunction doOnLoad() {\n\t\t\tdhxWins = new dhtmlXWindows();\n\t\t\tdhxWins.attachViewportTo(\"winVP\");\n\t\t}\n\t\t\n\t\tvar idPrefix = 1;\n\t\tfunction createWindow() {\n\t\t\tvar p = 0;\n\t\t\tdhxWins.forEachWindow(function(){p++;});\n\t\t\tif (p>5) {\n\t\t\t\talert(\"Too many windows\");\n\t\t\t\treturn;\n\t\t\t}\n\t\t\tvar id = \"userWin\"+(idPrefix++);\n\t\t\t//\n\t\t\tvar w = Number(document.getElementById(\"win_w\").value);\n\t\t\tvar h = Number(document.getElementById(\"win_h\").value);\n\t\t\tvar x = Number(document.getElementById(\"win_x\").value);\n\t\t\tvar y = Number(document.getElementById(\"win_y\").value);\n\t\t\t//\n\t\t\tdhxWins.createWindow(id, x, y, w, h);\n\t\t\tdhxWins.window(id).setText(\"Evolv512 Camera\");\n\t\t\tdhxWins.window(id).attachURL(\"http://127.0.0.1:5000\");\n\t\t\t\n\t\t\t// dhxWins.window(id).keepInViewport(true);\n\t\t\t//\n\t\t\tdocument.getElementById(\"win_x\").value = x+50;\n\t\t\tdocument.getElementById(\"win_y\").value = y+40;\n\t\t}\n\t\t\n\t\tfunction doOnUnload() {\n\t\t\tif (dhxWins != null && dhxWins.unload != null) {\n\t\t\t\tdhxWins.unload();\n\t\t\t\tdhxWins = null;\n\t\t\t}\n\t\t}\n\t\t\n\t</script>\n</head>\n<body onload=\"doOnLoad();\" onunload=\"doOnUnload();\">\n\t<div>\n\t\t<table>\n\t\t\t<tr>\n\t\t\t\t<td>Input Position (x,y)</td>\n\t\t\t\t<td><input id=\"win_x\" type=\"text\" style=\"width: 30px;\" value=\"20\"> <input id=\"win_y\" type=\"text\" style=\"width: 30px;\" value=\"30\"></td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>Input Size (width, height)</td>\n\t\t\t\t<td><input id=\"win_w\" type=\"text\" style=\"width: 30px;\" value=\"320\"> <input id=\"win_h\" type=\"text\" style=\"width: 30px;\" value=\"200\"></td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td>Input Header Text</td>\n\t\t\t\t<td><input id=\"win_t\" type=\"text\" style=\"width: 150px;\" value=\"New dhtmlxWindow\"></td>\n\t\t\t</tr>\n\t\t\t<tr>\n\t\t\t\t<td colspan=\"2\" align=\"center\" style=\"padding-top: 10px;\"><input type=\"button\" value=\"Create Window\" onclick=\"createWindow();\"></td>\n\t\t\t</tr>\n\t\t</table>\n\t</div>\n\t<div id=\"winVP\" style=\"position: relative; height: 500px; border: #cecece 1px solid; margin: 10px;\"></div>\n</body>\n</html>",
+        "x": 1590,
+        "y": 100,
+        "wires": [
+            [
+                "254e58a4.09d568"
+            ]
+        ]
+    },
+    {
+        "id": "1e72484c.9abca8",
+        "type": "template",
+        "z": "cb80149c.966208",
+        "name": "HTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n\t<title>Init from xml file</title>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"/>\n\t<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"/>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"codebase/fonts/font_roboto/roboto.css\"/>\n\t<link rel=\"stylesheet\" type=\"text/css\" href=\"codebase/dhtmlx.css\"/>\n\t<script src=\"codebase/dhtmlx.js\"></script>\n\t\t<script>\n\t\tvar myMenu;\n\t\tfunction doOnLoad() {\n\t\t\tmyMenu = new dhtmlXMenuObject({\n\t\t\t\tparent: \"menuObj\",\n\t\t\t\ticons_path: \"commonMenu/imgs/\",\n\t\t\t\txml: \"commonMenu/dhxmenu.xml\",\n\t\t\t\tonload: function() {\n\t\t\t\t\t// callback\n\t\t\t\t}\n\t\t\t});\n\t\t}\n\t</script>\n</head>\n<body onload=\"doOnLoad();\">\n\t<div style=\"height: 250px;\">\n\t\t<div id=\"menuObj\"></div>\n\t</div>\n</body>\n</html>",
+        "output": "str",
+        "x": 1590,
+        "y": 140,
+        "wires": [
+            [
+                "495294e7.78100c"
+            ]
+        ]
+    },
+    {
+        "id": "1cf4785a.979648",
+        "type": "http in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "url": "/menuDHTMLX",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 1410,
+        "y": 140,
+        "wires": [
+            [
+                "1e72484c.9abca8"
+            ]
+        ]
+    },
+    {
+        "id": "495294e7.78100c",
+        "type": "http response",
+        "z": "cb80149c.966208",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1730,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9bc5390b.89d7e8",
+        "type": "http response",
+        "z": "cb80149c.966208",
+        "name": "",
+        "x": 1150,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "86819aec.be7398",
+        "type": "http in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "url": "/simple",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 830,
+        "y": 100,
+        "wires": [
+            [
+                "566b57e.f9e7ca8"
+            ]
+        ]
+    },
+    {
+        "id": "e0d3f4a9.9c52d8",
+        "type": "websocket in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "server": "da7e8f9b.c87dc",
+        "client": "",
+        "x": 150,
+        "y": 800,
+        "wires": [
+            [
+                "164a13c0.02011c",
+                "7fabf17e.1dc57",
+                "98d63808.a30b18",
+                "362f9069.c410b"
+            ]
+        ]
+    },
+    {
+        "id": "79c8bebe.99dc4",
+        "type": "comment",
+        "z": "cb80149c.966208",
+        "name": "Simulation Multi Acquisition",
+        "info": "",
+        "x": 170,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "36712d46.f2bbb2",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Initialisation",
+        "func": "context.global.startMDA = 0 ;\ncontext.global.sync = 0 ;\ncontext.global.sync2 = 0 ;\ncontext.global.sync3 = 0 ;\ncontext.global.sync4 = 0 ;\ncontext.global.settingChannels = [];\ncontext.global.saveConfigChannel = '' ;\n//context.global.listConfigChannel = ['williams1.json'] ;\n//context.global.initialize = false ;\n//context.global.ressources = [] ;\n\n//context.global.test = [];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4ee30745.c64048",
+        "type": "http response",
+        "z": "cb80149c.966208",
+        "name": "",
+        "x": 1730,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "34f602d3.91b9de",
+        "type": "http in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "url": "/d3_js",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 1440,
+        "y": 60,
+        "wires": [
+            [
+                "faaef7b1.bc2b98"
+            ]
+        ]
+    },
+    {
+        "id": "faaef7b1.bc2b98",
+        "type": "template",
+        "z": "cb80149c.966208",
+        "name": "HTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!doctype html>\n<html lang=\"en\">\n  <head>\n    <!-- Required meta tags -->\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n\n    <!-- Bootstrap CSS -->\n    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">\n\n    <title>Hello, world!</title>\n  </head>\n  <body>\n    <h1>Hello, world!</h1>\n\n    <!-- Optional JavaScript -->\n    <!-- jQuery first, then Popper.js, then Bootstrap JS -->\n    <script src=\"https://code.jquery.com/jquery-3.3.1.slim.min.js\" integrity=\"sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo\" crossorigin=\"anonymous\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js\" integrity=\"sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49\" crossorigin=\"anonymous\"></script>\n    <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js\" integrity=\"sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy\" crossorigin=\"anonymous\"></script>\n  </body>\n</html>",
+        "x": 1590,
+        "y": 60,
+        "wires": [
+            [
+                "4ee30745.c64048"
+            ]
+        ]
+    },
+    {
+        "id": "9daba4a7.c3fe28",
+        "type": "websocket out",
+        "z": "cb80149c.966208",
+        "name": "InitObjectHTMLDevice",
+        "server": "da7e8f9b.c87dc",
+        "client": "",
+        "x": 1100,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "566b57e.f9e7ca8",
+        "type": "template",
+        "z": "cb80149c.966208",
+        "name": "Simple Live Test",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE HTML>\n<html>\n    <head>\n    <title>Simple Live Test Miss Marple</title>\n    <script type=\"text/javascript\">\n        var ws;\n        var wsUri = \"ws:\";\n        var loc = window.location;\n        console.log(loc);\n        if (loc.protocol === \"https:\") { wsUri = \"wss:\"; }\n        // This needs to point to the web socket in the Node-RED flow\n        // ... in this case it's ws/simple\n        wsUri += \"//\" + loc.host + loc.pathname.replace(\"simple\",\"ws/simple\");\n        \n        \n        var i = 0;\n        function wsConnect() {\n            console.log(\"connect\",wsUri);\n            ws = new WebSocket(wsUri);\n            ws.onmessage = function(msg) {\n                var line = \"\";  // or uncomment this to overwrite the existing message\n                // parse the incoming message as a JSON object\n                var data = msg.data;\n                if(data.substr(0,4)==\"grab\"){ \n                    var x = document.createElement(\"IMG\");\n                    x.setAttribute(\"src\", \"media/\"+data);\n                    x.setAttribute(\"width\", \"304\");\n                    x.setAttribute(\"height\", \"228\");\n                    document.body.appendChild(x);\n                    \n                }\n                else {\n                    //console.log(data);\n                    // build the output from the topic and payload parts of the object\n                    line += \"<p>\"+data+\"</p>\";\n                    // replace the messages div with the new \"line\"\n                    document.getElementById('messages').innerHTML = line;\n                    //ws.send(JSON.stringify({data:data}));\n                }\n            }\n            ws.onopen = function() {\n                // update the status div with the connection status\n                document.getElementById('status').innerHTML = \"Connected to server\";\n                //ws.send(\"Open for data\");\n                console.log(\"connected\");\n            }\n            ws.onclose = function() {\n                // update the status div with the connection status\n                document.getElementById('status').innerHTML = \"Not connected - retry in 3 seconds ...\";\n                setTimeout(wsConnect,3000);\n            }\n            \n        }\n        \n        function doit(m) {\n            if (ws) { ws.send(m); }\n        }\n    </script>\n    </head>\n    <body onload=\"wsConnect();\" onunload=\"ws.disconnect();\" style=\"background-color:#708090;\">\n        <font face=\"Arial\">\n        <h3>Miss Marple :-)</h3>\n        <img src=\"media/e475238aca49b9f6bb53cc4138fbdb27--funny-caricatures-celebrity-caricatures.jpg\">\n        \n        <div id=\"messages\"></div>\n        <button type=\"button\" onclick='doit(\"click\");'>START TEST MDA</button>\n        <hr/>\n        <div id=\"status\">unknown</div>\n        <hr/>\n        </font>\n    </body>\n</html>\n",
+        "x": 1000,
+        "y": 100,
+        "wires": [
+            [
+                "9bc5390b.89d7e8"
+            ]
+        ]
+    },
+    {
+        "id": "fd1a5d25.eba38",
+        "type": "http in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "url": "/missmarple",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 720,
+        "wires": [
+            [
+                "cd0d4adf.dbcb98"
+            ]
+        ]
+    },
+    {
+        "id": "1ca919d8.2e3c36",
+        "type": "http response",
+        "z": "cb80149c.966208",
+        "name": "",
+        "x": 670,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "cd0d4adf.dbcb98",
+        "type": "template",
+        "z": "cb80149c.966208",
+        "name": "MissMarpleHTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n    <link rel=\"icon\" href=\"bootstrap/favicon.ico\">\n\n    <title>Miss Marple | Bootstrap</title>\n\n    <script>\n    </script>\n\n    <link href=\"bootstrap/dist/css/bootstrap.min.css\" rel=\"stylesheet\">\n    <link href=\"bootstrap/assets/css/ie10-viewport-bug-workaround.css\" rel=\"stylesheet\">\n    <link href=\"bootstrap/dashboard.css\" rel=\"stylesheet\">\n    <link href=\"css/style1.css\" rel=\"stylesheet\">\n    <script src=\"bootstrap/assets/js/ie-emulation-modes-warning.js\"></script>\n    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>\n    <script src=\"js/js1.js\"></script>\n    \n    <script src=\"//code.jquery.com/jquery-3.3.1.min.js\"></script>\n    \n    <!-- This demo uses an 3rd-party, jQuery UI based context menu -->\n    <link href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\" rel=\"stylesheet\">\n    <script src=\"//code.jquery.com/ui/1.12.1/jquery-ui.min.js\"></script>\n    <!-- jquery-contextmenu (https://github.com/mar10/jquery-ui-contextmenu/) -->\n    <script src=\"//cdn.jsdelivr.net/npm/ui-contextmenu/jquery.ui-contextmenu.min.js\"></script>\n    \n    <link href=\"fancytree-master/src/skin-win8/ui.fancytree.css\" rel=\"stylesheet\">\n    <script src=\"fancytree-master/src/jquery.fancytree.js\"></script>\n    <script src=\"fancytree-master/src/jquery.fancytree.dnd5.js\"></script>\n    <script src=\"fancytree-master/src/jquery.fancytree.edit.js\"></script>\n    <script src=\"fancytree-master/src/jquery.fancytree.gridnav.js\"></script>\n    <script src=\"fancytree-master/src/jquery.fancytree.table.js\"></script>\n    <script src=\"fancytree-master/src/jquery.fancytree.multi.js\"></script>\n    \n    <link rel=\"stylesheet\" href=\"//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css\">\n    <script src=\"//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js\"></script>\n  \n    <style type=\"text/css\">\n      .ui-menu {\n        width: 200px;\n        height: 30px;\n        font-size: 63%;\n      }\n      .ui-menu kbd { /* Keyboard shortcuts for ui-contextmenu titles */\n        float: right;\n      }\n      /* custom alignment (set by 'renderColumns'' event) */\n      td.alignRight {\n         text-align: right;\n      }\n      td.alignCenter {\n         text-align: center;\n      }\n      td input[type=input] {\n        width: 40px;\n      }\n       span.drag-source {\n    border: 1px solid lightgray;\n    border-radius: 3px;\n    padding: 2px;\n    background-color: silver\n  }\n\n  ul.fancytree-container {\n    max-height: 200px;\n    overflow-y: scroll;\n  }\n\n  span.fancytree-node.fancytree-drag-source {\n    outline: 1px dotted grey;\n  }\n  span.fancytree-node.fancytree-drop-accept {\n    outline: 1px dotted green;\n  }\n  span.fancytree-node.fancytree-drop-reject {\n    outline: 1px dotted red;\n  }\n    </style>\n\n\n  </head>\n\n  <body  onload=\"wsConnect();\" onunload=\"ws.onclose();\">\n    \n     <div id=\"wait\" style=\"text-align: center;\" >\n        <img style=\"margin: 0 auto;\" src='media/Audit.png'><img style=\"margin: 0 auto;\" src='media/loading.gif'>\n        <br>\n        <h2>Loading parameters, please wait a few seconds</h2>\n     </div>\n    \n     <div id=\"main\">\n         <nav class=\"navbar navbar-inverse navbar-fixed-top\">\n          <div class=\"container-fluid\">\n            <div class=\"navbar-header\">\n              <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n                <span class=\"sr-only\">Toggle navigation</span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n                <span class=\"icon-bar\"></span>\n              </button>\n              <a class=\"navbar-brand\" href=\"#\"><img src=\"e475238aca49b9f6bb53cc4138fbdb27--funny-caricatures-celebrity-caricatures.jpg\" style=\"width: 40px; height: 50px\"></a>\n              <a class=\"navbar-brand\" href=\"#\">Miss Marple</a>\n              <a class=\"navbar-brand\" href=\"#\"><div id=\"status\"></div></a>\n              <a class=\"navbar-brand\" href=\"#\"><div id=\"name_user\"></div></a>\n            </div>\n            \n            <div id=\"navbar\" class=\"navbar-collapse collapse\">\n              <ul class=\"nav navbar-nav navbar-right\">\n                <li><a href=\"#\"><!--<img src=\"user.png\" style=\"width: 40px; height: 50px\">--></a></li>\n              </ul>\n            </div>\n          </div>\n        </nav>\n    \n    \n        <div class=\"container-fluid\">\n          <div class=\"row\">\n            <div class=\"col-sm-3 col-md-2 sidebar\">\n              <ul class=\"nav nav-sidebar\">\n                <li><a href=\"#\"></a></li>\n                <li id='livemodeli'><a href=\"javascript: live_mode();\">Live mode<span class=\"sr-only\" ></span></a></li>\n                <li id='settingschannelsli'><a href=\"javascript: setting();\">Settings Channels<span class=\"sr-only\"></span></a></li>\n                <li id='mdali'><a href=\"javascript: mda();\">MDA<span class=\"sr-only\" ></span></a></li>\n              </ul>\n            </div>\n            <div class=\"col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main\">    \n    \n            \n            <br>\n            <div id=\"receive\"></div>\n            <hr/>\n            <div id=\"alert-success\" class=\"alert alert-success\" role=\"alert\"></div>\n            <!--<div id=\"alert-warning\"  class=\"alert alert-warning\" role=\"alert\"></div>          -->\n\n          <div id=\"live_mode\">\n            <h2 class=\"sub-header\">Live mode</h2>\n<!--            -->\n            <div id=\"live_div\" class=\"table-responsive\">\n                <!--<span class=\"drag-source\" draggable=\"true\" id=\"live_olympusix81\"><img src='icons/OlympusIx81.png'>&nbsp;OLYMPUS-IX-81</span>-->\n                <img src='icons/work_in_progress.jpg'>\n            </div>    \n          </div>\n  \n          <div id=\"settings\">\n              <h2 class=\"sub-header\">Settings channels</h2>\n                <div id=\"name_configChannels\">\n                </div>\n                <div id=\"available_configChannels\">\n                </div>\n                <br>\n                <!--<button class='setting_button' alt='load channel' id=\"setting_button_load_channel\"><img src='icons/arrow_up.png'> Load a new setting channel configuration</button>-->\n                <button class='setting_button' alt='add channel' id=\"setting_button_add_channel\"><img src='icons/add.png'> Add a new setting channel</button>\n                <button class='setting_button' alt='new configuration' id=\"setting_button_new_configChannel\"><img src='icons/add.png'> New configuration</button><br><br>\n                <form method=\"post\" id='setting_channel_form' action=\"/formpost\" ajax=\"true\">\n                      <!--<label hidden id='label_config'> Name: &nbsp;&nbsp;</label><input hidden required type='text' id='name_config' name=\"nam_config\" ><br>-->\n                      <div id=\"setting_table_channel\" class=\"table-responsive\"></div>\n                      <button type='submit' alt='save' class='setting_button' id='setting_button_save_channel'><img src='icons/disk.png'> Save the current settings</button>\n                      \n                </form>\n                <br>\n                <hr/>\n<!--                Futur<br>\n                <button type='setting_button' alt='export setting' class='setting_button' id=\"setting_button_export_channel\"> Load</button>\n                <button type='setting_button' alt='import setting' class='setting_button' id=\"setting_button_import_channel\"> Save as</button>\n    -->             \n          </div>\n                \n          \n          <div id=\"mda\">\n            <h2 class=\"sub-header\">Multi-dimensional Acquisition</h2>\n                \n                <div id=\"available_channels_mda\">\n                </div>\n\n                <div id=\"available_ressources\">\n                    <span>Available resources and functions</span><br>\n                    <span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Simple picture');\"><img src='icons/camera.png'>&nbsp;Simple picture</span>\n                    &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Autofocus');\"><img src='icons/autofocus.png'>&nbsp;Autofocus</span>\n                    &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Z-stack');\"><img src='icons/zstack.png'>&nbsp;Z-stack</span>\n                    &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'XYZ Position');\"><img src='icons/yxz-512.png'>&nbsp;XYZ-position</span>\n                    &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Sequence');\"><img src='icons/arrow_rotate_clockwise.png'>&nbsp;Sequence</span>\n                </div>\n                <h3>Definition of the experimental protocol</h3><hr/>\n\n                <table id=\"\" class=\"table table-striped\">\n                    <tbody>\n                        <tr>\n                            <th style=\"width:50%;\">                \n                                <button class='' alt='load' id=\"\"><img src='icons/arrow_up.png'> Load a existing protocol</button>\n                                <button class='' alt='new' id=\"\"><img src='icons/add.png'> New protocol</button><br><br>\n                                <table id=\"tree\">\n                                    <colgroup>\n                                        <col width=\"1%\">\n                                        <col width=\"1%\">\n                                        <col width=\"38%\">\n                                        <col width=\"10%\">\n                                    </colgroup>\n                                    <thead>\n                                        <tr> <th></th> <th></th> <th></th> <th></th> <!--<th>Z-stacks</th> <th>Autofocus</th> <th>Save Images</th> <th>Comment</th> <th>Color</th>--> </tr>\n                                    </thead>\n                                    <tbody>\n                                      <tr>\n                                        <td class=\"alignCenter\"></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td class=\"alignCenter\"></td>\n                                      </tr>\n                                    </tbody>\n                                </table>\n                            </th>\n                            <th style=\"width:50%;\">                \n                                <!--<label>PDMS chip:</label> <select><option>1</option><option>2</option></select><br>\n                                <img width=\"100%\" src='icons/test_uf.png'><br>\n                                <hr/>-->\n                                <label>Comments :</label><br>    \n                                <textarea type=\"text\" cols=\"40\" rows=\"5\" style=\"width:100%; height:100px;\" name=\"mdaac_comment\" value=\"\"></textarea><br>\n                                <hr/>\n                                <label>Prefix image:</label><br><input name ='mdapr_use' type='text'><label ></label><br>\n                                <hr/>\n                                <label>Saving folder:</label><br><input name ='mdapr_use' type='text'><label ></label><br>\n                                <hr/>\n                                \n                                <p>Active: <span id=\"lblActive\">-</span></p>\n                                <button onclick=test();>TEST</button>\n                                <button id=\"btnOpenPopup\">Select products...</button>\n\n                            </th>\n                        </tr>\n                    </tbody>\n                </table>\n  <!-- (Irrelevant source removed.) -->\n  \n  <script>\n  </script>\n\n            </div>\n            <!--</strong>-->\n            \n          </div>\n    \n              \n        </div>\n      </div>\n    </div>\n<!-- Bootstrap core JavaScript Placed at the end of the document so the pages load faster -->\n    <script>window.jQuery || document.write('<script src=\"bootstrap/assets/js/vendor/jquery.min.js\"><\\/script>')</script>\n    <script src=\"bootstrap/dist/js/bootstrap.min.js\"></script>\n    <script src=\"bootstrap/assets/js/vendor/holder.min.js\"></script>\n    <script src=\"bootstrap/assets/js/ie10-viewport-bug-workaround.js\"></script>\n    <script type=\"text/javascript\">\n    $.confirm({\n    title: 'WELCOME !',\n    theme: \"supervan\",\n    content: '' +\n    '<form action=\"\" class=\"formName\">' +\n    '<div class=\"form-group\">' +\n    '<label>Enter your name</label>' +\n    '<input type=\"text\" placeholder=\"Your name\" class=\"name form-control\" required />' +\n    '</div>' +\n    '</form>',\n    buttons: {\n        formSubmit: {\n            text: 'Submit',\n            btnClass: 'btn-blue',\n            action: function () {\n                var name = this.$content.find('.name').val();\n                if(!name){\n                    $.alert('provide a valid name');\n                    return false;\n                }\n                document.getElementById('name_user').innerHTML = \"USER:\"+name;\n                }\n        }\n    },\n    onContentReady: function () {\n        // bind to events\n        var jc = this;\n        this.$content.find('form').on('submit', function (e) {\n            // if the user submits the form by pressing enter in the field.\n            e.preventDefault();\n            jc.$$formSubmit.trigger('click'); // reference the button and click it\n        });\n    }\n});\n    </script>\n</body>\n</html>\n",
+        "x": 430,
+        "y": 700,
+        "wires": [
+            [
+                "1ca919d8.2e3c36"
+            ]
+        ]
+    },
+    {
+        "id": "c05256d5.243a08",
+        "type": "websocket in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "server": "79f90969.395868",
+        "client": "",
+        "x": 1120,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7fabf17e.1dc57",
+        "type": "debug",
+        "z": "cb80149c.966208",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "x": 470,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "7b6521b9.1babc",
+        "type": "http in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "url": "/formpost",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 980,
+        "wires": [
+            [
+                "a4c36126.13e18",
+                "4b8c912c.1dc4d"
+            ]
+        ]
+    },
+    {
+        "id": "a4c36126.13e18",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "return msg.payload to client",
+        "func": "var obj = msg.payload;\n\nif(obj['topicpost']==='setting_channel_form'){\n    context.global.settingChannels = [] ;\n    var index = '' ;                    \n    var old_index = '' ;\n    var indexation = -1 ;\n    var namechannel = '' ;\n    var oldlid = '';\n    var oldnid = '';\n    \n    for(var key in obj){\n        if(key !== 'topicpost'){\n            var str = key.split(\"_\");\n            index = str[0];\n            if(index != old_index){ indexation = indexation + 1 ; oldlid = '';}\n            old_index = parseInt(str[0]);    \n            if(key === (index + \"_channel\")){namechannel = obj[key];}\n            if(key === (index + \"_devices\")) {\n                context.global.settingChannels[indexation] = {};   \n                context.global.settingChannels[indexation]['id'] = indexation + 1;\n                context.global.settingChannels[indexation]['name'] = namechannel;\n                var obj2 = context.global.ressources[obj[key]] ;\n                for (var key2 in obj2) if(key!=='update')context.global.settingChannels[indexation][''+key2] = obj2[key2];\n                context.global.settingChannels[indexation]['update'] = {} ;\n            }\n            if((key !== (index + \"_channel\")) && (key !== (index + \"_devices\"))){    \n                var balise = str[1];\n                var lid = balise.substr(0,1) ; //a modifier expression régulière\n                var nid = parseInt(balise.substr(1,1)) ; //a modifier expression régulière\n                if (lid !== oldlid) context.global.settingChannels[indexation]['update'][lid] = [] ;\n                oldlid = lid ;\n                context.global.settingChannels[indexation]['update'][lid][nid] = obj[key]; // = obj[key];//settingChannel = name.concat(settingChannel);\n            }\n        }\n    }\n    //msg.payload = context.global.settingChannels;\n    msg.payload = 'The settings channels data was submitted and available';\n    return [msg];\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 420,
+        "y": 980,
+        "wires": [
+            [
+                "1ca919d8.2e3c36",
+                "2d34c0a7.fbe07",
+                "c42ec656.f0d428"
+            ]
+        ]
+    },
+    {
+        "id": "164a13c0.02011c",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "get ? set ?",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\"=\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n  // expected output: ReferenceError: nonExistantFunction is not defined\n  // Note - error messages will vary depending on browser\n}\n\nif(order[0] === 'getSettingChannels') msg.payload = context.global.settingChannels;\nif(order[0] === 'getSettingChannels2') msg.payload = context.global.settingChannels;\nif(order[0] === 'listConfigChannel') msg.payload = context.global.listConfigChannel;\nif(order[0] === 'updateSettingChannels') msg.payload = context.global.settingChannels;\nif(order[0] === 'getSettingChannels-MDA') msg.payload = context.global.settingChannels;\nif(order[0] === 'getRessources') msg.payload = context.global.ressources;\n\nif(order[0] === 'getMDA-mdazs_zstart_set') msg.payload = \"123\";\n\nif(order[0] === 'setMDATimepointUse') context.global.mda['timepoints']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDATimepointNumber') context.global.mda['timepoints']['number'] = parseInt(order[1]) ;\nif(order[0] === 'setMDATimepointInterval') context.global.mda['timepoints']['interval'] = parseInt(order[1]) ;\nif(order[0] === 'setMDATimepointUnity') context.global.mda['timepoints']['unity'] = (order[1]) ;\n\nif(order[0] === 'setMDAMultiplespositionsUse') context.global.mda['multiplespositions']['use'] = parseInt(order[1]) ;\n\nif(order[0] === 'setMDAZstacksUse') context.global.mda['zstacks']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAZstacksZstart') context.global.mda['zstacks']['zstart'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAZstacksZend') context.global.mda['zstacks']['zend'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAZstacksZstep') context.global.mda['zstacks']['zstep'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAZstacksType') context.global.mda['zstacks']['type'] = (order[1]) ;\nif(order[0] === 'setMDAZstacksShutter') context.global.mda['zstacks']['shutteropen'] = parseInt(order[1]) ;\n\nif(order[0] === 'setMDAAutofocusUse') context.global.mda['autofocus']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAAutofocusSkip') context.global.mda['autofocus']['skip'] = parseInt(order[1]) ;\n\nif(order[0] === 'setMDAChannelsUse') context.global.mda['channels']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAChannelsConfiguration'){\n    var config = order[1].split(\",\");\n    var id = context.global.mda['channels']['config'].length;\n    context.global.mda['channels']['config'][id] = {} ;\n    context.global.mda['channels']['config'][id]['use'] = parseInt(config[0]);\n    context.global.mda['channels']['config'][id]['exposure'] = parseInt(config[1]);\n    context.global.mda['channels']['config'][id]['zoffset'] = parseInt(config[2]);\n    context.global.mda['channels']['config'][id]['channel'] = (config[3]);\n    context.global.mda['channels']['config'][id]['zstack'] = parseInt(config[4]);\n    context.global.mda['channels']['config'][id]['skipframe'] = parseInt(config[5]);\n    context.global.mda['channels']['config'][id]['refHTML'] = parseInt(config[6]);\n}\n\nif(order[0] === 'setMDAChannelsConfigurationUse'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['use'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationExposure'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['exposure'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationZoffset'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['zoffset'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationChannel'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['channel'] = config[0];\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationZstack'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['zstack'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationSkipframe'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['skipframe'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'MDAChannelsConfigurationRemove'){\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(order[1])){\n            context.global.mda['channels']['config'].splice(i, 1);\n        }\n    }\n}\n\n\n\n\n\nif(order[0] === 'setMDASaveimagesUse') context.global.mda['saveimages']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDASaveimagesDirectory') context.global.mda['saveimages']['directory'] = (order[1]) ;\nif(order[0] === 'setMDASaveimagesPrefix') context.global.mda['saveimages']['prefix'] = (order[1]) ;\nif(order[0] === 'setMDASaveimagesFormat') context.global.mda['saveimages']['format'] = (order[1]) ;\n\nif(order[0] === 'setMDAAcquisitioncommentComment') context.global.mda['acquisitioncomment'] = (order[1]) ;\n\n\nreturn msg ;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 470,
+        "y": 840,
+        "wires": [
+            [
+                "2d34c0a7.fbe07"
+            ]
+        ]
+    },
+    {
+        "id": "4b8c912c.1dc4d",
+        "type": "debug",
+        "z": "cb80149c.966208",
+        "name": "",
+        "active": true,
+        "tosidebar": false,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 450,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "2d34c0a7.fbe07",
+        "type": "websocket out",
+        "z": "cb80149c.966208",
+        "name": "",
+        "server": "da7e8f9b.c87dc",
+        "client": "",
+        "x": 780,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "5b8e613b.5bd27",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Object SettingChannels",
+        "func": "context.global.settingChannels = [\n  {\n      \"id\" : 0,\n      \"name\": \"channelA\",\n      \"device\" : \"CoolLed-PE-4000\",\n      \"type\" : \"ligth-source\",\n      \"topic\" : \"fluo1\",\n      \"update\" :{\n          \"A\" : [120,100,true],\n          \"B\" : [200,40,false],\n          \"C\" : [330,80,false],\n          \"D\" : [410,10,false]\n      },\n      \"config\":{\n          \"A\" : [\"<select name='0A0' id='0A0'><option name='0A00' id='0A00' value=100>100</option>          <option name='0A01' id='0A01' value=110>110</option>           <option name='0A02' id='0A02' selected value=120>120</option>   <option name='0A03' id='0A03' value=130>130</option></select>\",          \"<input name='0A1' id='0A1' type='number' min='0' max='100' step='1' value='100'/>\",    \"<input name='0A2'  id='0A2' checked type='checkbox'/>\"],\n          \"B\" : [\"<select name='0B0' id='0B0'><option name='0B00' id='0B00' selected value=200>200</option> <option name='0B01' id='0B01' value=210>210</option>           <option name='0B02' id='0B02' value=220>220</option>            <option name='0B03' id='0B03' value=230>230</option></select>\",          \"<input name='0B1' id='0B1' type='number' min='0' max='100' step='1' value='40'/>\",     \"<input name='0B2'  id='0B2' type='checkbox'/>\"],\n          \"C\" : [\"<select name='0C0' id='0C0'><option name='0C00' id='0C00' value=300>300</option>          <option name='0C01' id='0C01' value=310>310</option>           <option name='0C02' id='0C02' value=320>320</option>            <option name='0C03' id='0C03' selected value=330>330</option></select>\", \"<input name='0C1' id='0C1' type='number' min='0' max='100' step='1' value='80'/>\",     \"<input name='0C2'  id='0C2' type='checkbox'/>\"],\n          \"D\" : [\"<select name='0D0' id='0D0'><option name='0D00' id='0D00' value=400>400</option>          <option name='0D01' id='0D01' selected value=410>410</option>  <option name='0D02' id='tD02' value=420>420</option>            <option name='0D03' id='0D03' value=430>430</option></select>\",          \"<input name='0D1' id='0D1' type='number' min='0' max='100' step='1' value='10'/>\",     \"<input name='0D2'  id='0D2' type='checkbox'/>\"]\n        }\n  },\n  {\n      \"id\" : 1,\n      \"name\" : \"channelB\",\n      \"device\" : \"X-Cite-120-PC\",\n      \"type\" : \"ligth-source\",\n      \"topic\" : \"fluo2\",\n      \"update\" :{\n          \"A\" : [365,100,true]\n      },\n      \"config\":{\n          \"A\" : [\"<input name='1A0' id='1A0' type='number'  min='0' max='100' step='1' value='365'/>\",\"<input  name='1A1' id='1A1' type='number'  min='0' max='100' step='1' value='100'/>\",\"<input  name='1A2' id='1A2' checked type='checkbox'/>\"],\n      }\n  }\n];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 410,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f29bd186.6c79b",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Object Ressources -- afaire garce a l'ini des noeuds",
+        "func": "\ncontext.global.ressources = [\n  {\n      \"device\" : \"CoolLed-PE-4000\",\n      \"type\" : \"ligth-source\",\n      \"topic\" : \"fluo1\",\n      \"update\" :{\n          \"A\" : [120,10,\"ON\"],\n          \"B\" : [200,40,\"OFF\"],\n          \"C\" : [330,80,\"ON\"],\n          \"D\" : [410,10,\"OFF\"]\n      },\n      \"config\":{\n          \"A\" : [\"LambdaA: <select required name='%A0' id='%A0'><option value=100>100</option><option value=110>110</option><option value=120>120</option><option value=130>130</option></select>\",\"IntensityA: <input required name='%A1' id='%A1' type='number' min='0' max='100' step='1'/>\",\"ShutterA: <select required name='%A2' id='%A2'><option value=ON>ON</option><option value=OFF>OFF</option></select>\"],\n          \"B\" : [\"LambdaB: <select required name='%B0' id='%B0'><option value=200>200</option><option value=210>210</option><option value=220>220</option><option value=230>230</option></select>\",\"IntensityB: <input required name='%B1' id='%B1' type='number' min='0' max='100' step='1'/>\",\"ShutterB: <select required name='%B2' id='%B2'><option value=ON>ON</option><option value=OFF>OFF</option></select>\"],\n          \"C\" : [\"LambdaC: <select required name='%C0' id='%C0'><option value=300>300</option><option value=310>310</option><option value=320>320</option><option value=330>330</option></select>\",\"IntensityC: <input required name='%C1' id='%C1' type='number' min='0' max='100' step='1'/>\",\"ShutterC: <select required name='%C2' id='%C2'><option value=ON>ON</option><option value=OFF>OFF</option></select>\"],\n          \"D\" : [\"LambdaD: <select required name='%D0' id='%D0'><option value=400>400</option><option value=410>410</option><option value=420>420</option><option value=430>430</option></select>\",\"IntensityD: <input required name='%D1' id='%D1' type='number' min='0' max='100' step='1'/>\",\"ShutterD: <select required name='%D2' id='%D2'><option value=ON>ON</option><option value=OFF>OFF</option></select>\"]\n      }\n  },\n  {\n      \"device\" : \"X-Cite-120-PC\",\n      \"type\" : \"ligth-source\",\n      \"topic\" : \"fluo2\",\n      \"update\" :{\n          \"A\" : [35]\n      },\n      \"config\":{\n          \"A\" : [\"Intensity: <input required name='%A0'  id='%A0' type='number'  min='0' max='100' step='1' />\"],\n      }\n  },\n  {\n      \"device\" : \"Olympus-IX-81\",\n      \"type\" : \"ligth-source\",\n      \"topic\" : \"brigth-field\",\n      \"update\" :{\n          \"A\" : [5]\n      },\n      \"config\":{\n          \"A\" : [\"Int. Lamp: <input required name='%A0'  id='%A0' type='number'  min='0' max='100' step='1' />\"],\n      }\n  },\n  {\n      \"device\" : \"Evolv-512\",\n      \"type\" : \"camera\",\n      \"topic\" : \"camera1\",\n      \"update\" :{\n      },\n      \"config\":{\n      }\n  }\n\n];\n//context.global.test = [];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b04c3fdb.3d97c",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Object MDA",
+        "func": "context.global.mda = {\n    \"timepoints\": {\n        \"use\" : 0,\n        \"number\" : 1,\n        \"interval\" : 1,\n        \"unity\" : \"ms\"\n    },\n    \"multiplespositions\": {\n        \"use\" : 0,\n        \"param\" : []\n    },\n    \"zstacks\": {\n        \"use\" : 0 ,\n        \"zstart\" : 0,\n        \"zend\" : 10,\n        \"zstep\" : 1,\n        \"type\" : \"relative Z\",\n        \"shutteropen\" : 0\n    },\n    \"autofocus\": {\n        \"use\" : 0,\n        \"skip\" : 0\n    },\n    \"channels\": {\n        \"use\" : 0,\n        \"config\" : []\n    },\n    \"saveimages\": {\n        \"use\" : 0,\n        \"directory\" : \"\",\n        \"prefix\" : \"\",\n        \"format\" : \"separate images files\"\n    },\n    \"acquisitioncomment\" : \"\"\n};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "df5060c9.40c03",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 480,
+        "y": 920,
+        "wires": [
+            [
+                "c42ec656.f0d428"
+            ]
+        ]
+    },
+    {
+        "id": "c42ec656.f0d428",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "save settingChannels",
+        "func": "var test = [\n  {\n      \"id\" : 0,\n      \"name\": \"channelA\",\n      \"device\" : \"CoolLed-PE-4000\",\n      \"type\" : \"ligth-source\",\n      \"topic\" : \"fluo1\",\n      \"update\" :{\n          \"A\" : [120,100,true],\n          \"B\" : [200,40,false],\n          \"C\" : [330,80,false],\n          \"D\" : [410,10,false]\n      },\n      \"config\":{\n          \"A\" : [\"<select name='0A0' id='0A0'><option name='0A00' id='0A00' value=100>100</option>          <option name='0A01' id='0A01' value=110>110</option>           <option name='0A02' id='0A02' selected value=120>120</option>   <option name='0A03' id='0A03' value=130>130</option></select>\",          \"<input name='0A1' id='0A1' type='number' min='0' max='100' step='1' value='100'/>\",    \"<input name='0A2'  id='0A2' checked type='checkbox'/>\"],\n          \"B\" : [\"<select name='0B0' id='0B0'><option name='0B00' id='0B00' selected value=200>200</option> <option name='0B01' id='0B01' value=210>210</option>           <option name='0B02' id='0B02' value=220>220</option>            <option name='0B03' id='0B03' value=230>230</option></select>\",          \"<input name='0B1' id='0B1' type='number' min='0' max='100' step='1' value='40'/>\",     \"<input name='0B2'  id='0B2' type='checkbox'/>\"],\n          \"C\" : [\"<select name='0C0' id='0C0'><option name='0C00' id='0C00' value=300>300</option>          <option name='0C01' id='0C01' value=310>310</option>           <option name='0C02' id='0C02' value=320>320</option>            <option name='0C03' id='0C03' selected value=330>330</option></select>\", \"<input name='0C1' id='0C1' type='number' min='0' max='100' step='1' value='80'/>\",     \"<input name='0C2'  id='0C2' type='checkbox'/>\"],\n          \"D\" : [\"<select name='0D0' id='0D0'><option name='0D00' id='0D00' value=400>400</option>          <option name='0D01' id='0D01' selected value=410>410</option>  <option name='0D02' id='tD02' value=420>420</option>            <option name='0D03' id='0D03' value=430>430</option></select>\",          \"<input name='0D1' id='0D1' type='number' min='0' max='100' step='1' value='10'/>\",     \"<input name='0D2'  id='0D2' type='checkbox'/>\"]\n        }\n  }\n ];\nmsg.payload =  test.concat(context.global.settingChannels);\n//msg.payload =  context.global.settingChannels;\nif(context.global.saveConfigChannel !== '' ) msg.filename = context.global.saveConfigChannel;\n\nreturn msg ;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 800,
+        "y": 920,
+        "wires": [
+            [
+                "3ba95c06.a74dd4"
+            ]
+        ]
+    },
+    {
+        "id": "3ba95c06.a74dd4",
+        "type": "file",
+        "z": "cb80149c.966208",
+        "name": "",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "x": 1030,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a28a6c34.d3063",
+        "type": "file in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 670,
+        "y": 760,
+        "wires": [
+            [
+                "533ae4fa.60128c",
+                "7fabf17e.1dc57"
+            ]
+        ]
+    },
+    {
+        "id": "62849356.22381c",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 480,
+        "y": 800,
+        "wires": [
+            [
+                "a28a6c34.d3063"
+            ]
+        ]
+    },
+    {
+        "id": "533ae4fa.60128c",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "",
+        "func": "msg.payload = JSON.parse(msg.payload);\ncontext.global.settingChannels = msg.payload ;\n//msg.payload = context.global.settingChannels;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1030,
+        "y": 760,
+        "wires": [
+            [
+                "2d34c0a7.fbe07"
+            ]
+        ]
+    },
+    {
+        "id": "f399684c.d091b8",
+        "type": "exec",
+        "z": "cb80149c.966208",
+        "command": "DIR",
+        "addpay": false,
+        "append": "C:\\Users\\Williams\\.node-red\\lib\\config\\*.json",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 430,
+        "y": 1120,
+        "wires": [
+            [
+                "aa559e1d.98357",
+                "958e58ce.90a3f8"
+            ],
+            [
+                "958e58ce.90a3f8"
+            ],
+            [
+                "958e58ce.90a3f8"
+            ]
+        ]
+    },
+    {
+        "id": "88f2436e.ddb9b",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 240,
+        "y": 1120,
+        "wires": [
+            [
+                "f399684c.d091b8"
+            ]
+        ]
+    },
+    {
+        "id": "958e58ce.90a3f8",
+        "type": "debug",
+        "z": "cb80149c.966208",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 770,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "aa559e1d.98357",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "get ? set ?",
+        "func": "msg.payload = msg.payload.toString();\nvar reg = /\\json/;\nvar resultat = reg.test(msg.payload);\nmsg.payload = (resultat);\nreturn msg ;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 1100,
+        "wires": [
+            [
+                "958e58ce.90a3f8"
+            ]
+        ]
+    },
+    {
+        "id": "98d63808.a30b18",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "load",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\n\nif(order[0] === 'LoadSettingChannelsConfiguration') {\n    context.global.saveConfigChannel = 'C:/Users/Williams/.node-red/lib/config/'+context.global.listConfigChannel[parseInt(order[1])];\n    msg.filename = context.global.saveConfigChannel ;\n    return msg ;\n}\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 760,
+        "wires": [
+            [
+                "a28a6c34.d3063"
+            ]
+        ]
+    },
+    {
+        "id": "13f0919b.b09f2e",
+        "type": "debug",
+        "z": "cb80149c.966208",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "x": 1100,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e0ca72ab.88",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Sequencer Miss Marple - MDA",
+        "func": "if(false){\n    \n//if(msg.parameters['mode'] !== 'init'){\nif( (context.global.startMDA === 1) && (context.global.initialize === true)){\n    var output = {};\n    var topic = (msg.topic) ;\n    var keyWord = Object.keys(context.global.sequence)[0].substr(0,4); //sync\n    var length = Object.keys(context.global.sequence).length - 1; //longueur de l'objet json\n    \n    if( length  !== context.global.sync ){\n        if((msg.payload === 'done') /*&& (topic === context.global.sequence[keyWord+context.global.sync].device)*/){\n            context.global.sync = context.global.sync + 1 ;\n            key = Object.keys(context.global.sequence)[context.global.sync];\n        }\n        output.payload = context.global.sequence[keyWord+context.global.sync].topic;\n        output.topic = context.global.sequence[keyWord+context.global.sync].topic;\n        output.device = context.global.sequence[keyWord+context.global.sync].device;\n        output.parameters = context.global.sequence[keyWord+context.global.sync];\n        delete output.parameters.device;\n        delete output.parameters.topic;\n        return [output];\n    }\n    else {context.global.startMDA = 0; context.global.sync=0;}    \n}\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3390,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59b6e457.29d87c",
+        "type": "link out",
+        "z": "cb80149c.966208",
+        "name": "output_cam",
+        "links": [
+            "2e57212f.297fce",
+            "66fdc750.1163a8"
+        ],
+        "x": 2935,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "2e57212f.297fce",
+        "type": "link in",
+        "z": "cb80149c.966208",
+        "name": "input_cam",
+        "links": [
+            "59b6e457.29d87c"
+        ],
+        "x": 2195,
+        "y": 720,
+        "wires": [
+            [
+                "3e24b8df.836ea8",
+                "534f7a6b.8ade04",
+                "53eab063.b255d",
+                "bace8a16.5d18c8",
+                "f85b62f5.508b3",
+                "16638acb.b95075",
+                "c12f9fe4.d53e2"
+            ]
+        ]
+    },
+    {
+        "id": "f8201b4d.b43878",
+        "type": "delay",
+        "z": "cb80149c.966208",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 3690,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "68647a9d.492fb4",
+        "type": "comment",
+        "z": "cb80149c.966208",
+        "name": "ST/ST",
+        "info": "",
+        "x": 3670,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "2655b295.3b4e1e",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "name_grab",
+        "func": "if(msg.mode === 'MDA'){\n    if (msg.parameters.name.substr(0,4)==='grab'){\n        msg.payload = msg.parameters.name ;\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3330,
+        "y": 440,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e12e2817.d069c8",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "START",
+        "func": "context.global.startMDA = 1 ;\ncontext.global.checkFinish = 0 ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3680,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "90471aad.219f28",
+        "type": "debug",
+        "z": "cb80149c.966208",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "true",
+        "x": 3710,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "86e3beed.f0099",
+        "type": "ressources",
+        "z": "cb80149c.966208",
+        "topic": "ressources for MDA microscopy",
+        "x": 3390,
+        "y": 160,
+        "wires": [
+            [
+                "51dbf5c8.ddc78c"
+            ]
+        ]
+    },
+    {
+        "id": "51dbf5c8.ddc78c",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "toGlobal",
+        "func": "context.global.ressources = msg;\ncontext.global.initialize = true ;\n    \t",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3620,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fb96e8d8.3431c8",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3340,
+        "y": 560,
+        "wires": [
+            [
+                "14fc9190.6d1e5e"
+            ]
+        ]
+    },
+    {
+        "id": "14fc9190.6d1e5e",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "ressources",
+        "func": "msg.payload = context.global.ressources;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3510,
+        "y": 560,
+        "wires": [
+            [
+                "90471aad.219f28"
+            ]
+        ]
+    },
+    {
+        "id": "6e87ad65.84c384",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "wait for all devices are initilized",
+        "func": "function verifyIsTopicExists(ressources,topic){\n    if(ressources.length !==0){\n        var verify = false ;\n        for(var i=0; i<ressources.length;i++){\n            if(ressources[i]['topic']===topic){ verify = true ; return i;}\n        }\n        if(verify ===false) return (-1);\n    }\n    else return (-1) ;\n}\n\n\nif(msg.mode === 'init'){\n    \n    context.data = context.data || new Object();\n    context.global.ressources = context.global.ressources || [];\n    \n    var verify = verifyIsTopicExists(context.global.ressources,msg.topic) ;\n    \n    switch (msg.topic) {\n        case \"Fluorescence1\":\n            context.data.task1 = msg.device;\n            context.global.Fluorescence1 = msg.device ;\n            if(verify === -1) context.global.ressources.push(msg);\n            else  context.global.ressources[verify] = msg ;\n            msg = null;\n            break;\n        case \"MotionStage1\":\n            context.data.task2 = msg.device;\n            context.global.MotionStage1 = msg.device ;\n            if(verify === -1) context.global.ressources.push(msg);\n            else  context.global.ressources[verify] = msg ;\n            msg = null;\n            break;\n        case \"Microscope1\":\n            context.data.task3 = msg.device;\n            context.global.Microscope1 = msg.device ;\n            if(verify === -1) context.global.ressources.push(msg);\n            else  context.global.ressources[verify] = msg ;\n            msg = null;\n            break;\n        case \"Mosaic1\":\n            context.data.task4 = msg.device;\n            context.global.Mosaic1 = msg.device ;\n            if(verify === -1) context.global.ressources.push(msg);\n            else  context.global.ressources[verify] = msg ;\n            msg = null;\n            break;\n        case \"Camera1\":\n            context.data.task5 = msg.device;\n            context.global.Camera1 = msg.device ;\n            if(verify === -1) context.global.ressources.push(msg);\n            else  context.global.ressources[verify] = msg ;\n            msg = null;\n            break;\n        case \"Fluorescence2\":\n            context.data.task6 = msg.device;\n            context.global.Fluorescence2 = msg.device ;\n            if(verify === -1) context.global.ressources.push(msg);\n            else  context.global.ressources[verify] = msg ;\n            msg = null;\n            break;\n        default:\n            msg = null;\n        \tbreak;\n    \n    }\n    \n    if(context.data.task1 != null && context.data.task2 != null && context.data.task3 != null && context.data.task4 != null && context.data.task5 != null && context.data.task6 != null) {\n    \tmsg2 = new Object();\n        msg2 = context.data;\n        msg2.payload = \"Initialisation >>> DONE :-)\";\n        context.global.initialize = true ;\n        context.data=null;\n    \treturn msg2;\n    } else return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2750,
+        "y": 500,
+        "wires": [
+            [
+                "f17315f5.3993b8"
+            ]
+        ]
+    },
+    {
+        "id": "f17315f5.3993b8",
+        "type": "debug",
+        "z": "cb80149c.966208",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 2970,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "d1898f0e.47356",
+        "type": "debug",
+        "z": "cb80149c.966208",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 2970,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "3e24b8df.836ea8",
+        "type": "PhotometricsEvolv512",
+        "z": "cb80149c.966208",
+        "name": "",
+        "x": 2390,
+        "y": 420,
+        "wires": [
+            [
+                "6e87ad65.84c384",
+                "ac0464d2.d7a6a8"
+            ]
+        ]
+    },
+    {
+        "id": "534f7a6b.8ade04",
+        "type": "LdynamicsXCite",
+        "z": "cb80149c.966208",
+        "name": "X-Cite-120PC",
+        "topic": "drive the X-Cite-120PC",
+        "x": 2380,
+        "y": 360,
+        "wires": [
+            [
+                "6e87ad65.84c384",
+                "ac0464d2.d7a6a8"
+            ]
+        ]
+    },
+    {
+        "id": "908f8c51.1898",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "initialize",
+        "func": "msg.payload = context.global.initialize ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3520,
+        "y": 600,
+        "wires": [
+            [
+                "90471aad.219f28"
+            ]
+        ]
+    },
+    {
+        "id": "629773bc.d05ecc",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3340,
+        "y": 600,
+        "wires": [
+            [
+                "908f8c51.1898"
+            ]
+        ]
+    },
+    {
+        "id": "c93900b3.9ae8",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2040,
+        "y": 600,
+        "wires": [
+            [
+                "15fb90b3.280cff"
+            ]
+        ]
+    },
+    {
+        "id": "15fb90b3.280cff",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "live",
+        "func": "msg.payload =  context.global.Fluorescence1;\nmsg.topic = 'Fluorescence1';\nmsg.device =  context.global.Fluorescence1;\nmsg.mode = 'live';\nmsg.update = {\n  \"A\" : [120,100,\"ON\"],\n  \"B\" : [200,100,\"ON\"],\n  \"C\" : [330,100,\"ON\"],\n  \"D\" : [410,100,\"ON\"]\n}    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2170,
+        "y": 600,
+        "wires": [
+            [
+                "53eab063.b255d"
+            ]
+        ]
+    },
+    {
+        "id": "53eab063.b255d",
+        "type": "CoolLedPe4000",
+        "z": "cb80149c.966208",
+        "name": "PE-4000",
+        "topic": "drive the PE-4000",
+        "x": 2400,
+        "y": 600,
+        "wires": [
+            [
+                "6e87ad65.84c384",
+                "ac0464d2.d7a6a8",
+                "d2f895ae.bf4a88",
+                "f17315f5.3993b8"
+            ]
+        ]
+    },
+    {
+        "id": "ead5c8c2.964da8",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "live",
+        "func": "msg.payload =  context.global.Microscope1;\nmsg.topic = 'Microscope1';\nmsg.device =  context.global.Microscope1;\nmsg.mode = 'live';\nmsg.action = \"setAll\" ;\nmsg.update = {\n  \"Filter\" : 2\n}    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2170,
+        "y": 660,
+        "wires": [
+            [
+                "16638acb.b95075"
+            ]
+        ]
+    },
+    {
+        "id": "56d1bea8.7b857",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2040,
+        "y": 660,
+        "wires": [
+            [
+                "ead5c8c2.964da8"
+            ]
+        ]
+    },
+    {
+        "id": "fd448ad3.403dd8",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "live",
+        "func": "msg.payload =  context.global.MotionStage1;\nmsg.topic = 'MotionStage1';\nmsg.device =  context.global.MotionStage1;\nmsg.mode = 'live';\nmsg.action = \"setAll\" ;\nmsg.update = {\n  \"X\" : 2324,\n  \"Y\" : 3678\n}    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2170,
+        "y": 480,
+        "wires": [
+            [
+                "c12f9fe4.d53e2"
+            ]
+        ]
+    },
+    {
+        "id": "633b6916.597548",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2040,
+        "y": 480,
+        "wires": [
+            [
+                "fd448ad3.403dd8"
+            ]
+        ]
+    },
+    {
+        "id": "c952a2a5.b3ccc",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "live",
+        "func": "msg.payload =  context.global.Mosaic1;\nmsg.topic = 'Mosaic1';\nmsg.device =  context.global.Mosaic1;\nmsg.mode = 'live';\nmsg.update = {\n  \"matrice\" : 2324\n}    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2170,
+        "y": 540,
+        "wires": [
+            [
+                "2d2d269.9cf84da"
+            ]
+        ]
+    },
+    {
+        "id": "147c987d.d64158",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2040,
+        "y": 540,
+        "wires": [
+            [
+                "c952a2a5.b3ccc"
+            ]
+        ]
+    },
+    {
+        "id": "2d2d269.9cf84da",
+        "type": "AndorMosaic3",
+        "z": "cb80149c.966208",
+        "name": "",
+        "x": 2390,
+        "y": 540,
+        "wires": [
+            [
+                "6e87ad65.84c384",
+                "ac0464d2.d7a6a8"
+            ]
+        ]
+    },
+    {
+        "id": "5e7ae510.9b02cc",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "live",
+        "func": "msg.payload =  context.global.Fluorescence2;\nmsg.topic = 'Fluorescence2';\nmsg.device =  context.global.Fluorescence2;\nmsg.mode = 'live';\nmsg.update = {\n  \"Shutter\" : true,\n  \"Intensity\" : 20\n}    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2170,
+        "y": 360,
+        "wires": [
+            [
+                "534f7a6b.8ade04"
+            ]
+        ]
+    },
+    {
+        "id": "be0f5074.d448b",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2040,
+        "y": 360,
+        "wires": [
+            [
+                "5e7ae510.9b02cc"
+            ]
+        ]
+    },
+    {
+        "id": "4936d27a.f6e5bc",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "live",
+        "func": "msg.payload =  context.global.Camera1;\nmsg.topic = 'Camera1';\nmsg.device =  context.global.Camera1;\nmsg.mode = 'live';\nmsg.update = {\n}    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2170,
+        "y": 420,
+        "wires": [
+            [
+                "3e24b8df.836ea8"
+            ]
+        ]
+    },
+    {
+        "id": "11b006dd.17d1f9",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2040,
+        "y": 420,
+        "wires": [
+            [
+                "4936d27a.f6e5bc"
+            ]
+        ]
+    },
+    {
+        "id": "3a4eac6d.b7be14",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Object sequencer 2",
+        "func": "context.global.sequence2 = {\n    \"0\" : \n        [\n            [{\n            'topic' : 'Fluorescence1',\n            'device' : context.global.Fluorescence1,\n            'mode' : 'MDA',\n            \"update\" :\n                {\n                \"A\" : [120,100,\"ON\"],\n                \"B\" : [200,100,\"ON\"],\n                \"C\" : [330,100,\"ON\"],\n                \"D\" : [410,100,\"ON\"]\n                }    \n            },\n            {\n            'topic' : 'MotionStage1',\n            'device' : context.global.MotionStage1,\n            'action' : 'setAll',\n            'mode' : 'MDA',\n            'x': 1365,\n            'y': 3420,\n            'fonction': 'moveToPositionXY'    \n            }],\n            [{\n                'topic' : 'Camera1',\n                'device' : context.global.Camera1,\n                'mode' : 'MDA',\n                'exposure': 20,\n                'fonction' : 'getFrame'\n            }],\n            [{\n            'topic' : 'Fluorescence1',\n            'device' : context.global.Fluorescence1,\n            'mode' : 'MDA',\n            \"update\" :\n                {\n                \"A\" : [120,100,\"ON\"],\n                \"B\" : [200,100,\"ON\"],\n                \"C\" : [330,100,\"ON\"],\n                \"D\" : [410,100,\"ON\"]\n                }    \n            },\n            {\n            'topic' : 'MotionStage1',\n            'device' : context.global.MotionStage1,\n            'mode' : 'MDA',\n            'action' : 'setAll',\n            'x': 1365,\n            'y': 3420,\n            'fonction': 'moveToPositionXY'    \n            }],\n            [{\n            'topic' : 'Fluorescence1',\n            'device' : context.global.Fluorescence1,\n            'mode' : 'MDA',\n            \"update\" :\n                {\n                \"A\" : [120,100,\"ON\"],\n                \"B\" : [200,100,\"ON\"],\n                \"C\" : [330,100,\"ON\"],\n                \"D\" : [410,100,\"ON\"]\n                }    \n            },\n            {\n            'topic' : 'MotionStage1',\n            'device' : context.global.MotionStage1,\n            'mode' : 'MDA',\n            'action' : 'setAll',\n            'x': 1365,\n            'y': 3420,\n            'fonction': 'moveToPositionXY'    \n            }]\n        ],\n    \"10\" : \n        [\n            [{\n            'topic' : 'Camera1',\n            'device' : context.global.Camera1,\n            'mode' : 'MDA',\n            'exposure': 200,\n            'fonction' : 'getFrame'\n            }],\n            [{\n            'topic' : 'Fluorescence1',\n            'device' : context.global.Fluorescence1,\n            'mode' : 'MDA',\n            \"update\" :\n                {\n                \"A\" : [120,100,\"ON\"],\n                \"B\" : [200,100,\"ON\"],\n                \"C\" : [330,100,\"ON\"],\n                \"D\" : [410,100,\"ON\"]\n                }    \n            },\n            {\n            'topic' : 'MotionStage1',\n            'device' : context.global.MotionStage1,\n            'mode' : 'MDA',\n            'action' : 'setAll',\n            'x': 1365,\n            'y': 3420,\n            'fonction': 'moveToPositionXY'    \n            }]\n        ],\n    \"20\" : \n        [{\n        'topic' : 'MotionStage1',\n        'device' : context.global.MotionStage1,\n        'mode' : 'MDA',\n        'action' : 'setAll',\n        'x': 1365,\n        'y': 3420,\n        'fonction': 'moveToPositionXY'\n        }],\n    \"40\" : \n        [\n            [{\n            'topic' : 'Camera1',\n            'device' : context.global.Camera1,\n            'mode' : 'MDA',\n            'exposure': 20,\n            'fonction' : 'getFrame'\n            }],\n            [{\n            'payload' : 'MDA-FINISH',\n            }]\n        ]\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ac0464d2.d7a6a8",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Sequencer 2 Miss Marple - MDA",
+        "func": "    node.status ({fill:\"green\",shape:\"dot\", text: \"request\"});\n    \n    if( (context.global.startMDA === 1) && (context.global.initialize === true)){\n        node.status ({fill:\"yellow\",shape:\"dot\", text: context.global.sync2+\"-\"+context.global.sync3});\n    \n        var length = context.global.sequence2[context.global.sync2].length ;\n        \n        if( length  !== context.global.sync3 ){\n        \n            var order = context.global.sequence2[context.global.sync2];\n        \n            if(msg.payload === 'done'){\n        \n                context.global.checkFinish = context.global.checkFinish + 1 ;\n        \n                if(context.global.checkFinish === context.global.finish){\n                    context.global.checkFinish = 0 ;\n                    if(order.length !==1) {\n                        context.global.finish = order[context.global.sync3].length ; // nombre d'instructions dans la branche la plus profonde de l'object sequencer\n                        for(var i=0;i<order[context.global.sync3].length;i++){ node.send(order[context.global.sync3][i]);}\n                        //if(order[context.global.sync3][i]['payload'] === 'MDA-FINISH') node.status ({fill:\"red\",shape:\"dot\", text: \"finished and waiting order ...\"});\n        //                node.warn(\"ZFZ\");\n                    }\n                    else{ \n                        node.send(order[context.global.sync3]) ;\n                        context.global.finish = 1 ;\n        //                node.warn(\"ZZZ\");\n                    }\n                    context.global.sync3 = context.global.sync3 + 1 ;\n                }\n            }\n            else{\n                if(order.length !==1) {\n                    context.global.finish = order[context.global.sync3].length ; // nombre d'instructions dans la branche la plus profonde de l'object sequencer\n                    for(var i=0;i<order[context.global.sync3].length;i++){ node.send(order[context.global.sync3][i]);}\n                }\n                else { \n                    context.global.finish = 1 ;\n                    node.send(order[context.global.sync3]) ;\n                }\n                context.global.sync3 = context.global.sync3 + 1 ;\n            }\n        }\n    } \n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2750,
+        "y": 360,
+        "wires": [
+            [
+                "d1898f0e.47356",
+                "59b6e457.29d87c"
+            ]
+        ]
+    },
+    {
+        "id": "774fbd7b.383994",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3340,
+        "y": 640,
+        "wires": [
+            [
+                "1dfd1e61.6c7522"
+            ]
+        ]
+    },
+    {
+        "id": "1dfd1e61.6c7522",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "sequence2",
+        "func": "msg.payload = context.global.sequence2[0];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3530,
+        "y": 640,
+        "wires": [
+            [
+                "90471aad.219f28"
+            ]
+        ]
+    },
+    {
+        "id": "65835391.a4004c",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3340,
+        "y": 680,
+        "wires": [
+            [
+                "beb4011a.e4db1"
+            ]
+        ]
+    },
+    {
+        "id": "beb4011a.e4db1",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "sync2",
+        "func": "context.global.sync2 = context.global.sync2 + 1;\ncontext.global.sync3 = 0 ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3510,
+        "y": 680,
+        "wires": [
+            [
+                "90471aad.219f28"
+            ]
+        ]
+    },
+    {
+        "id": "e3ecb0d5.bf5d3",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3340,
+        "y": 720,
+        "wires": [
+            [
+                "b956bdab.9ccea"
+            ]
+        ]
+    },
+    {
+        "id": "b956bdab.9ccea",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "sync3",
+        "func": "context.global.sync3 = context.global.sync3 + 1;\ncontext.global.sync4 = 0 ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3510,
+        "y": 720,
+        "wires": [
+            [
+                "90471aad.219f28"
+            ]
+        ]
+    },
+    {
+        "id": "a2373890.2d7e98",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3340,
+        "y": 760,
+        "wires": [
+            [
+                "1609c56f.71960b"
+            ]
+        ]
+    },
+    {
+        "id": "1609c56f.71960b",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "sync4",
+        "func": "context.global.sync4 = context.global.sync4 + 1;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3510,
+        "y": 760,
+        "wires": [
+            [
+                "90471aad.219f28"
+            ]
+        ]
+    },
+    {
+        "id": "f3291786.d6a708",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "",
+        "func": "msg = {} ;\nmsg.payload = \"RUN\" ;\n\ncontext.global.sync2  =  0 ;\nnode.send(msg);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3470,
+        "y": 320,
+        "wires": [
+            [
+                "e12e2817.d069c8",
+                "f8201b4d.b43878"
+            ]
+        ]
+    },
+    {
+        "id": "188167c1.4539f8",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3320,
+        "y": 320,
+        "wires": [
+            [
+                "f3291786.d6a708"
+            ]
+        ]
+    },
+    {
+        "id": "dfb87d00.416aa",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "",
+        "func": "msg.payload = context.global.settingChannels;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2770,
+        "y": 860,
+        "wires": [
+            [
+                "d2f895ae.bf4a88"
+            ]
+        ]
+    },
+    {
+        "id": "2d287e8e.d75d22",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2720,
+        "y": 920,
+        "wires": [
+            [
+                "dfb87d00.416aa"
+            ]
+        ]
+    },
+    {
+        "id": "b72132a6.1d9cf",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "",
+        "func": "msg = {} ;\nmsg.payload = \"RUN\" ;\n\ncontext.global.sync2 =  20 ;\ncontext.global.sync3 = 0;\nnode.send(msg);",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 3470,
+        "y": 360,
+        "wires": [
+            [
+                "f8201b4d.b43878"
+            ]
+        ]
+    },
+    {
+        "id": "ed3d2ad6.5be6c8",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 3320,
+        "y": 360,
+        "wires": [
+            [
+                "b72132a6.1d9cf"
+            ]
+        ]
+    },
+    {
+        "id": "f85b62f5.508b3",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "sequencer2 key",
+        "func": "if(msg.payload === 'MDA-START'){\n    context.global.startMDA = 1 ;\n    context.global.checkFinish = 0 ;\n    \n    node.status ({fill:\"green\",shape:\"dot\", text: \"START\"});\n    //else node.status ({fill:\"red\",shape:\"dot\", text: \"\"}); \n    \n    for(var key in context.global.sequence2) {\n        sendCMD(key,context.global.sequence2[key]);\n    }\n}\nif(msg.payload === 'MDA-FINISH'){\n    node.status ({text: \"waiting start ...\"});\n}\n\nfunction sendCMD(key,data){\n    var msg = {} ;\n    msg.payload = \"RUN:\"+data;\n    setTimeout(function(){\n        context.global.sync2 = key;\n        context.global.sync3 = 0;\n        node.send(msg);\n    },parseInt(key) * 1000);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2380,
+        "y": 300,
+        "wires": [
+            [
+                "ac0464d2.d7a6a8"
+            ]
+        ]
+    },
+    {
+        "id": "f02e588e.05eb38",
+        "type": "inject",
+        "z": "cb80149c.966208",
+        "name": "START",
+        "topic": "",
+        "payload": "MDA-START",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2050,
+        "y": 300,
+        "wires": [
+            [
+                "f85b62f5.508b3",
+                "bace8a16.5d18c8"
+            ]
+        ]
+    },
+    {
+        "id": "67d88f34.94468",
+        "type": "template",
+        "z": "cb80149c.966208",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html>\n<head>\n    <meta charset=\"utf-8\">\n    <title>jQuery maphilight documentation</title>\n    <script type=\"text/javascript\" src=\"https://code.jquery.com/jquery-3.3.1.min.js\"></script>\n    <script type=\"text/javascript\" src=\"../jquery.maphilight.js\"></script>\n    <script>$(function() {\n        $('.map').maphilight({\n            fillColor: '008800'\n        });\n        $('#hilightlink').mouseover(function(e) {\n            $('#square2').mouseover();\n        }).mouseout(function(e) {\n            $('#square2').mouseout();\n        }).click(function(e) { e.preventDefault(); });\n        $('#starlink').click(function(e) {\n            e.preventDefault();\n            var data = $('#star').data('maphilight') || {};\n            data.neverOn = !data.neverOn;\n            $('#star').data('maphilight', data);\n        });\n        $('#star,#starlink2').click(function(e) {\n            e.preventDefault();\n            var data = $('#star').mouseout().data('maphilight') || {};\n            data.alwaysOn = !data.alwaysOn;\n            $('#star').data('maphilight', data).trigger('alwaysOn.maphilight');\n        });\n    });</script>\n</head>\n<body>\n<h1>Assorted features</h1>\n<p>This is an assortment of feature-demonstrations.</p>\n<p>\n<img src=\"demo_features.png\" width=\"300\" height=\"301\" class=\"map\" usemap=\"#features\">\n<map name=\"features\">\n    <area id=\"arrow\" shape=\"poly\" style=\"display:none;\" coords=\"211,3,121,67,112,53,95,103,146,108,136,92,229,25\" href=\"#\" alt=\"arrow\">\n    <area id=\"star\" shape=\"poly\" coords=\"78,83,70,100,52,104,64,115,61,133,78,124,94,133,91,116,104,102,87,101,79,88\" href=\"#\" alt=\"star\" class=\"group\" data-maphilight='{\"strokeColor\":\"0000ff\",\"strokeWidth\":5,\"fillColor\":\"ff0000\",\"fillOpacity\":0.6}'>\n    <area id=\"square1\" shape=\"poly\" coords=\"248,126,222,150,202,122,233,105,239,118,249,125,250,128\" href=\"#\" alt=\"a square\" data-maphilight='{\"alwaysOn\":true,\"stroke\":false}'>\n    <area id=\"square2\" shape=\"poly\" coords=\"151,249,175,225,182,222,167,193,136,221,153,250\" href=\"#\" alt=\"another square\" class=\"group\" data-maphilight='{\"groupBy\":\".group\"}'>\n    <area id=\"shadowed\" shape=\"rect\" coords=\"250,250,290,290\" href=\"#\" alt=\"Shadow for some\" data-maphilight='{\"fillColor\":\"00ff00\",\"shadow\":true,\"shadowBackground\":\"ffffff\",\"alwaysOn\":true}'>\n</map>\n</p>\n<p>Features:</p>\n    <ul>\n        <li>The star uses a <code>data-maphilight</code> attribute to adjust how it looks</li>\n        <li>The right-hand square uses a <code>data-maphilight</code> attribute to always be visible, to have no border, and to have a greenish fill</li>\n        <li>The lower-left square is linked to the star using groupBy. When you mouse over it the star will hilight as well.</li>\n        <li>The lower-right square has a shadow.</li>\n        <li><a id=\"hilightlink\" href=\"#\">Mouse over this to trigger a hilight from an external element!</a></li>\n        <li><a id=\"starlink\" href=\"#\">Click this to toggle whether or not the star will hilight</a></li>\n        <li><a id=\"starlink2\" href=\"#\">Click this to toggle whether or not the star is always hilighted; or click the star itself</a></li>\n    </ul>\n<small>The image is <a href=\"http://www.openclipart.org/detail/3325\">Ruffled Map by midkiffaries</a></small><br/>\n<a href=\"./\">Back to the index</a>\n</body>\n</html>",
+        "output": "str",
+        "x": 880,
+        "y": 660,
+        "wires": [
+            [
+                "4fc6a7f.59e3b58"
+            ]
+        ]
+    },
+    {
+        "id": "c38141bd.92ee6",
+        "type": "http in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "url": "/map",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 620,
+        "y": 580,
+        "wires": [
+            [
+                "67d88f34.94468"
+            ]
+        ]
+    },
+    {
+        "id": "4fc6a7f.59e3b58",
+        "type": "http response",
+        "z": "cb80149c.966208",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1030,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "362f9069.c410b",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "loadmsg.payload",
+        "func": "if(msg.payload==='www') return msg ;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 620,
+        "wires": [
+            [
+                "2d34c0a7.fbe07",
+                "7fabf17e.1dc57"
+            ]
+        ]
+    },
+    {
+        "id": "218c17e9.ab2e68",
+        "type": "websocket in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "server": "da7e8f9b.c87dc",
+        "client": "",
+        "x": 1830,
+        "y": 800,
+        "wires": [
+            [
+                "4b5cfb86.1b5074",
+                "3d76617c.59f4be",
+                "b44d17f3.7e3218"
+            ]
+        ]
+    },
+    {
+        "id": "4b5cfb86.1b5074",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "fancyTree switch",
+        "func": "context.global.sendDataLive = {} ;\nvar order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif(order[0] === 'getValueXYZ'){\n    context.global.sendDataLiveLg = 3 ;\n    output.payload =  context.global.MotionStage1;\n    output.topic = 'MotionStage1';\n    output.device =  context.global.MotionStage1;\n    output.mode = 'live';\n    output.action = 'getAll';\n    node.send(output);\n    output = {} ;\n    output.payload =  context.global.Microscope1;\n    output.topic = 'Microscope1';\n    output.device =  context.global.Microscope1;\n    output.mode = 'live';\n    output.action = 'getZposition';\n    node.send(output);\n}\nif(order[0] === 'tryAutoFocus'){\n    context.global.sendDataLiveLg = 1 ;\n    output = {} ;\n    output.payload =  context.global.Microscope1;\n    output.topic = 'Microscope1';\n    output.device =  context.global.Microscope1;\n    output.mode = 'live';\n    output.action = 'autoFocus';\n    node.send(output);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2110,
+        "y": 800,
+        "wires": [
+            [
+                "16638acb.b95075",
+                "c12f9fe4.d53e2"
+            ]
+        ]
+    },
+    {
+        "id": "d2f895ae.bf4a88",
+        "type": "debug",
+        "z": "cb80149c.966208",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 2910,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "2deca699.f8b0fa",
+        "type": "websocket out",
+        "z": "cb80149c.966208",
+        "name": "",
+        "server": "da7e8f9b.c87dc",
+        "client": "",
+        "x": 2940,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "af45d040.35ff9",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "if mode === live",
+        "func": "//if(Object.keys(context.global.sendDataLive).length !== 0){\n        if(msg.mode === 'live'){\n        //context.global.sendDataLive.push(msg.update);\n        \n        for(var key in msg.update){\n            context.global.sendDataLive[key] = msg.update[key];    \n        }\n        if(Object.keys(context.global.sendDataLive).length === context.global.sendDataLiveLg){\n            var msg = {};\n            msg.payload = context.global.sendDataLive ;\n            node.send(msg);\n            context.global.sendDataLive = {} ;\n        } \n    }\n//}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2700,
+        "y": 660,
+        "wires": [
+            [
+                "d2f895ae.bf4a88",
+                "2deca699.f8b0fa"
+            ]
+        ]
+    },
+    {
+        "id": "16638acb.b95075",
+        "type": "OlympusIx81",
+        "z": "cb80149c.966208",
+        "name": "",
+        "x": 2410,
+        "y": 660,
+        "wires": [
+            [
+                "ac0464d2.d7a6a8",
+                "6e87ad65.84c384",
+                "af45d040.35ff9",
+                "d2f895ae.bf4a88"
+            ]
+        ]
+    },
+    {
+        "id": "c12f9fe4.d53e2",
+        "type": "PriorProScan",
+        "z": "cb80149c.966208",
+        "name": "",
+        "x": 2390,
+        "y": 480,
+        "wires": [
+            [
+                "ac0464d2.d7a6a8",
+                "6e87ad65.84c384",
+                "af45d040.35ff9"
+            ]
+        ]
+    },
+    {
+        "id": "3d76617c.59f4be",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "create config channel",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif(order[0] === 'configChannels'){\n    context.global.saveConfigChannel = 'C:/Users/Williams/.node-red/lib/config/'+order[1]+\".json\" ;\n    output.filename =  context.global.saveConfigChannel;\n    output.payload =  \"create\";\n    context.global.listConfigChannel.push(order[1]+\".json\");\n    node.send(output);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2120,
+        "y": 840,
+        "wires": [
+            [
+                "4589e0f7.c91fc"
+            ]
+        ]
+    },
+    {
+        "id": "4589e0f7.c91fc",
+        "type": "file",
+        "z": "cb80149c.966208",
+        "name": "",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "x": 2310,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ad8abd92.4ea1d",
+        "type": "file in",
+        "z": "cb80149c.966208",
+        "name": "",
+        "filename": "C:\\Users\\Williams\\.node-red\\lib\\config\\list.txt",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 470,
+        "y": 260,
+        "wires": [
+            [
+                "244913c.38141ec"
+            ]
+        ]
+    },
+    {
+        "id": "244913c.38141ec",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "Initialisation",
+        "func": "context.global.listConfigChannel = msg.payload.split(\";\");\n//context.global.initialize = false ;\n//context.global.ressources = [] ;\n\n//context.global.test = [];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 260,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b44d17f3.7e3218",
+        "type": "function",
+        "z": "cb80149c.966208",
+        "name": "extend config channel",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif(order[0] === 'configChannels'){\n    output.payload = \";\"+order[1]+\".json\";\n    node.send(output);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2120,
+        "y": 880,
+        "wires": [
+            [
+                "fe963ba4.3d9428",
+                "d2f895ae.bf4a88"
+            ]
+        ]
+    },
+    {
+        "id": "fe963ba4.3d9428",
+        "type": "file",
+        "z": "cb80149c.966208",
+        "name": "",
+        "filename": "C:\\Users\\Williams\\.node-red\\lib\\config\\list.txt",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 2430,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "da7e8f9b.c87dc",
+        "type": "websocket-listener",
+        "z": "cb80149c.966208",
+        "path": "/ws/missmarple",
+        "wholemsg": "false"
+    },
+    {
+        "id": "79f90969.395868",
+        "type": "websocket-listener",
+        "z": "",
+        "path": "/ws/simple",
+        "wholemsg": "false"
+    }
+]

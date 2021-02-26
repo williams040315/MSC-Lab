@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5cab3bff3c4c7318f8fca5d2"},"equipement_name":"Miss Marple","begin_time":"Tue Aug 13 2019 15:21:55","is_available":"false","current_user":"admin@admin.fr","ip_address":"172.27.0.183"}
+{"_id":{"$oid":"5cab3c7b3c4c7318f8fca5d3"},"equipement_name":"Dr. Who","begin_time":"Thu May 23 2019 11:26:59","is_available":"false","current_user":"test@test.fr","ip_address":"42.42.42.42"}
+{"_id":{"$oid":"5d384af5cd250b1fe83d4b4b"},"equipement_name":"Mustard","begin_time":" - ","is_available":"true","current_user":" - ","ip_address":"5.2.6.55","__v":{"$numberInt":"0"}}
+{"_id":{"$oid":"5d405518c3ce0239bcc1f4f6"},"equipement_name":"test","begin_time":" - ","is_available":"true","current_user":" - ","ip_address":"5.6.5.4","__v":{"$numberInt":"0"}}

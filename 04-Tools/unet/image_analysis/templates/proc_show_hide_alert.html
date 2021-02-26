@@ -1,0 +1,18 @@
+/*
+Indicating the general state of the processing
+*/
+
+//--------------------- Processing running
+
+$('.state_proc').show()
+$('#text_proc').text('Processing...')
+$('#cog').show()
+
+//--------------------- End of the processing
+
+socket.on('end_proc', function(msg){
+      $('#text_proc').text('All processings done !')
+      $('#cog').hide()
+      $('.ratio_done').hide()
+      //alert('finished')
+})

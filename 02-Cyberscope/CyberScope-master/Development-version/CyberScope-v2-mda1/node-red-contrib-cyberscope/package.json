@@ -1,0 +1,26 @@
+{
+  "author": {
+    "name": "Oui oui et son taxi",
+    "email": "wllmsbrtt@gmail.com"
+  },
+  "dependencies": {
+    "serialport": "^6.2.0"
+  },
+  "description": "Node-RED nodes to talk to serial ports for specific node",
+  "keywords": [
+    "node-red",
+    "serial"
+  ],
+  "name": "node-red-contrib-cyberscope",
+  "version": "1.0.0",
+  "node-red": {
+    "version": ">=0.16.0",
+    "nodes": {
+      "cyberscope": "cyberscope.js"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

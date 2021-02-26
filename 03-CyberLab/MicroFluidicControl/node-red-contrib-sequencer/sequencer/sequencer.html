@@ -1,0 +1,247 @@
+<script type="text/x-red" data-template-name="sequencer">
+    <div class="form-row">
+        <label for="node-input-namesave" style="width:150px" ><i class="fa fa-tag"></i> <i class="fa fa-file-text"></i><span data-i18n="common.namesave"></span></label>
+        <input type="text" id="node-input-name" style="width:200px" placeholder="node name">
+        <input type="text" id="node-input-save" style="width:200px" placeholder="backup file | empty if not used">
+    </div>
+    <div class="form-row">
+        <label for="node-input-airTable"  style="width:150px" ><span data-i18n="common.airTable"></span></label>
+        <input type="text" id="node-input-ApiKey" style="width:200px" placeholder="ex: keyg2DOt9vukY1MhL" value="keyg2DOt9vukY1MhL">
+        <input type="text" id="node-input-BaseKey" style="width:200px" placeholder="ex: appDgnv2cpbuCsgCO" value="appDgnv2cpbuCsgCO">
+    </div>
+    <div class="form-row">
+        <label for="node-input-duration" style="width:150px" ><i class="fa fa-clock-o"></i><span data-i18n="common.duration"></span></label>
+        <input type="number" id="node-input-duration" style="width:100px" placeholder="duration (in minuts)" value="20">
+    </div>
+    <div class="form-row" style="margin-bottom:0;">
+        <label style="width:500px" ><i class="fa fa-calendar-check-o"></i><span data-i18n="common.configuration"></span></label>
+    </div>
+    <div class="form-row node-input-rule-container-row">
+        <ol id="node-input-rule-container"></ol>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="sequencer">
+    
+    <p> Digital Sequencer for Microfluidic Valves</ p>
+    <h3> Details </h3>
+    <p> You have two options for setting this node. Or dynamically by injecting a JSON object into the <code> msg.payload</code>
+    while respecting the name of each of the properties of the object. Either sustainably by editing specific rules from the node itself. </p>
+    
+    <h4>From the JSON object </h4>
+    <p>You will find an example from the download file. </p>
+    
+    <h4> From the node </h4>
+    <p> You can create n digital signals by adding sequencing rules each time. All times used are expressed in minutes. </p>
+
+    <h4> Output format </h4>
+    <p> The output message is available on the <code>msg.payload</code> in JSON format. <br>
+    It takes the names of the different rules that you have defined. For example, if you called the first rule "valve1", you could use <code>msg.payload.valve1</code>
+    to retrieve this value (used the node changes). A property noted "com" is useful for the interfacing of the arduino which controls the solenoid valves. All you need to do is set the communication and retrieve
+    the message to be sent in the same way as previously <code>msg.payload.com</code>.</p>
+    <p> A file is also generated and saved in the directory where you ran node-red </p>
+    <p> In the background, the node also sends all the parameters, and all the data generated in the AirTable database.</p>
+    
+    <h4> Addictions </h4>
+    <p> All dependencies are included in the node package.</p>
+    
+    <h4>Williams BRETT | July 2018 | CNRS, University Paris 7 | MSC</h4>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('sequencer',{
+        category: 'Lab513',
+        color:"#BCFCC9",
+        defaults: { 
+            name: {value:""}, 
+            topic: {value:"control of microfluidic valves"},
+            save :{value: ""},
+            ApiKey : {value: "keyg2DOt9vukY1MhL"},
+            BaseKey : {value: "appDgnv2cpbuCsgCO"},
+            duration : {value: "60", required:true, validate:function(v) { return RED.validators.number(v) && (v >= 3); }},
+            rules:{value:[{nm:"", en_c:false, en_s:false, et:"20",es:false, ths:"10", tls:"10", stc:false, sws:false}]}
+            },
+        inputs:1,
+        outputs:1,
+        icon: "lab513.png",   
+        label: function() {   
+            return this.name||this.topic||"sequencer";
+        },
+        labelStyle: function() { // sets the class to apply to the label
+            return this.name?"node_label_italic":"";
+        },
+        
+        oneditprepare: function() {
+    
+            var desc_nm = this._("desc.nm");
+            var desc_en = this._("desc.en");
+            var desc_et = this._("desc.et");
+            var desc_es = this._("desc.es");
+            var desc_ths = this._("desc.ths");
+            var desc_tls = this._("desc.tls");
+            var desc_stc = this._("desc.stc");
+            var desc_sws = this._("desc.sws");
+            var desc_L = this._("desc.L");
+            var desc_H = this._("desc.H");
+                
+            function resizeConfig(config) {
+                var newWidth = config.width();
+                config.find('.red-ui-typedInput').typedInput("width",newWidth);
+
+            }
+            $('#node-input-rule-container').css('min-height','280px').css('min-width','620px').editableList({
+                addItem: function(container,i,opt) {
+                    var rule = opt;
+                    
+                    if (!rule.hasOwnProperty('et')){
+                        rule = {nm:"", en_c:false, en_s:desc_L , et:"20",es:desc_L, ths:"10", tls:"10", stc:desc_L, sws:desc_L};
+                    }
+            
+                    var row0 = $('<div/>').appendTo(container);
+                    var row1 = $('<div/>',{style:"margin-top:8px;"}).appendTo(container);
+                    var row2 = $('<div/>',{style:"margin-top:8px;"}).appendTo(container);
+                    var row3 = $('<div/>',{style:"margin-top:8px;"}).appendTo(container);
+                    var selectOptions = [{v:false,l:desc_L},{v:true,l:desc_H}];
+                    //var selectOptions2 = [{v:"yes",l:"yes"},{v:"no (low state)",l:"no (low state)"},{v:"no (high state)",l:"no (high state)"}];
+            
+                    $('<label/>',{for:"node-input-rule-property-Name",style:"width:150px; margin-right:10px;"})
+                    .text(desc_nm)
+                    .appendTo(row0);
+                    var name = $('<input/>',{id:"node-input-rule-property-Name_v_"+i,style:"width:100px; margin-right:10px;", type:"text", value:rule.nm, placeholder:"ex: valve n°"+(i+1)})
+                    .appendTo(row0);
+
+                    $('<label/>',{for:"node-input-rule-property-Enable",style:"width:120px; margin-right:10px; text-align:right"})
+                    .text(desc_en)
+                    .appendTo(row0);
+                    var enable_check = $('<input/>',{id:"node-input-rule-property-enable_check_"+i, checked:rule.en_c, type:"checkbox",style:"width:20px;"})
+                    .appendTo(row0);                    
+                    var enable_list = $('<select/>',{id:"node-input-rule-property-enable_list_"+i, style:"width:125px; margin-right:10px;"})
+                    .appendTo(row0);
+                    for (j=0; j<2; j++) {
+                        if((rule.en_s).toString() === (selectOptions[j].v).toString()) enable_list.append($("<option selected></option>").val(selectOptions[j].v).text(selectOptions[j].l));
+                        else enable_list.append($("<option></option>").val(selectOptions[j].v).text(selectOptions[j].l));
+                    }
+                    
+                    $('<label/>',{for:"node-input-rule-property-eTime",style:"width:150px; margin-right:10px;"})
+                    .text(desc_et)
+                    .appendTo(row1);
+                    var eTime = $('<input/>',{id:"node-input-rule-property-eTime_"+i,style:"width:80px", type:"number", min:"1" , step:"1",value:rule.et}).appendTo(row1);
+                    
+                    $('<label/>',{for:"node-input-rule-property-eState",style:" text-align:center; width:150px; margin-right:10px; text-align:right"})
+                    .text(desc_es)
+                    .appendTo(row1);                    
+                    var eState = $('<select/>',{id:"node-input-rule-property-eState_"+i,style:"width:100px; margin-right:10px;"}).appendTo(row1);
+                    for (j=0; j<2; j++) {
+                        if((rule.es).toString() === (selectOptions[j].v).toString()) eState.append($("<option selected></option>").val(selectOptions[j].v).text(selectOptions[j].l));
+                        else eState.append($("<option></option>").val(selectOptions[j].v).text(selectOptions[j].l));
+                    }
+                    
+                    $('<label/>',{for:"node-input-rule-property-tHigh",style:"width:150px; margin-right:10px;"})
+                    .text(desc_ths)
+                    .appendTo(row2);
+                    var tHigh = $('<input/>',{id:"node-input-rule-property-tHigh_"+i, style:"width:80px", value: rule.ths, type:"number" , step:"1", min:"1"}).appendTo(row2);
+            
+                    $('<label/>',{for:"node-input-rule-property-tLow",style:"text-align:center; width:150px; margin-right:10px; text-align:right"})
+                    .text(desc_tls)
+                    .appendTo(row2);
+                    var tLow = $('<input/>',{id:"node-input-rule-property-tLow_"+i,style:"width:70px",value: rule.tls, type:"number" , step:"1", min:"1"}).appendTo(row2);
+
+                    $('<label/>',{for:"node-input-rule-property-stc",style:"width:150px; margin-right:10px;"})
+                    .text(desc_stc)
+                    .appendTo(row3);
+                    var start = $('<select/>',{id:"node-input-rule-property-stc_"+i,style:"width:100px; margin-right:10px;"}).appendTo(row3);
+                    for (j=0; j<2; j++) {
+                        if((rule.stc).toString() == (selectOptions[j].v).toString()) start.append($("<option selected></option>").val(selectOptions[j].v).text(selectOptions[j].l));
+                        else start.append($("<option></option>").val(selectOptions[j].v).text(selectOptions[j].l));
+                    }
+                    $('<label/>',{for:"node-input-rule-property-sws",style:"width:120px; margin-right:10px; text-align:right"})
+                    .text(desc_sws)
+                    .appendTo(row3);
+                    var stop = $('<select/>',{id:"node-input-rule-property-sws_"+i,style:"width:100px; margin-right:10px;"}).appendTo(row3);
+                    for (j=0; j<2; j++) {
+                        if((rule.sws).toString() == (selectOptions[j].v).toString()) stop.append($("<option selected></option>").val(selectOptions[j].v).text(selectOptions[j].l));
+                        else stop.append($("<option></option>").val(selectOptions[j].v).text(selectOptions[j].l));
+                    }
+
+                    eTime.change(function(){
+                        if(parseInt(document.getElementById("node-input-rule-property-eTime_"+i).value)< 1){eTime.prop('value',1);}
+                        else {eTime.prop('value',parseInt(document.getElementById("node-input-rule-property-eTime_"+i).value));}
+                        });
+                    tHigh.change(function(){
+                        if(parseInt(document.getElementById("node-input-rule-property-tHigh_"+i).value)< 1){tHigh.prop('value',1);}
+                        else {tHigh.prop('value',parseInt(document.getElementById("node-input-rule-property-tHigh_"+i).value));}
+                        });
+                    tLow.change(function(){
+                        if(parseInt(document.getElementById("node-input-rule-property-tLow_"+i).value)< 1){tLow.prop('value',1);}
+                        else {tLow.prop('value',parseInt(document.getElementById("node-input-rule-property-tLow_"+i).value));}
+                        });
+                    enable_check.change(function(){
+                        if( enable_check.is(':checked') ){
+                            enable_list.hide();
+                            row1.show();
+                            row2.show();
+                            row3.show();
+                        } else {
+                            enable_list.show();
+                            row1.hide();
+                            row2.hide();
+                            row3.hide();
+                        }    
+                    });                    
+                    
+                    enable_check.change();                    
+                    name.typedInput('value',rule.nm);
+                    enable_list.val(rule.en_s);
+                    eTime.typedInput('value',parseInt(rule.et));
+                    eState.val(rule.es);
+                    tHigh.typedInput('value',parseInt(rule.ths));
+                    tLow.typedInput('value',parseInt(rule.tls));
+                    start.val(rule.stc);
+                    stop.val(rule.sws);
+                    
+                    var newWidth = $("#node-input-rule-container").width();
+                    resizeConfig(container);
+                },
+                resizeItem: resizeConfig,
+                removable: true,
+                sortable: false
+            });
+           
+            for (var i=0; i<this.rules.length; i++) {
+                var rule = this.rules[i];
+                $("#node-input-rule-container").editableList('addItem',rule);
+            }
+        },
+        oneditsave: function() {
+            var rules = $("#node-input-rule-container").editableList('items');
+            var node = this;
+            node.rules= [];
+            rules.each(function(i) {
+                    var r = {
+                    nm:document.getElementById("node-input-rule-property-Name_v_"+i).value,
+                    en_c: document.getElementById("node-input-rule-property-enable_check_"+i).checked,
+                    en_s:document.getElementsByTagName("option")[document.getElementById("node-input-rule-property-enable_list_"+i).selectedIndex].value,
+                    et:document.getElementById("node-input-rule-property-eTime_"+i).value,
+                    es:document.getElementsByTagName("option")[document.getElementById("node-input-rule-property-eState_"+i).selectedIndex].value,
+                    ths:document.getElementById("node-input-rule-property-tHigh_"+i).value,
+                    tls:document.getElementById("node-input-rule-property-tLow_"+i).value,
+                    stc:document.getElementsByTagName("option")[document.getElementById("node-input-rule-property-stc_"+i).selectedIndex].value,
+                    sws:document.getElementsByTagName("option")[document.getElementById("node-input-rule-property-sws_"+i).selectedIndex].value,
+                };
+                node.rules.push(r);
+            });
+            
+        },
+        oneditresize: function(size) {
+            var rows = $("#dialog-form>div:not(.node-input-rule-container-row)");
+            var height = size.height;
+            for (var i=0; i<rows.size(); i++) {
+                height -= $(rows[i]).outerHeight(true);
+            }
+            var editorRow = $("#dialog-form>div.node-input-rule-container-row");
+            height -= (parseInt(editorRow.css("marginTop"))+parseInt(editorRow.css("marginBottom")));
+
+            $("#node-input-rule-container").editableList('height',height);
+        }
+    });
+</script>

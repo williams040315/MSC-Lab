@@ -1,0 +1,20 @@
+{
+    "name"         : "node-red-contrib-cool-led-pe-4000",
+    "version"      : "0.0.1",
+    "description"  : "A node module to drive the CoolLed PE-4000",
+    "keywords": [ "node-red" ],
+    "author": "Williams BRETT | Lab513",
+    "dependencies":{
+        "serialport":"7.1.0"
+        },
+    "node-red"     : {
+        "nodes": {
+            "CoolLedPe4000": "CoolLedPe4000/CoolLedPe4000.js"
+        }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/.........."
+    },
+    "license": "CNRS, University Paris 7, MSC"
+}

@@ -1,0 +1,82 @@
+/*
+
+Retrieving files names and parameters for the processing
+
+*/
+
+$('#processing').click(function(){                                                        // submit processing, associated to launch processings
+    var list_check = []                          // files list
+    var list_params = []                         // params list
+    $('.listfiles .check').each(function(){                                               // Reads all the checkboxes
+            if ($(this).is(':checked')){
+                  list_check.push($(this).attr('id'))                                     // giving checkboxes an ID attribute
+                }
+       }) // end .check
+
+       $('#params_' + curr_op + ' :input').each(function(){                                // ## operation (nbcells, segm&trac etc..) parameters
+               if ($(this).hasClass('check')){
+                  if ( $(this).is(':checked') ){
+                     list_params.push($(this).attr('id'))                                  // giving checkboxes an ID attribute
+                   }
+               }
+               else { list_params.push( $(this).attr('id') + ':' + $(this).val() )}          // retrieve id and value from input
+             }) // end input
+
+       $('.set_panel :input').each(function(){                                              // ## settings parameters
+               if ($(this).hasClass('check')){
+                  if ( $(this).is(':checked') ){
+                     list_params.push($(this).attr('id'))                                   // giving checkboxes an ID attribute
+                   }
+               }
+               else { list_params.push( $(this).attr('id') + ':' + $(this).val() )}          // retrieve id and value from input
+             }) // end input
+        list_params.push('model' + ':' + curr_model)                                         // current model
+
+    all_files_checks = JSON.stringify(list_check)          // list of the files to be processed
+    all_params = JSON.stringify(list_params)               // list of the parameters for the processing
+
+    //------------  Show the chosen options
+
+    //alert(all_params)
+    $('.proc_opts').show()
+    for (p of list_params){
+       //alert(p)
+       if (p.match('method') != null){
+          //alert('method is '+ p)
+          var valp = p.split(':')[1]
+
+          $('#num_meth').text(valp)
+       }
+
+       if (p.match('track') != null){
+          var valp = p.split(':')[1]
+          //alert('track is '+ p)
+          $('#track_which').text(valp)
+       }
+
+       if (p.match('thresh_after_pred') != null){
+          var valp = p.split(':')[1]
+          //alert('track is '+ p)
+          $('#thresh_after_pred_used').text(valp)
+       }
+
+       if (p.match('model') != null){
+          var valp = p.split(':')[1]
+          //alert('track is '+ p)
+          $('#model_used').text(valp)
+       }
+
+    }
+
+    $('.proc_opts').fadeOut(20000);
+
+    //------------
+
+    socket.emit('params', all_params)                      // emit the params
+    setTimeout(function(){}, 500)
+    socket.emit('launch_proc', all_files_checks)           // emit the files names
+
+    //-------
+    {% include 'proc_show_hide_alert.html' %}
+
+})

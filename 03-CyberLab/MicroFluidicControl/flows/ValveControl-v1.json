@@ -1,0 +1,2416 @@
+[
+    {
+        "id": "17f02287.90878d",
+        "type": "comment",
+        "z": "569b0c30.c5fc84",
+        "name": "mode auto",
+        "info": "",
+        "x": 120,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "712ce0e1.9c176",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat1",
+        "group": "91f7fe5b.be0fa",
+        "order": 4,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v1e1",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 384.3333282470703,
+        "y": 141.00004816055298,
+        "wires": [
+            [
+                "40f1a3cb.ff2f2c"
+            ]
+        ]
+    },
+    {
+        "id": "3e71fcb0.883114",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat2",
+        "group": "91f7fe5b.be0fa",
+        "order": 6,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v1e2",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 383.99998474121094,
+        "y": 352.9999842643738,
+        "wires": [
+            [
+                "c237bf6f.ae426"
+            ]
+        ]
+    },
+    {
+        "id": "8351319a.1434e",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat1",
+        "group": "91f7fe5b.be0fa",
+        "order": 9,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v2e1",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 385,
+        "y": 175.6666750907898,
+        "wires": [
+            [
+                "e090a468.24f338"
+            ]
+        ]
+    },
+    {
+        "id": "11d0265c.43d4ba",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat2",
+        "group": "91f7fe5b.be0fa",
+        "order": 11,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v2e2",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 382.99998474121094,
+        "y": 385.9999842643738,
+        "wires": [
+            [
+                "2f9b2c5a.500fe4"
+            ]
+        ]
+    },
+    {
+        "id": "4a7a0850.2b0988",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps1",
+        "group": "91f7fe5b.be0fa",
+        "order": 10,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v2t1",
+        "x": 389.0000343322754,
+        "y": 826.3332784175873,
+        "wires": [
+            [
+                "d306a140.16b5e"
+            ]
+        ]
+    },
+    {
+        "id": "4b14a1e3.3f43b",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps2",
+        "group": "91f7fe5b.be0fa",
+        "order": 12,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v2t2",
+        "x": 387.0000343322754,
+        "y": 1007.3332784175873,
+        "wires": [
+            [
+                "f4aba59d.dd3d28"
+            ]
+        ]
+    },
+    {
+        "id": "745f2c2f.ffdaa4",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat1",
+        "group": "91f7fe5b.be0fa",
+        "order": 14,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v3e1",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 384.9999885559082,
+        "y": 211.33334302902222,
+        "wires": [
+            [
+                "426cc12e.7136a"
+            ]
+        ]
+    },
+    {
+        "id": "223825ea.fe187a",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat2",
+        "group": "91f7fe5b.be0fa",
+        "order": 16,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v3e2",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 382.99998474121094,
+        "y": 419.9999842643738,
+        "wires": [
+            [
+                "f82a4686.61bb48"
+            ]
+        ]
+    },
+    {
+        "id": "6bbe1079.b7bab",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps1",
+        "group": "91f7fe5b.be0fa",
+        "order": 15,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v3t1",
+        "x": 389.0000343322754,
+        "y": 860.3332784175873,
+        "wires": [
+            [
+                "f7607d96.5a8f7"
+            ]
+        ]
+    },
+    {
+        "id": "5a13c828.6f0df8",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps2",
+        "group": "91f7fe5b.be0fa",
+        "order": 17,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v3t2",
+        "x": 387.0000343322754,
+        "y": 1041.3332784175873,
+        "wires": [
+            [
+                "cb5c01f5.5b5b6"
+            ]
+        ]
+    },
+    {
+        "id": "fbc62064.2fe66",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat1",
+        "group": "91f7fe5b.be0fa",
+        "order": 19,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v4e1",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 384.9999885559082,
+        "y": 253.66663694381714,
+        "wires": [
+            [
+                "dc9baeef.9a2cf"
+            ]
+        ]
+    },
+    {
+        "id": "e9319d4b.7512",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat2",
+        "group": "91f7fe5b.be0fa",
+        "order": 21,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v4e2",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 382.99998474121094,
+        "y": 453.9999842643738,
+        "wires": [
+            [
+                "66ce8917.3c5bc8"
+            ]
+        ]
+    },
+    {
+        "id": "4b16b135.e1657",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps1",
+        "group": "91f7fe5b.be0fa",
+        "order": 20,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v4t1",
+        "x": 389.0000343322754,
+        "y": 894.3332784175873,
+        "wires": [
+            [
+                "baba5caa.c8dd2"
+            ]
+        ]
+    },
+    {
+        "id": "4d9f6dd8.5dd0d4",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps2",
+        "group": "91f7fe5b.be0fa",
+        "order": 22,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v4t2",
+        "x": 387.0000343322754,
+        "y": 1075.3332784175873,
+        "wires": [
+            [
+                "274335a7.52f2fa"
+            ]
+        ]
+    },
+    {
+        "id": "4d593699.4e0948",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat1",
+        "group": "91f7fe5b.be0fa",
+        "order": 24,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v5e1",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 383.9999771118164,
+        "y": 301.00001287460327,
+        "wires": [
+            [
+                "ea073a61.01c358"
+            ]
+        ]
+    },
+    {
+        "id": "83d5ad0f.0fa2a",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Etat2",
+        "group": "91f7fe5b.be0fa",
+        "order": 26,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "v5e2",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 381.99998474121094,
+        "y": 487.9999842643738,
+        "wires": [
+            [
+                "d5a830c6.3d6cf"
+            ]
+        ]
+    },
+    {
+        "id": "cd01feef.17706",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps1",
+        "group": "91f7fe5b.be0fa",
+        "order": 25,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v5t1",
+        "x": 388.0000343322754,
+        "y": 928.3332784175873,
+        "wires": [
+            [
+                "57ddcaac.547a24"
+            ]
+        ]
+    },
+    {
+        "id": "9583d156.3e16",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps2",
+        "group": "91f7fe5b.be0fa",
+        "order": 27,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v5t2",
+        "x": 386.0000343322754,
+        "y": 1109.3332784175873,
+        "wires": [
+            [
+                "8116a8cd.095c98"
+            ]
+        ]
+    },
+    {
+        "id": "dce08e21.468cd",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps d'établissement",
+        "group": "91f7fe5b.be0fa",
+        "order": 2,
+        "width": "10",
+        "height": "2",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "tini",
+        "x": 436.0000190734863,
+        "y": 1148.3332726955414,
+        "wires": [
+            [
+                "16e68b3.cbb7b75"
+            ]
+        ]
+    },
+    {
+        "id": "19d7a1e1.bee9de",
+        "type": "inject",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "topic": "",
+        "payload": "10",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 109.9523696899414,
+        "y": 982.7142999172211,
+        "wires": [
+            [
+                "4a7a0850.2b0988",
+                "6bbe1079.b7bab",
+                "4b16b135.e1657",
+                "cd01feef.17706",
+                "4b14a1e3.3f43b",
+                "5a13c828.6f0df8",
+                "4d9f6dd8.5dd0d4",
+                "9583d156.3e16",
+                "dce08e21.468cd",
+                "16e68b3.cbb7b75",
+                "8116a8cd.095c98",
+                "274335a7.52f2fa",
+                "cb5c01f5.5b5b6",
+                "f4aba59d.dd3d28",
+                "1ee764fa.05fccb",
+                "57ddcaac.547a24",
+                "baba5caa.c8dd2",
+                "f7607d96.5a8f7",
+                "d306a140.16b5e",
+                "cdffda3b.4c9598",
+                "5db55d72.3ad8f4",
+                "bf53f7bd.df9e08"
+            ]
+        ]
+    },
+    {
+        "id": "2135bbc5.16cf14",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Nom de l'essai",
+        "group": "91f7fe5b.be0fa",
+        "order": 1,
+        "width": "10",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "nom",
+        "x": 408.0000343322754,
+        "y": 1191.3332784175873,
+        "wires": [
+            [
+                "51d19e67.d69a5"
+            ]
+        ]
+    },
+    {
+        "id": "f6fb0faa.1c328",
+        "type": "inject",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "topic": "",
+        "payload": "Test1",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 111.14289474487305,
+        "y": 1191.3332660198212,
+        "wires": [
+            [
+                "2135bbc5.16cf14",
+                "51d19e67.d69a5"
+            ]
+        ]
+    },
+    {
+        "id": "7593803c.f82da",
+        "type": "ui_button",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "group": "91f7fe5b.be0fa",
+        "order": 28,
+        "width": "10",
+        "height": "1",
+        "label": "GO",
+        "color": "",
+        "icon": "",
+        "payload": "go",
+        "payloadType": "str",
+        "topic": "go",
+        "x": 381.81815338134766,
+        "y": 606.8181920051575,
+        "wires": [
+            [
+                "8563664c.68ca68",
+                "f0e71f0a.0fdb5"
+            ]
+        ]
+    },
+    {
+        "id": "85422c0b.ccc5f",
+        "type": "ui_button",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "group": "91f7fe5b.be0fa",
+        "order": 29,
+        "width": "10",
+        "height": "1",
+        "label": "STOP",
+        "color": "",
+        "icon": "",
+        "payload": "stop",
+        "payloadType": "str",
+        "topic": "stop",
+        "x": 380.81815338134766,
+        "y": 642.8181920051575,
+        "wires": [
+            [
+                "21097a19.65e516"
+            ]
+        ]
+    },
+    {
+        "id": "6768d376.99b24c",
+        "type": "inject",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 122.9999885559082,
+        "y": 211.9999828338623,
+        "wires": [
+            [
+                "712ce0e1.9c176",
+                "8351319a.1434e",
+                "745f2c2f.ffdaa4",
+                "fbc62064.2fe66",
+                "4d593699.4e0948"
+            ]
+        ]
+    },
+    {
+        "id": "aff78b5b.eab688",
+        "type": "inject",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 118.9999885559082,
+        "y": 463.99999809265137,
+        "wires": [
+            [
+                "3e71fcb0.883114",
+                "11d0265c.43d4ba",
+                "223825ea.fe187a",
+                "e9319d4b.7512",
+                "83d5ad0f.0fa2a",
+                "3b81d73e.b25ea8",
+                "ef8de94a.c438f8"
+            ]
+        ]
+    },
+    {
+        "id": "40f1a3cb.ff2f2c",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v1e1 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520.9999847412109,
+        "y": 170.99998426437378,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e090a468.24f338",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v2e1 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520.9999847412109,
+        "y": 203.99998426437378,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "426cc12e.7136a",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v3e1 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520.9999847412109,
+        "y": 237.99998426437378,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc9baeef.9a2cf",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v4e1 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 519.9999847412109,
+        "y": 271.9999842643738,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ea073a61.01c358",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v5e1 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 518.9999847412109,
+        "y": 305.9999842643738,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c237bf6f.ae426",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v1e2 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 517.9999847412109,
+        "y": 352.9999842643738,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f9b2c5a.500fe4",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v2e2 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 517.9999847412109,
+        "y": 385.9999842643738,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f82a4686.61bb48",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v3e2 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 517.9999847412109,
+        "y": 419.9999842643738,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "66ce8917.3c5bc8",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v4e2 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 516.9999847412109,
+        "y": 453.9999842643738,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d5a830c6.3d6cf",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v5e2 = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 516.9999847412109,
+        "y": 487.9999842643738,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cdffda3b.4c9598",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v1t1 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 522.1906661987305,
+        "y": 792.9050939083099,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d306a140.16b5e",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v2t1 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 522.1905860900879,
+        "y": 825.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f7607d96.5a8f7",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v3t1 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 522.1905860900879,
+        "y": 859.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "baba5caa.c8dd2",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v4t1 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 521.1905860900879,
+        "y": 893.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "57ddcaac.547a24",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v5t1 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520.1905860900879,
+        "y": 927.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1ee764fa.05fccb",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v1t2 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 519.1905860900879,
+        "y": 974.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f4aba59d.dd3d28",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v2t2 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 519.1905860900879,
+        "y": 1007.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb5c01f5.5b5b6",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v3t2 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 519.1905860900879,
+        "y": 1041.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "274335a7.52f2fa",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v4t2 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 518.1905860900879,
+        "y": 1075.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8116a8cd.095c98",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v5t2 = parseInt(msg.payload) ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 517.1905860900879,
+        "y": 1109.9051263332367,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "16e68b3.cbb7b75",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.tini = parseInt(msg.payload) ;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 517.3334083557129,
+        "y": 1148.190862417221,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "51d19e67.d69a5",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.nom = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 518.3334465026855,
+        "y": 1191.4766778796911,
+        "wires": [
+            [
+                "2f41dee0.a234e2"
+            ]
+        ]
+    },
+    {
+        "id": "8563664c.68ca68",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.go = true ;\ncontext.global.stop = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520.9545364379883,
+        "y": 567.2726759910583,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "21097a19.65e516",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.stop = true ;\ncontext.global.go = false ;\ncontext.global.graph1 = 0;\ncontext.global.graph2 = 0;\ncontext.global.graph3 = 0;\ncontext.global.graph4 = 0;\ncontext.global.graph5 = 0;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 518.7272415161133,
+        "y": 674.45454454422,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3b81d73e.b25ea8",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.go = false ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380.27270126342773,
+        "y": 529.9090628623962,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ef8de94a.c438f8",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.stop = true ;\ncontext.global.refresh = 0 ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380.54543685913086,
+        "y": 565.090886592865,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "81fb6595.f707d8",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "V1",
+        "group": "91f7fe5b.be0fa",
+        "order": 3,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 377.66663360595703,
+        "y": 1245.333370923996,
+        "wires": [
+            [
+                "652d582c.313818"
+            ]
+        ]
+    },
+    {
+        "id": "c9117787.1e7128",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "V2",
+        "group": "91f7fe5b.be0fa",
+        "order": 8,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 377.66663360595703,
+        "y": 1281.333370923996,
+        "wires": [
+            [
+                "39528ff1.5a2c3"
+            ]
+        ]
+    },
+    {
+        "id": "e715ab3e.871f68",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "V3",
+        "group": "91f7fe5b.be0fa",
+        "order": 13,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 376.66663360595703,
+        "y": 1316.333370923996,
+        "wires": [
+            [
+                "f210dac1.7fd678"
+            ]
+        ]
+    },
+    {
+        "id": "bae212b6.5850c",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "V4",
+        "group": "91f7fe5b.be0fa",
+        "order": 18,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 375.66663360595703,
+        "y": 1351.333370923996,
+        "wires": [
+            [
+                "4e77bcb6.1c8304"
+            ]
+        ]
+    },
+    {
+        "id": "e05c0edf.54a8c",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "V5",
+        "group": "91f7fe5b.be0fa",
+        "order": 23,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 376.66663360595703,
+        "y": 1385.333370923996,
+        "wires": [
+            [
+                "a38d7f7b.21c44"
+            ]
+        ]
+    },
+    {
+        "id": "1d661c06.a49534",
+        "type": "inject",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "x": 113,
+        "y": 1310.0000114440918,
+        "wires": [
+            [
+                "81fb6595.f707d8",
+                "c9117787.1e7128",
+                "e715ab3e.871f68",
+                "bae212b6.5850c",
+                "e05c0edf.54a8c"
+            ]
+        ]
+    },
+    {
+        "id": "652d582c.313818",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v1en = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 519.666633605957,
+        "y": 1245.333370923996,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "39528ff1.5a2c3",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v2en = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 519.666633605957,
+        "y": 1281.333370923996,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f210dac1.7fd678",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v3en = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 519.666633605957,
+        "y": 1316.333370923996,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4e77bcb6.1c8304",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v4en = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 518.666633605957,
+        "y": 1351.333370923996,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a38d7f7b.21c44",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.v5en = msg.payload ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 517.666633605957,
+        "y": 1385.333370923996,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2e91a3d8.59b93c",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "V2",
+        "func": "if(context.global.go === true){\n    if( (context.global.synchro % (context.global.mod2*60)) === 0){\n        if(context.global.inv2 === false){\n            msg.payload = context.global.v2e1 ;\n            if(context.global.synchro === 0 ) context.global.mod2 = context.global.v2t1 ;\n            else context.global.mod2 = context.global.mod2 + context.global.v2t1 ;\n        }\n        if(context.global.inv2 === true){\n            msg.payload = context.global.v2e2 ;\n            if(context.global.synchro === 0 ) context.global.mod2 = context.global.v2t2 ;\n            else context.global.mod2 = context.global.mod2 + context.global.v2t2 ;\n        }\n        context.global.inv2 = !context.global.inv2 ;\n        //msg.payload = context.global.inv ;\n        msg.topic = \"Vanne2\";\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 985.0000267028809,
+        "y": 705.2334523200989,
+        "wires": [
+            [
+                "46c5f4cc.a80e2c"
+            ]
+        ]
+    },
+    {
+        "id": "f0e71f0a.0fdb5",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "Init",
+        "func": "var msg2 = {};\nvar msg3 = {};\nvar msg4 = {};\nvar msg5 = {};\nvar msg6 = {};\n\ncontext.global.enabled = 0 ;\ncontext.global.synchro = -1;\n\ncontext.global.graph1 = 0;\ncontext.global.graph2 = 0;\ncontext.global.graph3 = 0;\ncontext.global.graph4 = 0;\ncontext.global.graph5 = 0;\n\ncontext.global.inv1 = false;\ncontext.global.inv2 = false;\ncontext.global.inv3 = false;\ncontext.global.inv4 = false;\ncontext.global.inv5 = false;\n\n/*context.global.v1e1 = true;\ncontext.global.v1e2 = false;\ncontext.global.v1t1 = 5;\ncontext.global.v1t2 = 10;\n\ncontext.global.v2e1 = false;\ncontext.global.v2e2 = true;\ncontext.global.v2t1 = 3;\ncontext.global.v2t2 = 12;\n\ncontext.global.v3e1 = true;\ncontext.global.v3e2 = false;\ncontext.global.v3t1 = 8;\ncontext.global.v3t2 = 7;\n\ncontext.global.v4e1 = false;\ncontext.global.v4e2 = true;\ncontext.global.v4t1 = 12;\ncontext.global.v4t2 = 3;\n\ncontext.global.v5e1 = true;\ncontext.global.v5e2 = false;\ncontext.global.v5t1 = 1;\ncontext.global.v5t2 = 14;\n\ncontext.global.tini = 2;\n*/\n\n\ncontext.global.mod1 = context.global.tini;\ncontext.global.mod2 = context.global.tini;\ncontext.global.mod3 = context.global.tini;\ncontext.global.mod4 = context.global.tini;\ncontext.global.mod5 = context.global.tini;\n\n\nmsg.payload = context.global.inv1 ;\nmsg.topic = \"Vanne1\" ;\nmsg2.payload = context.global.inv2 ;\nmsg2.topic = \"Vanne2\" ;\nmsg3.payload = context.global.inv3 ;\nmsg3.topic = \"Vanne3\" ;\nmsg4.payload = context.global.inv4 ;\nmsg4.topic = \"Vanne4\" ;\nmsg5.payload = context.global.inv5 ;\nmsg5.topic = \"Vanne5\" ;\nvar date = new Date(); \nmsg6.filename = context.global.nom +\"_\"+ date.getTime()+\".txt\";\ncontext.global.path = msg6.filename ;\nmsg6.payload = \"Time; V1 > V6\";\nreturn [msg,msg2,msg3,msg4,msg5,msg6];",
+        "outputs": "6",
+        "noerr": 0,
+        "x": 983.4714469909668,
+        "y": 607.1192321777344,
+        "wires": [
+            [
+                "52338c14.8bf574"
+            ],
+            [
+                "46c5f4cc.a80e2c"
+            ],
+            [
+                "56b0c13f.8b17b"
+            ],
+            [
+                "272d28b1.ce1838"
+            ],
+            [
+                "e0b643da.913f3"
+            ],
+            [
+                "7532388f.6dd608"
+            ]
+        ]
+    },
+    {
+        "id": "f68fb7d4.b18728",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "V1",
+        "func": "if(context.global.go === true){\n    if( (context.global.synchro % (context.global.mod1*60)) === 0){\n        if(context.global.inv1 === false){\n            msg.payload = context.global.v1e1 ;\n            if(context.global.synchro === 0 ) context.global.mod1 = parseInt(context.global.v1t1) ;\n            else context.global.mod1 = parseInt(context.global.mod1 + context.global.v1t1) ;\n        }\n        if(context.global.inv1 === true){\n            msg.payload = context.global.v1e2 ;\n            if(context.global.synchro === 0 ) parseInt(context.global.mod1 = context.global.v1t2) ;\n            else context.global.mod1 = parseInt(context.global.mod1 + context.global.v1t2) ;\n        }\n        context.global.inv1 = !context.global.inv1 ;\n        //msg.payload = context.global.inv ;\n        msg.topic = \"Vanne1\";\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 983.9000205993652,
+        "y": 671.8334279060364,
+        "wires": [
+            [
+                "52338c14.8bf574"
+            ]
+        ]
+    },
+    {
+        "id": "9f848aee.cfe4a8",
+        "type": "change",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1414.8335266113281,
+        "y": 1304.9003129005432,
+        "wires": [
+            [
+                "3a424afa.6aaad6"
+            ]
+        ]
+    },
+    {
+        "id": "6409e582.597dac",
+        "type": "change",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1415.733570098877,
+        "y": 1477.8336443901062,
+        "wires": [
+            [
+                "7ea7bbda.40f2a4",
+                "6c7e4b19.087024",
+                "50efbc2e.4baab4",
+                "5f88a608.aacf18",
+                "3a424afa.6aaad6"
+            ]
+        ]
+    },
+    {
+        "id": "ba7e0fec.a9c52",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "Loop",
+        "func": "context.global.enabled = context.global.enabled + 1;\nif(context.global.enabled >= (context.global.tini*60)){\n    context.global.synchro = context.global.synchro + 1;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1172.6667556762695,
+        "y": 858.233549118042,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "af294950.9af888",
+        "type": "delay",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "0.5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 1004.6667594909668,
+        "y": 858.8335537910461,
+        "wires": [
+            [
+                "ba7e0fec.a9c52"
+            ]
+        ]
+    },
+    {
+        "id": "8447c11c.85fbc",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "V3",
+        "func": "if(context.global.go === true){\n    if( (context.global.synchro % (context.global.mod3*60)) === 0){\n        if(context.global.inv3 === false){\n            msg.payload = context.global.v3e1 ;\n            if(context.global.synchro === 0 ) context.global.mod3 = context.global.v3t1 ;\n            else context.global.mod3 = context.global.mod3 + context.global.v3t1 ;\n        }\n        if(context.global.inv3 === true){\n            msg.payload = context.global.v3e2 ;\n            if(context.global.synchro === 0 ) context.global.mod3 = context.global.v3t2 ;\n            else context.global.mod3 = context.global.mod3 + context.global.v3t2 ;\n        }\n        context.global.inv3 = !context.global.inv3 ;\n        //msg.payload = context.global.inv ;\n        msg.topic = \"Vanne3\";\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 985.9000205993652,
+        "y": 738.8334279060364,
+        "wires": [
+            [
+                "56b0c13f.8b17b"
+            ]
+        ]
+    },
+    {
+        "id": "ebe74fc7.da9b5",
+        "type": "change",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1415.7335205078125,
+        "y": 1338.5002884864807,
+        "wires": [
+            [
+                "5f88a608.aacf18"
+            ]
+        ]
+    },
+    {
+        "id": "26580977.89c0c6",
+        "type": "change",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1415.7335166931152,
+        "y": 1372.5002884864807,
+        "wires": [
+            [
+                "50efbc2e.4baab4"
+            ]
+        ]
+    },
+    {
+        "id": "7cc5b979.469618",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "V5",
+        "func": "if(context.global.go === true){\n    if( (context.global.synchro % (context.global.mod5*60)) === 0){\n        if(context.global.inv5 === false){\n            msg.payload = context.global.v5e1 ;\n            if(context.global.synchro === 0 ) context.global.mod5 = context.global.v5t1 ;\n            else context.global.mod5 = context.global.mod5 + context.global.v5t1 ;\n        }\n        if(context.global.inv5 === true){\n            msg.payload = context.global.v5e2 ;\n            if(context.global.synchro === 0 ) context.global.mod5 = context.global.v5t2 ;\n            else context.global.mod5 = context.global.mod5 + context.global.v5t2 ;\n        }\n        context.global.inv5 = !context.global.inv5 ;\n        //msg.payload = context.global.inv ;\n        msg.topic = \"Vanne5\";\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 985.900016784668,
+        "y": 806.8334279060364,
+        "wires": [
+            [
+                "e0b643da.913f3"
+            ]
+        ]
+    },
+    {
+        "id": "a38ff56a.1a8428",
+        "type": "change",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1415.7335166931152,
+        "y": 1406.5002884864807,
+        "wires": [
+            [
+                "6c7e4b19.087024"
+            ]
+        ]
+    },
+    {
+        "id": "52338c14.8bf574",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "graph1",
+        "func": "if(context.global.v1en === true) context.global.graph1 = msg.payload;\nelse context.global.graph1 = false ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1175.1143188476562,
+        "y": 578.3335936069489,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "21aad15.0f67c2e",
+        "type": "inject",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "x": 748.2333908081055,
+        "y": 814.5004196166992,
+        "wires": [
+            [
+                "606d05fb.8f003c",
+                "f68fb7d4.b18728",
+                "2e91a3d8.59b93c",
+                "8447c11c.85fbc",
+                "7cc5b979.469618",
+                "af294950.9af888",
+                "94def78a.278258",
+                "90b1a8b8.f9d728",
+                "b45b1e04.a9a88"
+            ]
+        ]
+    },
+    {
+        "id": "5230dab9.f9d3c4",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "graphx",
+        "func": "if(true){\n    var msg2 = {};\n    var msg3 = {};\n    var msg4 = {};\n    var msg5 = {};\n    var msg6 = {};\n    \n    msg.payload = context.global.graph1;\n    msg.topic = \"Vanne1\" ;\n    msg2.payload = context.global.graph2;\n    msg2.topic = \"Vanne2\" ;\n    msg3.payload = context.global.graph3;\n    msg3.topic = \"Vanne3\" ;\n    msg4.payload = context.global.graph4;\n    msg4.topic = \"Vanne4\" ;\n    msg5.payload = context.global.graph5;\n    msg5.topic = \"Vanne5\" ;\n    msg6.payload = context.global.go;\n    msg6.topic = \"Start\" ;\n    \n    context.global.refresh++;\n    \n    return [msg, msg2, msg3, msg4, msg5,msg6];\n}",
+        "outputs": "6",
+        "noerr": 0,
+        "x": 1165.7333984375,
+        "y": 1386.1669363975525,
+        "wires": [
+            [
+                "9f848aee.cfe4a8"
+            ],
+            [
+                "ebe74fc7.da9b5"
+            ],
+            [
+                "26580977.89c0c6"
+            ],
+            [
+                "a38ff56a.1a8428"
+            ],
+            [
+                "3a30a151.3997fe"
+            ],
+            [
+                "6409e582.597dac"
+            ]
+        ]
+    },
+    {
+        "id": "46c5f4cc.a80e2c",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "graph2",
+        "func": "if(context.global.v2en === true) context.global.graph2 = msg.payload;\nelse context.global.graph2 = false ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1176.5428314208984,
+        "y": 616.333514213562,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "56b0c13f.8b17b",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "graph3",
+        "func": "if(context.global.v3en === true) context.global.graph3 = msg.payload;\nelse context.global.graph3 = false ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1176.542823791504,
+        "y": 653.3335132598877,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "272d28b1.ce1838",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "graph4",
+        "func": "if(context.global.v4en === true) context.global.graph4 = msg.payload;\nelse context.global.graph4 = false ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1176.542823791504,
+        "y": 691.3335132598877,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e0b643da.913f3",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "graph5",
+        "func": "if(context.global.v5en === true) context.global.graph5 = msg.payload;\nelse context.global.graph5 = false ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1176.542823791504,
+        "y": 730.3335132598877,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3a424afa.6aaad6",
+        "type": "ui_chart",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "group": "42b4e614.170468",
+        "order": 0,
+        "width": "20",
+        "height": "4",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": "",
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 1628.0673904418945,
+        "y": 1314.3334593772888,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5f88a608.aacf18",
+        "type": "ui_chart",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "group": "42b4e614.170468",
+        "order": 0,
+        "width": "20",
+        "height": "4",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": "",
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 1627.3670959472656,
+        "y": 1350.1671524047852,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "50efbc2e.4baab4",
+        "type": "ui_chart",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "group": "42b4e614.170468",
+        "order": 0,
+        "width": "20",
+        "height": "4",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": "",
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 1626.3670959472656,
+        "y": 1383.1671524047852,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6c7e4b19.087024",
+        "type": "ui_chart",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "group": "42b4e614.170468",
+        "order": 0,
+        "width": "20",
+        "height": "4",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": "",
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 1627.3670959472656,
+        "y": 1417.1671524047852,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7ea7bbda.40f2a4",
+        "type": "ui_chart",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "group": "42b4e614.170468",
+        "order": 0,
+        "width": "20",
+        "height": "4",
+        "label": "",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "0",
+        "ymax": "1",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": "",
+        "useOneColor": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "useOldStyle": true,
+        "x": 1627.3670959472656,
+        "y": 1451.1671524047852,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "5db55d72.3ad8f4",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps2",
+        "group": "91f7fe5b.be0fa",
+        "order": 7,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v1t2",
+        "x": 388.0000343322754,
+        "y": 974.3332784175873,
+        "wires": [
+            [
+                "1ee764fa.05fccb"
+            ]
+        ]
+    },
+    {
+        "id": "bf53f7bd.df9e08",
+        "type": "ui_text_input",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Temps1",
+        "group": "91f7fe5b.be0fa",
+        "order": 5,
+        "width": "2",
+        "height": "1",
+        "passthru": true,
+        "mode": "text",
+        "delay": 300,
+        "topic": "v1t1",
+        "x": 390.0000343322754,
+        "y": 793.3332784175873,
+        "wires": [
+            [
+                "cdffda3b.4c9598"
+            ]
+        ]
+    },
+    {
+        "id": "606d05fb.8f003c",
+        "type": "delay",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 994.4999313354492,
+        "y": 1385.6669907569885,
+        "wires": [
+            [
+                "5230dab9.f9d3c4"
+            ]
+        ]
+    },
+    {
+        "id": "3a30a151.3997fe",
+        "type": "change",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "rules": [
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "true",
+                "fromt": "bool",
+                "to": "1",
+                "tot": "num"
+            },
+            {
+                "t": "change",
+                "p": "payload",
+                "pt": "msg",
+                "from": "false",
+                "fromt": "bool",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1416.8335571289062,
+        "y": 1441.6669597625732,
+        "wires": [
+            [
+                "7ea7bbda.40f2a4"
+            ]
+        ]
+    },
+    {
+        "id": "94def78a.278258",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "V4",
+        "func": "if(context.global.go === true){\n    if( (context.global.synchro % (context.global.mod4*60)) === 0){\n        if(context.global.inv4 === false){\n            msg.payload = context.global.v4e1 ;\n            if(context.global.synchro === 0 ) context.global.mod4 = context.global.v4t1 ;\n            else context.global.mod4 = context.global.mod4 + context.global.v4t1 ;\n        }\n        if(context.global.inv4 === true){\n            msg.payload = context.global.v4e2 ;\n            if(context.global.synchro === 0 ) context.global.mod4 = context.global.v4t2 ;\n            else context.global.mod4 = context.global.mod4 + context.global.v4t2 ;\n        }\n        context.global.inv4 = !context.global.inv4 ;\n        //msg.payload = context.global.inv ;\n        msg.topic = \"Vanne4\";\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 984.3332977294922,
+        "y": 772.3332390785217,
+        "wires": [
+            [
+                "272d28b1.ce1838"
+            ]
+        ]
+    },
+    {
+        "id": "88ae7d22.ff76b",
+        "type": "serial out",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "serial": "33e0a904.6204f6",
+        "x": 1422.3100128173828,
+        "y": 931.0958204269409,
+        "wires": []
+    },
+    {
+        "id": "90b1a8b8.f9d728",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "send",
+        "func": "var out = \"\";\nif(context.global.go === true) out = \"1\";\nelse out = \"0\";\nif(context.global.graph1 === true) out = out + \";0\";\nelse out = out + \";1\";\nif(context.global.graph2 === true) out = out + \";0\";\nelse out = out + \";1\";\nif(context.global.graph3 === true) out = out + \";0\";\nelse out = out + \";1\";\nif(context.global.graph4 === true) out = out + \";0\";\nelse out = out + \";1\";\nif(context.global.graph5 === true) out = out + \";0\";\nelse out = out + \";1\";\n\nmsg.payload = out ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 986.8336601257324,
+        "y": 931.6669888496399,
+        "wires": [
+            [
+                "88ae7d22.ff76b"
+            ]
+        ]
+    },
+    {
+        "id": "885f02f8.ed06b",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Vanne 1:",
+        "group": "9c7b06af.c485d8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 1000.5000991821289,
+        "y": 106.33346939086914,
+        "wires": [
+            [
+                "3b50e442.70559c"
+            ]
+        ]
+    },
+    {
+        "id": "82e0acd2.696a9",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Vanne 2:",
+        "group": "9c7b06af.c485d8",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 999.5000991821289,
+        "y": 143.33346700668335,
+        "wires": [
+            [
+                "138e86e1.96f0f9"
+            ]
+        ]
+    },
+    {
+        "id": "c5e1f719.a6b5b8",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Vanne 3:",
+        "group": "9c7b06af.c485d8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 999.5000991821289,
+        "y": 176.33346700668335,
+        "wires": [
+            [
+                "73c46b15.a15c74"
+            ]
+        ]
+    },
+    {
+        "id": "12076a60.031f36",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Vanne 4:",
+        "group": "9c7b06af.c485d8",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 998.5000991821289,
+        "y": 209.33346700668335,
+        "wires": [
+            [
+                "35e893a.ebe916c"
+            ]
+        ]
+    },
+    {
+        "id": "3d8c97d8.311528",
+        "type": "ui_switch",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "label": "Vanne 5:",
+        "group": "9c7b06af.c485d8",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "topic": "",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "x": 998.5000991821289,
+        "y": 242.33346700668335,
+        "wires": [
+            [
+                "bf07dd98.27dcc"
+            ]
+        ]
+    },
+    {
+        "id": "93f21d3d.7da22",
+        "type": "comment",
+        "z": "569b0c30.c5fc84",
+        "name": "mode manuel",
+        "info": "",
+        "x": 1006.5001411437988,
+        "y": 60.83352184295654,
+        "wires": []
+    },
+    {
+        "id": "3b50e442.70559c",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.graph1 = !context.global.graph1;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1163,
+        "y": 106.20004653930664,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "138e86e1.96f0f9",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.graph2 = !context.global.graph2;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1161,
+        "y": 143.20004653930664,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "73c46b15.a15c74",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.graph3 = !context.global.graph3;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1161,
+        "y": 176.20004653930664,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "35e893a.ebe916c",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.graph4 = !context.global.graph4;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1161,
+        "y": 210.20004653930664,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bf07dd98.27dcc",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "func": "context.global.graph5 = !context.global.graph5;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1159,
+        "y": 242.20004653930664,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7532388f.6dd608",
+        "type": "file",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 1167.7143211364746,
+        "y": 510.7143268585205,
+        "wires": []
+    },
+    {
+        "id": "b45b1e04.a9a88",
+        "type": "function",
+        "z": "569b0c30.c5fc84",
+        "name": "send",
+        "func": "if(context.global.go === true){\n    date = new Date();\n    msg.filename  = context.global.path;\n    msg.payload = date.getTime()+\";\"+context.global.graph1+\";\"+context.global.graph2+\";\"+context.global.graph3+\";\"+context.global.graph4+\";\"+context.global.graph5;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 983.2857246398926,
+        "y": 512.1428446769714,
+        "wires": [
+            [
+                "7532388f.6dd608"
+            ]
+        ]
+    },
+    {
+        "id": "2f41dee0.a234e2",
+        "type": "debug",
+        "z": "569b0c30.c5fc84",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 706.2857513427734,
+        "y": 1132.1428320748464,
+        "wires": []
+    },
+    {
+        "id": "91f7fe5b.be0fa",
+        "type": "ui_group",
+        "z": "",
+        "name": "Param1",
+        "tab": "8c949531.e83038",
+        "order": 1,
+        "disp": false,
+        "width": "10"
+    },
+    {
+        "id": "42b4e614.170468",
+        "type": "ui_group",
+        "z": "",
+        "name": "Graph",
+        "tab": "8c949531.e83038",
+        "order": 3,
+        "disp": false,
+        "width": "16"
+    },
+    {
+        "id": "33e0a904.6204f6",
+        "type": "serial-port",
+        "z": "",
+        "serialport": "COM11",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": true
+    },
+    {
+        "id": "9c7b06af.c485d8",
+        "type": "ui_group",
+        "z": "",
+        "name": "Boutons d'inversion d'état courant",
+        "tab": "583e2544.e7b89c",
+        "disp": true,
+        "width": "4"
+    },
+    {
+        "id": "8c949531.e83038",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Microfluidique - 5 vannes - Auto - v1",
+        "icon": "dashboard"
+    },
+    {
+        "id": "583e2544.e7b89c",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Microfluidique - 5 vannes - Manuel",
+        "icon": "dashboard",
+        "order": 1
+    }
+]

@@ -1,0 +1,26 @@
+div.processed_names{
+    position: fixed;
+    padding-left: 2%;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 70px;
+    left: 20%;
+    margin-left: 100px;
+    /*max-height: 550px;*/
+    max-height: 500px;
+    /*height: auto;*/
+    /*width: 250px;*/
+    width: auto;
+    max-width: 400px;
+    /*width: auto;*/
+    background-color: #99ccff;
+    font-size:85%;
+    font-color:#fff;
+    /*overflow: scroll;*/
+    overflow: auto;
+    z-index: 20;
+    }
+
+

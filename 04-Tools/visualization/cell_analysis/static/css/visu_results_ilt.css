@@ -1,0 +1,184 @@
+div.results{
+    position: fixed;
+    padding-left: 50px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 50px;
+    left: 60%;
+    margin-left: -350px;
+    height: 600px;
+    width: 750px;
+    background-color: #ddffcc;
+    font-size:85%;
+    font-color:#fff;
+    /*overflow: scroll;*/
+    }
+
+/*
+###### Contains the resulting processing plots
+*/
+#iframeres{
+    /*    padding-left:500px;*/
+    left: -50%;
+/*    height: 300px;
+    width: 250px;*/
+    overflow: scroll;
+
+    }
+
+
+
+/*
+Peakpicking panel
+*/
+
+/*div.pp{
+    position: fixed;
+    padding-left: 30px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 200px;
+    left: 45%;
+    margin-left: 300px;
+    margin-top: 0px;
+    height: 300px;
+    width: 250px;
+    background-color: #ffffcc;
+    font-size:85%;
+    z-index: 10
+    }*/
+
+div.side_results{
+    position: fixed;
+    top: 50px;
+    left: 60%;
+    margin-left: -350px;
+    height: 200px;
+    width: 25px;
+    background-color: #ffd699; /* rgb(179, 45, 0) #ffd6cc;*/
+    font-size:85%;
+    font-color:#fff;
+    text-align:center;
+    vertical-align: top;
+    writing-mode:tb-rl;
+    transform: rotate(180deg);
+    z-index: 10;
+    }
+
+/*
+###### Panel (blue) with all names of the resulting files
+Files are clickable
+*/
+
+div.results_names{
+    position: fixed;
+    padding-left: 2%;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 70px;
+    left: 37%;
+    margin-left: -370px;
+    max-height: 550px;
+    /*height: auto;*/
+    /*width: 250px;*/
+    width: auto;
+    max-width: 400px;
+    /*width: auto;*/
+    background-color: #f0f5f5 ; /*#99ccff*/
+    font-size:85%;
+    font-color:#fff;
+    overflow: scroll;
+    z-index: 20;
+    }
+
+/*
+########  Processings Controls
+*/
+
+/*
+Panel for checking control 
+Comparison between experiment and result of processing
+*/
+
+div.control{
+    position: fixed;
+    padding-left: 50px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    top: 50px;
+    left: 60%;
+    margin-left: -350px;
+    height: 600px;
+    width: 550px;
+    background-color: #ddffcc;
+    font-size:85%;
+    font-color:#fff;
+    }
+
+div.side_control{        /*button for showing control*/
+    position: fixed;
+    top: 250px;
+    left: 60%;
+    margin-left: -350px;
+    height: 200px;
+    width: 25px;
+    background-color: #fff2cc;
+    font-size:85%;
+    font-color:#fff;
+    /*opacity:0.5;*/
+    z-index: 10;
+    text-align:center;
+    vertical-align: top;
+    writing-mode:tb-rl;
+    transform: rotate(180deg);
+    z-index: 10;
+    }
+
+/*
+Panel giving access to the location of the downloaded files. (yellow panel downside)
+It opens a windows to access the result dataset.
+*/
+
+div.download_link {
+    position: fixed;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0.5em 0.5em 0.7em;
+    bottom: 90px;
+    left: 30%;
+    margin-left: -290px;
+    height: 70px;
+    /*width: 400px;*/
+    width: 180px;
+    background-color: #ffff99;
+    font-size:60%;
+    opacity:0.9;
+
+    }
+
+/*
+Navigation bar (processing, visualisation etc..)
+*/
+    .nav-pills  {
+        color: red;
+        background-color: grey;
+        font-size: 17px;
+    }
+    .nav-pills > li > a {
+        background-color: grey;
+        color:white;
+    }
+    .nav-pills > li > a:hover {
+        background-color: white;
+        color:blue;
+    }

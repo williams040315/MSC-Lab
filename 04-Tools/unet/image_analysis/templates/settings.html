@@ -1,0 +1,111 @@
+<div class="lateral_bar">
+
+<!-- info used in proc_trig.html -->
+
+<!-- inserted in index_folder.html -->
+
+<!-- save folder -->
+
+ <div class="icon_save" > <img id="butt_save_dir" class="icon_settings" src="static/icons/capicon/svg/226.svg"  > </div>
+ <div class="addr_save_panel" hidden> <input id='addr_save_text' type='text' > </div>
+
+ <!-- panel set -->
+
+ <div class="icon_set" > <img id="butt_set" class="icon_settings" src="static/icons/capicon/svg/272.svg"  > </div>
+
+    <div class="set_panel" hidden>
+
+      <!-- stop at pred -->
+
+      <div class="checkbox col-xs-12" style="margin-left: 10px; font-size: 14px;">
+        <span> stop at pred </span>
+          <h5 class="check" style="margin: 0; padding 0;  height:13px">
+            <input class="check" id="stop_at_pred" style="line-height: 10%; top:-2px" name = '' type="checkbox" >
+          </h5>
+      </div>
+
+       <!-- make a video -->
+
+       <div class="checkbox col-xs-12" style="margin-left: 10px; font-size: 14px;">
+         <span> video </span>
+           <h5 class="check" style="margin: 0; padding 0;  height:13px">
+             <input class="check" id="video" style="line-height: 10%; top:-2px" type="checkbox" >
+           </h5>
+        </div>
+
+       <!-- Method used for segmentation -->
+
+        <div>
+           <label for="meth"> method </label>
+           <input type="number"  id="method"  value='2' style="width:30px; margin-left:20px;">
+        </div>
+
+        <!-- Threshold -->
+
+         <div>
+            <label for="thresh"> threshold after pred </label>
+            <input id="thresh_after_pred"  value='120' style="width:30px; margin-left:20px;">
+         </div>
+
+         <!-- Show pred -->
+
+         <div class="checkbox col-xs-12" style="margin-left: 10px; font-size: 14px;">
+           <span> show pred </span>
+             <h5 class="check" style="margin: 0; padding 0;  height:13px">
+               <input class="check" id="show_pred" style="line-height: 10%; top:-2px" type="checkbox" >
+             </h5>
+          </div>
+
+         <!-- Erode after pred -->
+
+         <div class="checkbox col-xs-12" style="margin-left: 10px; font-size: 14px;">
+           <span> erode after pred </span>
+             <h5 class="check" style="margin: 0; padding 0;  height:13px">
+               <input class="check" id="erode_after_pred" style="line-height: 10%; top:-2px" type="checkbox" >
+             </h5>
+          </div>
+
+          <!-- fluo -->
+
+          <div class="checkbox col-xs-12" style="margin-left: 10px; font-size: 14px;">
+            <span> obs fluo </span>
+              <h5 class="check" style="margin: 0; padding 0;  height:13px">
+                <input class="check" id="rfp" style="line-height: 10%; top:-2px" type="checkbox" >
+              </h5>
+           </div>
+
+        <!-- Models -->
+
+        <!-- class="custom-select" -->
+
+        <div id="model"  style="width:50px;">
+            <select id="select_model"  class="selectpicker" style="width:50px;" >
+
+              <option value="ep5"> ep5 </option>
+              <option value="ep5_dil3"> ep5_dil3 </option>
+              <option value="ep5_v3"> ep5_v3 </option>
+              <option value="ep30"> ep30 </option>
+              <option value="ep50"> ep50 </option>
+              <option value="buds7"> buds7 </option>
+              <option value="buds15"> buds15 </option>
+              <option value="buds20"> buds20 </option>
+              <option value="buds30"> buds30 </option>
+              <option value="buds40"> buds40 </option>
+              <option value="ep5_v3&buds30"> ep5_v3&buds30 </option>
+              <option value="link5"> link5 </option>
+              <option value="ep15_20x"> ep15_20x </option>
+              <option value="ep20_20x"> ep20_20x </option>
+              <option value="ep40_20x"> ep40_20x </option>
+              <option value="ep15_20x_v2"> ep15_20x_v2 </option>
+              <option value="ep15_20x_otsu"> ep15_20x_otsu </option>
+
+            </select>
+        </div>
+
+    </div>
+    <!--  end class set_panel -->
+
+    <div class="icon_infos_hs" > <img id="butt_infos_hs" class="icon_settings" src="static/icons/capicon/svg/007.svg"  > </div>
+
+ </div>
+ <!--  end lateral bar -->

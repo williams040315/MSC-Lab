@@ -1,0 +1,51 @@
+/*
+
+Refresh the processing steps :
+      steps in processing
+      file processed
+      num image
+
+*/
+
+var t0_proc = 0;
+var max_nb_im = 0;
+
+socket.on('state', function(msg){
+    $('.curr_state').text(msg.mess)
+    if (msg.mess == 'begin processing'){       // beginning of one processing among many
+         //alert('yiipp')
+         $('.num_im').text('').show()
+         t0_proc = Date.now()
+         $('.telapsed').show()
+
+      }
+    if (msg.mess == 'processing end'){         // end of one processing
+         $('.telapsed').hide()
+         $('.num_im').hide()
+         //alert('yuuuup')
+      }
+
+      if (msg.mess == 'beginning all the processings'){       // beginning of all the processings
+           t0_all_procs = Date.now()
+           $('.time_controls').show()
+           $('.proc_controls').show()
+        }
+
+      if (msg.mess == 'end of the processings'){              // end of all the processings
+           t1_all_procs = Date.now()
+           $('.all_procs_time').show()
+           var total_elapsed_time = roundToTwo((( t1_all_procs - t0_all_procs )/60000),5)
+           $('.all_procs_time').text('total time elapsed  :' + total_elapsed_time + ' min')
+        }
+
+  }) // indicate the current state of the processing
+
+socket.on('ratio', function(msg){                             // indicate the index of proc over all procs
+    $('.ratio_done').text(msg.mess)
+  })
+
+socket.on('num_im', function(msg){                            // indicate the current picture number in the central control panel
+    $('.num_im').text('img : ' + msg.mess)
+    $('#win_num_im').text(msg.mess)                           // num of the current picture in the image control panel bottom right corner
+    max_nb_im = msg.mess.split()[1]
+  })

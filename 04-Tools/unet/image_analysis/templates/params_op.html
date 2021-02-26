@@ -1,0 +1,12 @@
+$('#selectop').on('change', function() {        // select operation
+    //alert( $(this).val() );
+    curr_op = $(this).val()
+    $('.params').hide()
+    $('#params_' + $(this).val()).show()
+    socket.emit('operation', $(this).val())    // send the current operation to the server
+
+});
+
+$('.params').hide()
+$('#params_nbcells').show()
+socket.emit('operation', 'nbcells')

@@ -1,0 +1,59 @@
+<div id="params_segm" class="params">
+
+     <!-- <h4> Parameters </h4> -->
+
+    <!-- follow cell, by default all -->
+
+    <div>
+      <label for="track"> which cells: </label>
+      <input type="text" id="track" value='all' name="name" style="width:50px; margin-left:15px;">
+    </div>
+
+    <!-- list of images removed from segmentation and tracking -->
+
+    <div>
+      <label for="rem_imgs"> rem pics: </label>
+      <input type="text" id="rem_imgs" value='' style="width:50px; margin-left:15px;">
+    </div>
+
+    <!-- remove bad pics -->
+
+     <div class="checkbox col-xs-12" style="margin-left: 10px">
+       <span> autom rem bad pics </span>
+         <h5 class="check" style="margin: 0; padding 0;  height:13px">
+           <input class="check" id="rem_bad_pics" style="line-height: 10%; top:-2px" name = '' type="checkbox" >
+         </h5>
+     </div>
+
+      <!-- num_cell -->
+
+     <div class="checkbox col-xs-12" style="margin-left: 10px">
+       <span> num_cell </span>
+         <h5 class="check" style="margin: 0; padding 0;  height:13px">
+           <input class="check" id="num_cell" style="line-height: 10%; top:-2px" name = '' type="checkbox" >
+         </h5>
+     </div>
+
+     <!-- Use one color -->
+
+     <div class="checkbox col-xs-12" style="margin-left: 10px">
+       <span> one color </span>
+         <h5 class="check" style="margin: 0; padding 0;  height:13px">
+           <input class="check" id="one_color" style="line-height: 10%; top:-2px" name = '' type="checkbox" >
+         </h5>
+     </div>
+
+     <!-- Tracking method -->
+
+     <div > tracking method : </div>
+
+     <br>
+
+     <div id="choose_track" class="custom-select" ">
+         <select id="select_track"  class="selectpicker" ">
+           <option value="min"> min_dist </option>
+           <option value="hung"> hungarian </option>
+         </select>
+     </div>
+
+</div> <!-- end class params -->

@@ -1,0 +1,21 @@
+/*
+Time of processing, time elapsed etc ...
+*/
+
+//----------- Time of the processing
+
+socket.on('time_one_proc', function(msg){
+    $('.time_one_proc').text('time of the processing :' + msg.mess + ' min')
+    }) // indicate the time elapsed for one processing
+
+//----------- Time elapsed
+
+function roundToTwo(num) {
+    return +( Math.round(num + "e+2")  + "e-2" );
+}
+
+setInterval(function(){
+     t1_proc = Date.now()
+     var elapsed_time = roundToTwo((( t1_proc - t0_proc )/60000),5)
+     $('.telapsed').text( 'time elapsed  : ' + elapsed_time + ' min' )
+}, 100);

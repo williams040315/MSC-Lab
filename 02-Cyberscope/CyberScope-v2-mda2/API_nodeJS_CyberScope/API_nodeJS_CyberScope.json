@@ -1,0 +1,266 @@
+[
+    {
+        "id": "16a5f30.2526c8d",
+        "type": "http in",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "url": "/comment-est-votre-blanquette",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 260,
+        "wires": [
+            [
+                "75ef1442.fb78cc"
+            ]
+        ]
+    },
+    {
+        "id": "2029ab86.35852c",
+        "type": "http response",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 500,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "75ef1442.fb78cc",
+        "type": "function",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "func": "msg.payload.status = 'connected';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 260,
+        "wires": [
+            [
+                "2029ab86.35852c"
+            ]
+        ]
+    },
+    {
+        "id": "bf437bd.7183b88",
+        "type": "http in",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "url": "/simple-tes",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 320,
+        "wires": [
+            [
+                "5849209c.eda2"
+            ]
+        ]
+    },
+    {
+        "id": "85f1679a.b2e98",
+        "type": "http response",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 500,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "5849209c.eda2",
+        "type": "function",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "func": "msg.payload.message='OMG ITS WORKING, MESSAGE SENT FROM nodeRED!';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "85f1679a.b2e98"
+            ]
+        ]
+    },
+    {
+        "id": "b4006b24.a9b4f8",
+        "type": "http in",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "url": "/simple-test",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 380,
+        "wires": [
+            [
+                "684a513e.cfe938"
+            ]
+        ]
+    },
+    {
+        "id": "156c963.a14b96a",
+        "type": "http response",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 500,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "684a513e.cfe938",
+        "type": "function",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "func": "msg.payload.message='OMG ITS WORKING, MESSAGE SENT FROM nodeRED!';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 380,
+        "wires": [
+            [
+                "156c963.a14b96a"
+            ]
+        ]
+    },
+    {
+        "id": "d53c469c.50183",
+        "type": "http in",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "url": "list-device-connected",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "399d8ab4.78f3ae"
+            ]
+        ]
+    },
+    {
+        "id": "13952ebc.750da1",
+        "type": "http response",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 500,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "399d8ab4.78f3ae",
+        "type": "function",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "func": "msg.payload.CoolLed_pE4000_fluorescence = 'connected';\nmsg.payload.X_Cite_120PC_fluorescence = 'connected';\nmsg.payload.CoolLed_pE100_fluorescence = 'connected';\nmsg.payload.CoolLed_pE300_mosaic = 'connected';\nmsg.payload.Olympus_IX81 = 'connected';\nmsg.payload.Fluigent_micro_fluidic_10_valves = 'connected';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 200,
+        "wires": [
+            [
+                "13952ebc.750da1"
+            ]
+        ]
+    },
+    {
+        "id": "43d3e68a.9dd1b8",
+        "type": "http in",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "url": "test-prior",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 440,
+        "wires": [
+            [
+                "f241426a.4c444"
+            ]
+        ]
+    },
+    {
+        "id": "f241426a.4c444",
+        "type": "function",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "func": "var myX = Math.floor((Math.random() * 10000) + 1);\nvar myY = Math.floor((Math.random() * 10000) + 1);\nvar myZ = Math.floor((Math.random() * 10000) + 1);\nmsg.payload.X = myX;\nmsg.payload.Y = myY;\nmsg.payload.Z = myZ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "19215aa5.3be56d"
+            ]
+        ]
+    },
+    {
+        "id": "19215aa5.3be56d",
+        "type": "http response",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 500,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "72a45ee5.cd3718",
+        "type": "http in",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "url": "run-protocol",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 500,
+        "wires": [
+            [
+                "f24f82ab.50ec58"
+            ]
+        ]
+    },
+    {
+        "id": "f24f82ab.50ec58",
+        "type": "function",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "func": "\nmsg.payload.status='OK';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 500,
+        "wires": [
+            [
+                "fb815ee1.8c5e2"
+            ]
+        ]
+    },
+    {
+        "id": "fb815ee1.8c5e2",
+        "type": "http response",
+        "z": "aff91da2.151aa8",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 500,
+        "y": 500,
+        "wires": []
+    }
+]

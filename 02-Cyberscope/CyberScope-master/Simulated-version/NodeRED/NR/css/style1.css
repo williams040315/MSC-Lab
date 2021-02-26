@@ -1,0 +1,14 @@
+#camera{
+  border-width:1px;
+  border-style:dotted;
+  border-color:black;
+}
+#title_device{
+  background-color: black;
+  color: white
+}
+.marge {
+padding: 10px;
+margin: 10px;
+}
+/*# sourceMappingURL=bootstrap.css.map */

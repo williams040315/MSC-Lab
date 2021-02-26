@@ -1,0 +1,1540 @@
+[
+    {
+        "id": "f0ec19bf.bbf9c",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "9203e650.1d73a",
+                "99cf6a7.55b7618",
+                "5e8626f3.997258",
+                "59052c9a.48d344"
+            ]
+        ]
+    },
+    {
+        "id": "c28f58aa.23adb8",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "STOP",
+        "topic": "",
+        "payload": "MDA-FINISH",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2110,
+        "y": 320,
+        "wires": [
+            [
+                "c00be164.722ee8",
+                "4d60937c.5f44b4"
+            ]
+        ]
+    },
+    {
+        "id": "c00be164.722ee8",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "stop MDA time Order",
+        "func": "if(msg.payload === 'MDA-FINISH'){\n    context.global.startMDA = 0 ;\n    node.status ({fill:\"red\",shape:\"dot\", text: \"STOP\"});\n    //stop camera python code\n    var msg = {};\n    msg.payload = \"STOP,\"+Date.now();\n    node.send(msg);    \n}\nif(msg.payload === 'MDA-START'){\n    context.global.startMDA = 1 ;\n    node.status ({text: \"waiting stop ...\"});\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2340,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7b9d0b24.8ffbfc",
+        "type": "websocket in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "server": "cc2483be.9a4e08",
+        "client": "",
+        "x": 120,
+        "y": 660,
+        "wires": [
+            [
+                "eec5cb1b.485618",
+                "15de1f4c.f9c7a9",
+                "9d6464a3.6940c8",
+                "f46eb9f6.84e7",
+                "326f5deb.4746d2",
+                "8ab21d72.06d1d",
+                "30c6d13e.b00356"
+            ]
+        ]
+    },
+    {
+        "id": "99cf6a7.55b7618",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "Initialisation",
+        "func": "context.global.startMDA = 0 ;\n\ncontext.global.sync = 0 ;\ncontext.global.sync2 = 0 ;\ncontext.global.sync3 = 0 ;\ncontext.global.sync4 = 0 ;\n\ncontext.global.settingChannels = [];\n\ncontext.global.saveConfigChannel = '' ;\ncontext.global.saveConfigMda = '' ;\n\n//context.global.listConfigChannel = ['williams1.json'] ;\n//context.global.initialize = false ;\n//context.global.ressources = [] ;\n\n//context.global.test = [];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e176ec1a.a915b",
+        "type": "http in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "url": "/cyberscope",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "5f0189bc.da83f8"
+            ]
+        ]
+    },
+    {
+        "id": "43c6d0ca.dc6fc",
+        "type": "http response",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "x": 630,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "5f0189bc.da83f8",
+        "type": "template",
+        "z": "d82bbf2b.8439a8",
+        "name": "MissMarpleHTML",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n    <head>\n        <meta charset=\"utf-8\">\n        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n        <meta name=\"description\" content=\"\">\n        <meta name=\"author\" content=\"\">\n        <link rel=\"icon\" href=\"bootstrap/favicon.ico\">\n        <title>CyberScope | Lab513</title>\n        <link href=\"bootstrap/dist/css/bootstrap.min.css\" rel=\"stylesheet\">\n        <link href=\"bootstrap/assets/css/ie10-viewport-bug-workaround.css\" rel=\"stylesheet\">\n        <link href=\"bootstrap/dashboard.css\" rel=\"stylesheet\">\n        <link href=\"css/style1.css\" rel=\"stylesheet\">\n        <script src=\"bootstrap/assets/js/ie-emulation-modes-warning.js\"></script>\n        \n        <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>\n        \n        <script src=\"js/js1.js\"></script>\n        <script src=\"//code.jquery.com/jquery-3.3.1.min.js\"></script>\n        \n        <script type=\"text/javascript\" src=\"wPaint/lib/jquery.1.10.2.min.js\"></script>\n    \n        <link href=\"//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css\" rel=\"stylesheet\">\n        <script src=\"//code.jquery.com/ui/1.12.1/jquery-ui.min.js\"></script>\n        <script src=\"//cdn.jsdelivr.net/npm/ui-contextmenu/jquery.ui-contextmenu.min.js\"></script>\n        \n        \n        <link href=\"fancytree-master/src/skin-win8/ui.fancytree.css\" rel=\"stylesheet\">\n        <script src=\"fancytree-master/src/jquery.fancytree.js\"></script>\n        <script src=\"fancytree-master/src/jquery.fancytree.dnd5.js\"></script>\n        <script src=\"fancytree-master/src/jquery.fancytree.edit.js\"></script>\n        <script src=\"fancytree-master/src/jquery.fancytree.gridnav.js\"></script>\n        <script src=\"fancytree-master/src/jquery.fancytree.table.js\"></script>\n        <script src=\"fancytree-master/src/jquery.fancytree.multi.js\"></script>\n        \n        <script type=\"text/javascript\" src=\"js/jquery.maphilight.js\"></script>\n\n\n        <link rel=\"stylesheet\" href=\"//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css\">\n        <script src=\"//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js\"></script>\n      \n        <style type=\"text/css\">\n            img:hover {\n              box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);\n            }\n            .ui-menu {\n                width: 200px;\n                height: 30px;\n                font-size: 63%;\n            }\n            .ui-menu kbd {\n                float: right;\n            }\n            td.alignRight {\n                text-align: right;\n            }\n            td.alignCenter {\n                text-align: center;\n            }\n            td input[type=input] {\n                width: 40px;\n            }\n            span.drag-source{\n                border: 1px solid lightgray;\n                border-radius: 3px;\n                padding: 2px;\n                background-color: lightgray\n            }\n            ul.fancytree-container {\n                max-height: 200px;\n                overflow-y: scroll;\n            }\n            span.fancytree-node.fancytree-drag-source {\n                outline: 1px dotted grey;\n            }\n            span.fancytree-node.fancytree-drop-accept {\n                outline: 1px dotted green;\n            }\n            span.fancytree-node.fancytree-drop-reject {\n                outline: 1px dotted red;\n            }\n            #my_tree{max-height: 700px; overflow-y:scroll; overflow-x: hidden;}\n            #my_function{max-height: 700px; overflow-y:scroll; overflow-x: hidden;}\n            #settings{max-height: 800px; overflow-y:scroll; overflow-x: hidden;}\n        </style>\n    </head>\n\n    <body  onload=\"wsConnect();\" onunload=\"ws.onclose();\">\n    \n        <!--<div id=\"wait\" style=\"text-align: center;\" >\n            <img style=\"margin: 0 auto;\" src='media/Audit.png'><img style=\"margin: 0 auto;\" src='media/loading.gif'><br>\n            <h2>Loading parameters, please wait a few seconds</h2>\n        </div>-->\n    \n        <div id=\"main\">\n            <nav class=\"navbar navbar-inverse navbar-fixed-top\">\n                <div class=\"container-fluid\">\n                    <div class=\"navbar-header\">\n                        <button type=\"button\" class=\"navbar-toggle collapsed\" data-toggle=\"collapse\" data-target=\"#navbar\" aria-expanded=\"false\" aria-controls=\"navbar\">\n                            <span class=\"sr-only\">Toggle navigation</span>\n                            <span class=\"icon-bar\"></span>\n                            <span class=\"icon-bar\"></span>\n                            <span class=\"icon-bar\"></span>\n                        </button>\n                        <a class=\"navbar-brand\" href=\"javascript: setting();\"><small>Settings Channels</small></a>\n                        <a class=\"navbar-brand\" href=\"javascript: mda();\"><small>Acquisition</small></a>\n                        <a class=\"navbar-brand\" href=\"javascript: calibration();\"><small>Self Calibration</small></a>\n                        <a class=\"navbar-brand\" href=\"javascript: mosaic();\"><small>Mosaic</small></a>\n                        <a class=\"navbar-brand\" href=\"javascript: conf();\"><small>Configuration</small></a>\n                        <a class=\"navbar-brand\" href=\"#\"><small><div id=\"name_user\"></div></small></a>\n                    </div>\n                    <div id=\"navbar\" class=\"navbar-collapse collapse\">\n                        <ul class=\"nav navbar-nav navbar-right\">\n                            <li><a style=\"color: rgb(255, 102, 102);\" href=\"https://github.com/Lab513/CyberScope\" target=\"_blank\"><small>Documentation | Wiki</small></a></li>\n                            <li><a style=\"color: rgb(0, 255, 64);\" href=\"http://lab513.fr/labr/\" target=\"_blank\"><small>Lab 513 - Hersen's Lab</small></a></li>\n                            <li><a style=\"color: rgb(0, 255, 64);\"  href=\"#\"><small><div id=\"status\"></div></small></a></li>\n                        </ul>\n                    </div>\n                </div>\n            </nav>\n            <div class=\"container-fluid\">\n                <div class=\"row\">\n                    <div>    \n                        <br>\n                        <div id=\"receive\"></div>\n                        <div id=\"alert-success\" class=\"alert alert-success\" role=\"alert\"></div>\n                \n                        <div id=\"live_mode\">\n                            <h2 class=\"sub-header\">Live mode</h2>\n                            <div id=\"live_div\" class=\"table-responsive\">\n                                <img src='icons/work_in_progress.jpg'>\n                        </div>    \n                    </div>\n    \n                    <div id=\"settings\">\n                        <h2 class=\"sub-header\">Settings channels</h2>\n                        <div id=\"name_configChannels\"></div>\n                        <div id=\"available_configChannels\"></div>\n                        <br>\n                        <form method=\"post\" id='setting_channel_form' action=\"/formpost\" ajax=\"true\">\n                            <button class='setting_button' alt='add channel' id=\"setting_button_add_channel\"><img src='icons/add.png'> Add a new setting channel</button>\n                            <button type='submit' alt='save' class='setting_button' id='setting_button_save_channel'><img src='icons/disk.png'> Save the current settings</button>\n                            <div id=\"setting_table_channel\" class=\"table-responsive\"></div>\n                        </form>\n                        <br>\n                        <hr/>\n                    </div>\n                    \n                    <div id=\"settings\">\n                    \n                    </div>  \n                    <div id=\"calibration\">\t\n                        <!--<table style=\"text-align: left; width: 100%;\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n                          <tbody>\n                            <tr>\n                              <td style=\"width:1%;\"></td>\n                              <td style=\"width: 600px;\">\n                                <h3>\n                                    Load a design&nbsp;: &nbsp;\n                                    <select>\n                                        <option>µFluidic sample 1 (25 rooms)</option>\n                                        <option>static pattern (5 rooms)</option>\n                                    </select>\n                                </h3>\n                                <a name=\"map\"></a>\n                                <img class=\"map\" src=\"icons/test_uf2.png\" usemap=\"#map\">\n                                <map name=\"map\">\n                                    <area id=\"room1\" shape=\"poly\" title=\"Room 1\" onmouseover= \"info(1);\" onclick=\"visibilite(1);\" data-maphilight='{ \"fillColor\":\"0000ff\", \"strokeColor\":0000ff, \"strokeWidth\":2, \"fillOpacity\":0.5}' coords=\"361,78,342,96,361,114,381,97\" >\n                                    <area id=\"room2\" shape=\"poly\" title=\"Room 2\" onmouseover= \"info(2);\" onclick=\"visibilite(2);\" data-maphilight='{ \"fillColor\":0000ff, \"strokeColor\":0000ff, \"strokeWidth\":2, \"fillOpacity\":1}' coords=\"381,98,362,116,381,134,401,117\" > \n                                    <area id=\"room3\" shape=\"poly\" title=\"Room 3\" onmouseover= \"info(3);\" onclick=\"visibilite(3);\" data-maphilight='{ \"fillColor\":0000ff, \"strokeColor\":0000ff, \"strokeWidth\":2, \"fillOpacity\":1}' coords=\"400,118,381,136,400,154,420,137\" > \n                                    <area id=\"room4\" shape=\"poly\" title=\"Room 4\" onmouseover= \"info(4);\" onclick=\"visibilite(4);\" data-maphilight='{ \"fillColor\":0000ff, \"strokeColor\":0000ff, \"strokeWidth\":2, \"fillOpacity\":1}' coords=\"420,137,400,155,420,173,440,156\" > \n                                    <area id=\"room5\" shape=\"poly\" title=\"Room 5\" onmouseover= \"info(5);\" onclick=\"visibilite(5);\" data-maphilight='{ \"fillColor\":0000ff, \"strokeColor\":0000ff, \"strokeWidth\":2, \"fillOpacity\":1}' coords=\"438,156,419,174,438,192,458,175\" > \n                                    <area id=\"room6\" shape=\"poly\" title=\"Room 6\" onmouseover= \"info(6);\" onclick=\"visibilite(6);\" data-maphilight='{ \"fillColor\":0000ff, \"strokeColor\":0000ff, \"strokeWidth\":2, \"fillOpacity\":1}' coords=\"285,153,265,173,285,191,304,173\" > \n                                </map>\n                              </td>\n                              <td>\n                                    <div id=\"room\"></div>\n                              </td>\n                            </tr>\n                          </tbody>\n                        </table>-->\n<hr>\n<h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This module allows you to calibrate a μFlu chip.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The software calculates the movement between the different chambers, then he creates a selection list in order to simplify the move</h5>\n<table style=\"text-align: left;\"\n border=\"0\" cellpadding=\"2\" cellspacing=\"5\">\n  <tbody>\n    <tr>\n      <td style=\"width: 1%;\"></td>\n      <td\n style=\"width: 150px; background-color: rgb(204, 204, 204); text-align: center;\">Load\na specific design : &nbsp;\n      <select name=\"design\">\n      <option>&micro;Fluidic -\n25 rooms</option>\n      <option>static pattern - 6\nrooms</option>\n      </select>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 0px;\"><br>\n      </td>\n      <td\n style=\"width: 511px; background-color: rgb(204, 204, 204);\">Live</td>\n      <td\n style=\"width: 13px; background-color: rgb(255, 255, 255);\"\n colspan=\"1\" rowspan=\"1\"><br>\n      </td>\n      <td rowspan=\"1\"\n style=\"background-color: rgb(204, 204, 204); width: 241px;\"\n colspan=\"10\">Global\nparameters</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 150px;\"></td>\n      <td style=\"width: 0px;\"></td>\n      <td style=\"width: 511px;\"></td>\n      <td style=\"width: 13px;\"\n colspan=\"1\" rowspan=\"1\"><br>\n      </td>\n      <td style=\"width: 241px;\"\n colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 1%;\"></td>\n      <td colspan=\"1\" rowspan=\"22\"\n style=\"width: 46%; text-align: center; vertical-align: top;\">\n      <div>&nbsp;<a\n name=\"map\"></a><img\n class=\"map\" src=\"icons/test_uf2.png\" usemap=\"#map\"><map\n name=\"map\">\n      <area id=\"room1\" shape=\"poly\"\n title=\"Room 1\" onmouseover=\"info(1);\"\n onclick=\"visibilite(1);\"\n data-maphilight=\"{ &quot;fillColor&quot;:&quot;0000ff&quot;, &quot;strokeColor&quot;:0000ff, &quot;strokeWidth&quot;:2, &quot;fillOpacity&quot;:0.5}\"\n coords=\"361,78,342,96,361,114,381,97\">\n      <area id=\"room2\" shape=\"poly\"\n title=\"Room 2\" onmouseover=\"info(2);\"\n onclick=\"visibilite(2);\"\n data-maphilight=\"{ &quot;fillColor&quot;:0000ff, &quot;strokeColor&quot;:0000ff, &quot;strokeWidth&quot;:2, &quot;fillOpacity&quot;:1}\"\n coords=\"381,98,362,116,381,134,401,117\">\n      <area id=\"room3\" shape=\"poly\"\n title=\"Room 3\" onmouseover=\"info(3);\"\n onclick=\"visibilite(3);\"\n data-maphilight=\"{ &quot;fillColor&quot;:0000ff, &quot;strokeColor&quot;:0000ff, &quot;strokeWidth&quot;:2, &quot;fillOpacity&quot;:1}\"\n coords=\"400,118,381,136,400,154,420,137\">\n      <area id=\"room4\" shape=\"poly\"\n title=\"Room 4\" onmouseover=\"info(4);\"\n onclick=\"visibilite(4);\"\n data-maphilight=\"{ &quot;fillColor&quot;:0000ff, &quot;strokeColor&quot;:0000ff, &quot;strokeWidth&quot;:2, &quot;fillOpacity&quot;:1}\"\n coords=\"420,137,400,155,420,173,440,156\">\n      <area id=\"room5\" shape=\"poly\"\n title=\"Room 5\" onmouseover=\"info(5);\"\n onclick=\"visibilite(5);\"\n data-maphilight=\"{ &quot;fillColor&quot;:0000ff, &quot;strokeColor&quot;:0000ff, &quot;strokeWidth&quot;:2, &quot;fillOpacity&quot;:1}\"\n coords=\"438,156,419,174,438,192,458,175\">\n      <area id=\"room6\" shape=\"poly\"\n title=\"Room 6\" onmouseover=\"info(6);\"\n onclick=\"visibilite(6);\"\n data-maphilight=\"{ &quot;fillColor&quot;:0000ff, &quot;strokeColor&quot;:0000ff, &quot;strokeWidth&quot;:2, &quot;fillOpacity&quot;:1}\"\n coords=\"285,153,265,173,285,191,304,173\">\n      </map>\n      </div>\n      </td>\n      <td style=\"width: 1%;\"\n rowspan=\"21\"> </td>\n      <td\n style=\"text-align: right; width: 511px; vertical-align: top;\"\n colspan=\"1\" rowspan=\"22\">\n      <!--<iframe src=\"lib/media/test2/AgarPad1-Position1-BF-1552477544468.png\"\n frameborder=\"0\" height=\"512\" width=\"512\"></iframe>-->\n \n <img height=\"512\" width=\"512\"\n src=\"media/test2/AgarPad1-Position1-BF-1552477544468.png\">\n </td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Objective</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"9\"\n rowspan=\"1\">\n      <select onchange='updateAftbl0();' class=\"aftbl0\"\n style=\"width: 150px;\">\n      <option name=\"LCPlanFl 20x\"\n value=\"75\">LCPlanFl 20x</option>\n      <option name=\"LCPlanFl 40x\"\n value=\"76\">LCPlanFl 40x</option>\n      <option name=\"LCPlanFl 60x\"\n value=\"79\">LCPlanFl 60x</option>\n      <option name=\"LUCPlanFl 40x\"\n value=\"78\">LUCPlanFl 40x</option>\n      <option name=\"LUCPlanFlN 20x\"\n value=\"75\">LUCPlanFlN 20x</option>\n      <option name=\"LUCPlanFlN 40x\"\n value=\"76\">LUCPlanFlN 40x</option>\n      <option name=\"LUCPlanFlN 60x\"\n value=\"79\">LUCPlanFlN 60x</option>\n      <option name=\"PlanApo 100x O3\"\n value=\"31\">PlanApo 100x O3</option>\n      <option name=\"PlanApo 60x O TIRFM-SP\"\n value=\"70\">PlanApo 60x O TIRFM-SP</option>\n      <option name=\"PlanApo 60x O/LSM\"\n value=\"62\">PlanApo 60x O/LSM</option>\n      <option name=\"PlanApo 60x O3\"\n value=\"30\">PlanApo 60x O3</option>\n      <option name=\"PlanApo 40x W/LSM\"\n value=\"60\">PlanApo 40x W/LSM</option>\n      <option name=\"PlanApoN 60x O\"\n value=\"30\">PlanApoN 60x O</option>\n      <option name=\"SLCPlanFl 40x\"\n value=\"77\">SLCPlanFl 40x</option>\n      <option name=\"UApo 30x 3/340\"\n value=\"45\">UApo 30x 3/340</option>\n      <option name=\"UApo 40x 3/340\"\n value=\"47\">UApo 40x 3/340</option>\n      <option name=\"UApo 40x W\"\n value=\"48\">UApo 40x W</option>\n      <option name=\"UPlanFl 60x OI3\"\n value=\"57\">UPlanFl 60x OI3</option>\n      <option name=\"UPlanApo 20x\"\n value=\"36\">UPlanApo 20x</option>\n      <option name=\"UPlanApo 100x OI3\"\n value=\"43\">UPlanApo 100x OI3</option>\n      <option name=\"UPlanApo 40x OI3\"\n value=\"39\">UPlanApo 40x OI3</option>\n      <option name=\"UPlanApo 60x\"\n value=\"40\">UPlanApo 60x</option>\n      <option name=\"UPlanApo 60x W\"\n value=\"41\">UPlanApo 60x W</option>\n      <option name=\"UPlanApo 60x W/IR\"\n value=\"42\">UPlanApo 60x W/IR</option>\n      <option name=\"UplanFl 100x O3\"\n value=\"58\">UplanFl 100x O3</option>\n      <option name=\"UPlanFl 20x\"\n value=\"55\">UPlanFl 20x</option>\n      <option name=\"UPlanFl 40x O-SP\"\n value=\"71\">UPlanFl 40x O-SP</option>\n      <option name=\"UPlanFl 40x\"\n value=\"56\">UPlanFl 40x</option>\n      <option name=\"UPlanFlN 100x O\"\n value=\"58\">UPlanFlN 100x O</option>\n      <option name=\"UPlanFlN 100x OI\"\n value=\"58\">UPlanFlN 100x OI</option>\n      <option name=\"UPlanFlN 20x\"\n value=\"55\">UPlanFlN 20x</option>\n      <option name=\"UPlanFlN 40x O\"\n value=\"39\">UPlanFlN 40x O</option>\n      <option name=\"UPlanFl 60x\"\n value=\"40\">UPlanFl 60x</option>\n      <option name=\"UPlanFlN 60x OI\"\n value=\"57\">UPlanFlN 60x OI</option>\n      <option name=\"UPlanSApo 100x O\"\n value=\"43\">UPlanSApo 100x O</option>\n      <option name=\"UPlanSApo 20x\"\n value=\"36\">UPlanSApo 20x</option>\n      <option name=\"UPlanSApo 40x\"\n value=\"47\">UPlanSApo 40x</option>\n      <option name=\"UPlanSApo 60x O\"\n value=\"30\">UPlanSApo 60x O</option>\n      <option name=\"UPlanSApo 60x W\"\n value=\"41\">UPlanSApo 60x W</option>\n      <option name=\"UPlanFlN 40x\"\n value=\"56\">UPlanFlN 40x</option>\n      </select>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Initialize\nauto-focus</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP2\"><img\n src=\"icons/shape_align_middle.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\">Refocus</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"1\"\n rowspan=\"1\"><button\n id=\"xPosUP2\"><img\n src=\"icons/shape_align_top.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\">Offset<br>\n      </td>\n      <td\n colspan=\"2\" rowspan=\"1\"\n style=\"background-color: rgb(255, 255, 255);\">\n<input style=\"width: 50px;\" class=\"offset required=\" min=\"0\" max=\"100000\" step=\"1\" type=\"number\" readonly>\n</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><br>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"\n colspan=\"10\" rowspan=\"1\"><br>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204); width: 241px;\"\n colspan=\"10\" rowspan=\"1\">Navigation</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"><br>\n      </td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"><img\n alt=\"\" src=\"icons/008-arrow-2B.png\"><img\n alt=\"\" src=\"icons/001-arrowB.png\"><img\n alt=\"\" src=\"icons/005-downB.png\"><img\n alt=\"\" src=\"icons/004-arrow-1B.png\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\">\n      <div style=\"text-align: left;\"><input\n style=\"width: 50px;\" class=\"res10\" onchange='updateRes10();' required=\"\"\n value=\"1\" min=\"0\" max=\"100000\" step=\"1\"\n type=\"number\"></div>\n      </td>\n      <td\n style=\"width: 50px; background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP2\"><img\n src=\"icons/007-ascending.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"width: 50px; text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"zPosUP2\"><img\n src=\"icons/007-ascendingB.png\"></button></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"><img\n alt=\"\" src=\"icons/007-ascendingB.png\"><img\n alt=\"\" src=\"icons/002-backB.png\"><img\n alt=\"\" src=\"icons/006-down-1B.png\"><img\n alt=\"\" src=\"icons/003-rightB.png\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); text-align: center;\">\n      <div style=\"text-align: left;\"><input\n style=\"width: 50px;\" class=\"res20\" onchange='updateRes20();' required=\"\"\n value=\"10\" min=\"0\" max=\"100000\" step=\"1\"\n type=\"number\"></div>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP1\"><img\n src=\"icons/008-arrow-2.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"zPosUP1\"><img\n src=\"icons/008-arrow-2B.png\"></button></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">&nbsp;</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><br>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"yPosLF2\"><img\n src=\"icons/002-back.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"yPosLF1\"><img\n src=\"icons/001-arrow.png\"></button></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><strong>X-Y</strong></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"yPosRG1\"><img\n src=\"icons/004-arrow-1.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"yPosRG2\"><img\n src=\"icons/003-right.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><strong>Z</strong></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"><img\n src=\"icons/008-arrow-2.png\"><img\n src=\"icons/001-arrow.png\"><img\n src=\"icons/005-down.png\"><img\n src=\"icons/004-arrow-1.png\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); text-align: left;\"><input\n style=\"width: 50px;\" class=\"res30\" onchange='updateRes30();' required=\"\"\n value=\"5\" min=\"0\" max=\"100000\" step=\"1\"\n type=\"number\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"xPosDW1\"><img\n src=\"icons/005-down.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"zPosDW1\"><img\n src=\"icons/005-downB.png\"></button></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"><img\n src=\"icons/007-ascending.png\"><img\n src=\"icons/002-back.png\"><img\n src=\"icons/006-down-1.png\"><img\n src=\"icons/003-right.png\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); text-align: left;\"><input\n style=\"width: 50px;\" class=\"res40\" onchange='updateRes40();' required=\"\"\n value=\"50\" min=\"0\" max=\"100000\" step=\"1\"\n type=\"number\">\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"xPosDW2\"><img\n src=\"icons/006-down-1.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"zPosDW2\"><img\n src=\"icons/006-down-1B.png\"></button></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td></td>\n      <td colspan=\"1\" rowspan=\"1\">Move\nto :&nbsp;</td>\n      <td colspan=\"7\" rowspan=\"1\">\n      <div id=\"designMove0\"></div>\n      </td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"\n colspan=\"10\" rowspan=\"1\"><br>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204); width: 241px;\"\n colspan=\"10\" rowspan=\"1\">Camera\ncontrol</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"><br>\n      </td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"\n colspan=\"2\" rowspan=\"1\">Time\nexposure (ms)<br>\nTemperature<br>\nGain<br>\nInvert color<br>\nActive color mapping<br>\nBrightness and contrast<br>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"8\"\n rowspan=\"1\"><input\n style=\"width: 50px;\" class=\"timeExp0\" onchange=\"updateTimeExp0();\" required=\"\"\n min=\"0\" max=\"100000\" step=\"1\" value=\"100\"\n type=\"number\"><br>\n      <input style=\"width: 50px;\"\n class=\"temp0\" onchange=\"updateTemp0();\"  value=\" 20\" required=\"\" min=\"0\"\n max=\"100000\" step=\"1\" type=\"number\">&nbsp;\n(only for\nZyla)<br>\n      <input style=\"width: 50px;\"\n class=\"gain0\" onchange=\"updateGain0();\"  value=\"1\" required=\"\" min=\"0\"\n max=\"100000\" step=\"1\" type=\"number\"><br>\n      <select onchange='updateInvert0();' id=\"posInvert0\">\n      <option selected=\"selected\"\n value=\"OFF\">OFF</option>\n      <option value=\"ON\">ON</option>\n      </select>\n      <br>\n      <select onchange='updateMap0();' id=\"posMap0\">\n      <option value=\"OFF\">OFF</option>\n      <option selected=\"selected\"\n value=\"ON\">ON</option>\n      </select>\n      <br>\n      <select onchange='updateBC0();' id=\"posBC0\">\n      <option value=\"OFF\">OFF</option>\n      <option selected=\"selected\"\n value=\"ON\">ON</option>\n      </select>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"\n colspan=\"10\" rowspan=\"1\"><br>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204); width: 241px;\"\n colspan=\"10\" rowspan=\"1\">Functions</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td\n style=\"text-align: left; vertical-align: top; width: 13px;\"></td>\n      <td style=\"width: 241px;\"><br>\n      </td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Setting\nchannel</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\">\n      <select onchange='updateSC0();' id=\"posSC0\">\n      <option selected=\"selected\"\n value=\"BF\">BF</option>\n      <option value=\"RFP\">RFP</option>\n      <option value=\"GFP\">GFP</option>\n      <option value=\"YFP\">YFP</option>\n      </select>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"2\"\n rowspan=\"1\"><button>ON</button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"2\"\n rowspan=\"1\"><button>OFF</button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Simple\npicture</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP2\"><img\n src=\"icons/camera.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Z-stack</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP2\"><img\n src=\"icons/zstack.png\"></button></td>\n      <td\n style=\"text-align: right; background-color: rgb(255, 255, 255);\"></td>\n      <td colspan=\"2\" rowspan=\"1\"\n style=\"background-color: rgb(255, 255, 255); text-align: left;\">Start:\n      <input style=\"width: 50px;\"\n class=\"start0\" required=\"\" onchange=\"updateStart0();\"  min=\"0\" max=\"100000\"\n step=\"1\" type=\"number\"></td>\n      <td colspan=\"2\" rowspan=\"1\"\n style=\"background-color: rgb(255, 255, 255); text-align: left;\">Stop:\n      <input style=\"width: 50px;\"\n class=\"stop0\" onchange=\"updateStop0();\"  required=\"\" min=\"0\" max=\"100000\"\n step=\"1\" type=\"number\"></td>\n      <td colspan=\"3\" rowspan=\"1\"\n style=\"background-color: rgb(255, 255, 255); text-align: left;\">Step:\n      <input style=\"width: 50px;\"\n class=\"step0\" onchange=\"updateStep0();\"  required=\"\" min=\"0\" max=\"100000\"\n step=\"1\" type=\"number\"></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td style=\"width: 0px;\"></td>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td\n style=\"text-align: center; vertical-align: middle;\">\n      <div id=\"room\"></div>\n      </td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n  </tbody>\n</table>\n<hr>\n\n\n\n\n                  </div>\n\n                    <div id=\"mda\">\n                        <div id=\"name_configMda\"></div>\n                        <div id=\"available_configMda\"></div>\n                        <div id=\"available_channels_mda\"></div>\n\n                        <div id=\"available_ressources\">\n                            <span>&nbsp;&nbsp;&nbsp;Available resources and functions | drag and drop directly on the tree</span><br>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Sequence');\"><img src='icons/arrow_rotate_clockwise.png'>&nbsp;Sequence</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'BREAK');\"><img src='icons/bullet_red.png'>&nbsp;Break</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Group Position');\"><img src='icons/plugin.png'>&nbsp;Group-position</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Group Position');\"><img src='icons/text_list_numbers.png'>&nbsp;List-position</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'XYZ Position');\"><img src='icons/yxz-512.png'>&nbsp;XYZ-position</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Imaging');\"><img src='icons/image.png'>&nbsp;Imaging</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Analysis');\"><img src='icons/color_swatch.png'>&nbsp;Analysis</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'IF');\"><img src='icons/if.png'>&nbsp;IF</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Delay');\"><img src='icons/clock.png'>&nbsp;Delay</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'Slack');\"><img src='icons/comments.png'>&nbsp;Slack</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'µFluidic');\"><img src='icons/uf2.png'>&nbsp;µFluidic</span>\n                            &nbsp;<span class=\"drag-source\" draggable=\"true\" ondragstart=\"event.dataTransfer.setData('text/plain', 'STOP');\"><img src='icons/stop.png'>&nbsp;STOP</span>\n                            &nbsp;   \n                            <!--<button onclick=test();><img src='icons/package_go.png'>&nbsp;Create a new protocol</button>-->\n                            <button class='setting_button' alt='save' id=\"setting_button_save_configMda\"><img src='icons/package_link.png'>&nbsp;Load to Simulator</button>\n<!--                            <button class='setting_button' alt='Tooggle' id=\"setting_button_toogle\"><img src='icons/layout_content.png' >Toggle expand</button>\n                            <button onclick=test();><img src='icons/package_go.png'>&nbsp;Start the acquisition</button><br><br>\n                    -->\n                            <table id=\"\" class=\"table table-striped\" style=\"height: 120%;\"\n                                <tbody>\n                                    <tr>\n                                        <th style=\"width:28%;\">                \n                                            <div id='my_tree'>\n                                                <table id=\"tree\" class=\"sampletree\">\n                                                    <colgroup>\n                                                        <col><col><col style=\"width:100%\">\n                                                    </colgroup>\n                                                    <thead>\n                                                        <tr> <th></th> <th>ID</th> <th></th> <!--<th></th> <th>Z-stacks</th> <th>Autofocus</th> <th>Save Images</th> <th>Comment</th> <th>Color</th>--> </tr>\n                                                    </thead>\n                                                    <tbody>\n                                                    <tr>\n                                                        <td class=\"alignCenter\"></td><td></td><td></td>\n                                                    </tr>\n                                                    </tbody>\n                                                </table>\n                                            </div>\n                                        </th>\n                                        <th style=\"width:30%;\">            \n                                            <div id='my_function'>\n                                                <p><span id=\"lblActive\"></span></p>\n                                                <p><span id=\"lblActiveEsttimatedTime\"></span></p>\n                                            </div>\n                                        </th>\n                                        <th style=\"width:54%;\">                \n \n<table style=\"text-align: left;\"\n border=\"0\" cellpadding=\"2\" cellspacing=\"5\">\n  <tbody>\n    <tr>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 16px;\"><br>\n      </td>\n      <td\n style=\"background-color: rgb(204, 204, 204); width: 511px;\">Live</td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 13px;\"\n colspan=\"1\" rowspan=\"1\"><br>\n      </td>\n      <td\n style=\"background-color: rgb(204, 204, 204); width: 241px;\"\n colspan=\"1\">Global\nparameters</td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\" colspan=\"1\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\" colspan=\"1\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\" colspan=\"1\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\" colspan=\"1\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\" colspan=\"1\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\" colspan=\"1\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\" colspan=\"1\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\" colspan=\"1\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204);\"></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 16px;\"></td>\n      <td style=\"width: 511px;\"></td>\n      <td style=\"width: 13px;\"\n colspan=\"1\" rowspan=\"1\"><br>\n      </td>\n      <td style=\"width: 241px;\"\n colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td colspan=\"1\"></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 16px;\"\n rowspan=\"21\"> </td>\n      <td\n style=\"text-align: right; vertical-align: top; width: 511px;\"\n colspan=\"1\" rowspan=\"22\">\n      <div\n style=\"text-align: right; vertical-align: top;\" id=\"content\">\n      <div\n style=\"text-align: right; vertical-align: top;\"\n class=\"content-box\"><!-- jQuery UI -->\n      <script type=\"text/javascript\"\n src=\"wPaint/lib/jquery.ui.core.1.10.3.min.js\"></script>\n      <script type=\"text/javascript\"\n src=\"wPaint/lib/jquery.ui.widget.1.10.3.min.js\"></script>\n      <script type=\"text/javascript\"\n src=\"wPaint/lib/jquery.ui.mouse.1.10.3.min.js\"></script>\n      <script type=\"text/javascript\"\n src=\"wPaint/lib/jquery.ui.draggable.1.10.3.min.js\"></script><!-- wColorPicker -->\n      <link rel=\"Stylesheet\"\n type=\"text/css\" href=\"wPaint/lib/wColorPicker.min.css\">\n      <script type=\"text/javascript\"\n src=\"wPaint/lib/wColorPicker.min.js\"></script>\n<!-- wPaint -->\n      <link rel=\"Stylesheet\"\n type=\"text/css\" href=\"wPaint/wPaint.min.css\">\n      <script type=\"text/javascript\"\n src=\"wPaint/wPaint.min.js\"></script>\n      <script type=\"text/javascript\"\n src=\"wPaint/plugins/main/wPaint.menu.main.min.js\"></script>\n      <script type=\"text/javascript\"\n src=\"wPaint/plugins/text/wPaint.menu.text.min.js\"></script>\n      <script type=\"text/javascript\"\n src=\"wPaint/plugins/shapes/wPaint.menu.main.shapes.min.js\"></script>\n      <script type=\"text/javascript\"\n src=\"wPaint/plugins/file/wPaint.menu.main.file.min.js\"></script>\n      <div id=\"wPaint\"\n style=\"position: relative;\"><!--<iframe\n src=\"http://127.0.0.1:5000/\" frameborder=\"0\" height=\"512\"\n width=\"512\"></iframe>-->\n <img height=\"512\" width=\"512\"\n src=\"media/test2/AgarPad1-Position1-BF-1552477544468.png\">\n <!--<center style=\"margin-bottom: 50px;\">\n<input value=\"toggle menu\"\nonclick=\"console.log($('#wPaint').wPaint('menuOrientation')); $('#wPaint').wPaint('menuOrientation', $('#wPaint').wPaint('menuOrientation') === 'vertical' ? 'horizontal' : 'vertical');\"\ntype=\"button\"></center>\n<center id=\"wPaint-img\"></center>-->\n      <script type=\"text/javascript\">\nvar images = [\n'/test/uploads/wPaint.png',\n];\nfunction saveImg(image) {\nvar _this = this;\nmask = image ;\nupdateImaging();\nalertmessage('Image saved successfuly !');\n}\nfunction loadImgBg (image) {\n$('#wPaint').wPaint('image', nodeParameters.data.mask);\n}\nfunction loadImgFg (image) {\n$('#wPaint').wPaint('image', nodeParameters.data.mask);\n}\n// init wPaint\n$('#wPaint').wPaint({\nmenuOffsetLeft: -35,\nmenuOffsetTop: 600,\nmenuOrientation : 'horizontal',\nsaveImg: saveImg,\nloadImgBg: loadImgBg,\nloadImgFg: loadImgFg,\nmode: 'square',\nlineWidth : '1'\n});\n      </script></div>\n      </div>\n      </div>\n      </td>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Objective</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"9\"\n rowspan=\"1\">\n      <select onchange='updateAftbl();' class=\"aftbl\"\n style=\"width: 150px;\">\n      <option name=\"LCPlanFl 20x\"\n value=\"75\">LCPlanFl 20x</option>\n      <option name=\"LCPlanFl 40x\"\n value=\"76\">LCPlanFl 40x</option>\n      <option name=\"LCPlanFl 60x\"\n value=\"79\">LCPlanFl 60x</option>\n      <option name=\"LUCPlanFl 40x\"\n value=\"78\">LUCPlanFl 40x</option>\n      <option name=\"LUCPlanFlN 20x\"\n value=\"75\">LUCPlanFlN 20x</option>\n      <option name=\"LUCPlanFlN 40x\"\n value=\"76\">LUCPlanFlN 40x</option>\n      <option name=\"LUCPlanFlN 60x\"\n value=\"79\">LUCPlanFlN 60x</option>\n      <option name=\"PlanApo 100x O3\"\n value=\"31\">PlanApo 100x O3</option>\n      <option name=\"PlanApo 60x O TIRFM-SP\"\n value=\"70\">PlanApo 60x O TIRFM-SP</option>\n      <option name=\"PlanApo 60x O/LSM\"\n value=\"62\">PlanApo 60x O/LSM</option>\n      <option name=\"PlanApo 60x O3\"\n value=\"30\">PlanApo 60x O3</option>\n      <option name=\"PlanApo 40x W/LSM\"\n value=\"60\">PlanApo 40x W/LSM</option>\n      <option name=\"PlanApoN 60x O\"\n value=\"30\">PlanApoN 60x O</option>\n      <option name=\"SLCPlanFl 40x\"\n value=\"77\">SLCPlanFl 40x</option>\n      <option name=\"UApo 30x 3/340\"\n value=\"45\">UApo 30x 3/340</option>\n      <option name=\"UApo 40x 3/340\"\n value=\"47\">UApo 40x 3/340</option>\n      <option name=\"UApo 40x W\"\n value=\"48\">UApo 40x W</option>\n      <option name=\"UPlanFl 60x OI3\"\n value=\"57\">UPlanFl 60x OI3</option>\n      <option name=\"UPlanApo 20x\"\n value=\"36\">UPlanApo 20x</option>\n      <option name=\"UPlanApo 100x OI3\"\n value=\"43\">UPlanApo 100x OI3</option>\n      <option name=\"UPlanApo 40x OI3\"\n value=\"39\">UPlanApo 40x OI3</option>\n      <option name=\"UPlanApo 60x\"\n value=\"40\">UPlanApo 60x</option>\n      <option name=\"UPlanApo 60x W\"\n value=\"41\">UPlanApo 60x W</option>\n      <option name=\"UPlanApo 60x W/IR\"\n value=\"42\">UPlanApo 60x W/IR</option>\n      <option name=\"UplanFl 100x O3\"\n value=\"58\">UplanFl 100x O3</option>\n      <option name=\"UPlanFl 20x\"\n value=\"55\">UPlanFl 20x</option>\n      <option name=\"UPlanFl 40x O-SP\"\n value=\"71\">UPlanFl 40x O-SP</option>\n      <option name=\"UPlanFl 40x\"\n value=\"56\">UPlanFl 40x</option>\n      <option name=\"UPlanFlN 100x O\"\n value=\"58\">UPlanFlN 100x O</option>\n      <option name=\"UPlanFlN 100x OI\"\n value=\"58\">UPlanFlN 100x OI</option>\n      <option name=\"UPlanFlN 20x\"\n value=\"55\">UPlanFlN 20x</option>\n      <option name=\"UPlanFlN 40x O\"\n value=\"39\">UPlanFlN 40x O</option>\n      <option name=\"UPlanFl 60x\"\n value=\"40\">UPlanFl 60x</option>\n      <option name=\"UPlanFlN 60x OI\"\n value=\"57\">UPlanFlN 60x OI</option>\n      <option name=\"UPlanSApo 100x O\"\n value=\"43\">UPlanSApo 100x O</option>\n      <option name=\"UPlanSApo 20x\"\n value=\"36\">UPlanSApo 20x</option>\n      <option name=\"UPlanSApo 40x\"\n value=\"47\">UPlanSApo 40x</option>\n      <option name=\"UPlanSApo 60x O\"\n value=\"30\">UPlanSApo 60x O</option>\n      <option name=\"UPlanSApo 60x W\"\n value=\"41\">UPlanSApo 60x W</option>\n      <option name=\"UPlanFlN 40x\"\n value=\"56\">UPlanFlN 40x</option>\n      </select>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Initialize\nauto-focus</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP2\"><img\n src=\"icons/shape_align_middle.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\">Refocus</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"1\"\n rowspan=\"1\"><button\n id=\"xPosUP2\"><img\n src=\"icons/shape_align_top.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\">&nbsp;</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\">Offset<br>\n      </td>\n      <td colspan=\"2\" rowspan=\"1\"\n style=\"background-color: rgb(255, 255, 255);\">\n      <div id=\"offset\"><input\n style=\"width: 50px;\" class=\"offset required=\" min=\"0\"\n max=\"100000\" step=\"1\" type=\"number\" readonly></div>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><br>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"\n colspan=\"10\" rowspan=\"1\"><br>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204); width: 241px;\"\n colspan=\"10\" rowspan=\"1\">Navigation</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"><br>\n      </td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"><img\n alt=\"\" src=\"icons/008-arrow-2B.png\"><img\n alt=\"\" src=\"icons/001-arrowB.png\"><img\n alt=\"\" src=\"icons/005-downB.png\"><img\n alt=\"\" src=\"icons/004-arrow-1B.png\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><input\n style=\"width: 50px;\" class=\"res1\" onchange='updateRes1();' required=\"\"\n value=\"1\" min=\"0\" max=\"100000\" step=\"1\"\n type=\"number\">\n      </td>\n      <td\n style=\"width: 50px; background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP2\"><img\n src=\"icons/007-ascending.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"width: 50px; text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"zPosUP2\"><img\n src=\"icons/007-ascendingB.png\"></button></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"><img\n alt=\"\" src=\"icons/007-ascendingB.png\"><img\n alt=\"\" src=\"icons/002-backB.png\"><img\n alt=\"\" src=\"icons/006-down-1B.png\"><img\n alt=\"\" src=\"icons/003-rightB.png\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); text-align: center;\"><input\n style=\"width: 50px;\" class=\"res2\" onchange='updateRes2();' required=\"\"\n value=\"10\" min=\"0\" max=\"100000\" step=\"1\"\n type=\"number\">\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP1\"><img\n src=\"icons/008-arrow-2.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"zPosUP1\"><img\n src=\"icons/008-arrow-2B.png\"></button></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">&nbsp;</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><br>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"yPosLF2\"><img\n src=\"icons/002-back.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"yPosLF1\"><img\n src=\"icons/001-arrow.png\"></button></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><strong>X-Y</strong></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"yPosRG1\"><img\n src=\"icons/004-arrow-1.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"yPosRG2\"><img\n src=\"icons/003-right.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><strong>Z</strong></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"><img\n src=\"icons/008-arrow-2.png\"><img\n src=\"icons/001-arrow.png\"><img\n src=\"icons/005-down.png\"><img\n src=\"icons/004-arrow-1.png\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><input\n style=\"width: 50px;\" class=\"res3\" onchange='updateRes3();' required=\"\"\n value=\"5\" min=\"0\" max=\"100000\" step=\"1\"\n type=\"number\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"xPosDW1\"><img\n src=\"icons/005-down.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"zPosDW1\"><img\n src=\"icons/005-downB.png\"></button></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"><img\n src=\"icons/007-ascending.png\"><img\n src=\"icons/002-back.png\"><img\n src=\"icons/006-down-1.png\"><img\n src=\"icons/003-right.png\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); text-align: center;\"><input\n style=\"width: 50px;\" class=\"res4\" onchange='updateRes4();' required=\"\"\n value=\"50\" min=\"0\" max=\"100000\" step=\"1\"\n type=\"number\">\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"xPosDW2\"><img\n src=\"icons/006-down-1.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"text-align: center; background-color: rgb(255, 255, 255);\"><button\n id=\"zPosDW2\"><img\n src=\"icons/006-down-1B.png\"></button></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\">Move to\n: </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"9\"\n rowspan=\"1\">\n      <div id=\"designMove\"></div>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"\n colspan=\"10\" rowspan=\"1\"><br>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204); width: 241px;\"\n colspan=\"10\" rowspan=\"1\">Camera\ncontrol</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"><br>\n      </td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\"\n colspan=\"2\" rowspan=\"1\">Time\nexposure (ms)<br>\nTemperature<br>\nGain<br>\nInvert color<br>\nActive color mapping<br>\nBrightness and contrast<br>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"8\"\n rowspan=\"1\"><input\n style=\"width: 50px;\" class=\"timeExp\" onchange=\"updateTimeExp();\"  required=\"\"\n min=\"0\" max=\"100000\" step=\"1\" value=\"100\"\n type=\"number\"><br>\n      <input style=\"width: 50px;\"\n class=\"temp\" onchange=\"updateTemp();\"  value=\"20\" required=\"\" min=\"0\"\n max=\"100000\" step=\"1\" type=\"number\">&nbsp;\n(only for\nZyla)<br>\n      <input style=\"width: 50px;\"\n class=\"gain\" onchange=\"updateGain();\"  value=\"1\" required=\"\" min=\"0\"\n max=\"100000\" step=\"1\" type=\"number\"><br>\n      <select onchange='updateInvert();' id=\"posInvert\">\n      <option selected=\"selected\"\n value=\"OFF\">OFF</option>\n      <option value=\"ON\">ON</option>\n      </select>\n      <br>\n      <select onchange='updateMap();' id=\"posMap\">\n      <option value=\"OFF\">OFF</option>\n      <option selected=\"selected\"\n value=\"ON\">ON</option>\n      </select>\n      <br>\n      <select onchange='updateBC();' id=\"posBC\">\n      <option value=\"OFF\">OFF</option>\n      <option selected=\"selected\"\n value=\"ON\">ON</option>\n      </select>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"\n colspan=\"10\" rowspan=\"1\"><br>\n      </td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(204, 204, 204); width: 241px;\"\n colspan=\"10\" rowspan=\"1\">Functions</td>\n      <td></td>\n    </tr>\n    <tr>\n      <td\n style=\"text-align: left; vertical-align: top; width: 13px;\"></td>\n      <td style=\"width: 241px;\"><br>\n      </td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Setting\nchannel</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\">\n      <select onchange='updateSC();' id=\"posSC\">\n      <option  value=\"BF\">BF</option>\n      <option value=\"RFP\">RFP</option>\n      <option value=\"GFP\">GFP</option>\n      <option value=\"YFP\">YFP</option>\n      </select>\n      </td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"2\"\n rowspan=\"1\"><button>ON</button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\" colspan=\"2\"\n rowspan=\"1\"><button>OFF</button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Simple\npicture</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP2\"><img\n src=\"icons/camera.png\"></button></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 13px;\"></td>\n      <td\n style=\"background-color: rgb(255, 255, 255); width: 241px;\">Z-stack</td>\n      <td\n style=\"background-color: rgb(255, 255, 255);\"><button\n id=\"xPosUP2\"><img\n src=\"icons/zstack.png\"></button></td>\n      <td\n style=\"text-align: right; background-color: rgb(255, 255, 255);\"></td>\n      <td colspan=\"2\" rowspan=\"1\"\n style=\"background-color: rgb(255, 255, 255); text-align: left;\">Start:\n      <input style=\"width: 50px;\"\n class=\"start\" onchange=\"updateStart();\"  required=\"\" min=\"0\" max=\"100000\"\n step=\"1\" type=\"number\"></td>\n      <td colspan=\"2\" rowspan=\"1\"\n style=\"background-color: rgb(255, 255, 255); text-align: left;\">Stop:\n      <input style=\"width: 50px;\"\n class=\"stop\" onchange=\"updateStop();\"  required=\"\" min=\"0\" max=\"100000\"\n step=\"1\" type=\"number\"></td>\n      <td colspan=\"3\" rowspan=\"1\"\n style=\"background-color: rgb(255, 255, 255); text-align: left;\">Step:\n      <input style=\"width: 50px;\"\n class=\"step\" onchange=\"updateStep();\"  required=\"\" min=\"0\" max=\"100000\"\n step=\"1\" type=\"number\"></td>\n      <td></td>\n    </tr>\n    <tr>\n      <td style=\"width: 16px;\"></td>\n      <td style=\"width: 13px;\"></td>\n      <td style=\"width: 241px;\"></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n      <td></td>\n    </tr>\n  </tbody>\n</table>\n\n\n\n\n\n\n                                        </th>\n                                    </tr>\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        \n        <script type=\"text/javascript\">\n        var images = [\n          '/test/uploads/wPaint.png',\n        ];\n\n        function saveImg(image) {\n          var _this = this;\n\n          $.ajax({\n            type: 'POST',\n            url: '/test/upload.php',\n            data: {image: image},\n            success: function (resp) {\n\n              // internal function for displaying status messages in the canvas\n              _this._displayStatus('Image saved successfully');\n\n              // doesn't have to be json, can be anything\n              // returned from server after upload as long\n              // as it contains the path to the image url\n              // or a base64 encoded png, either will work\n              resp = $.parseJSON(resp);\n\n              // update images array / object or whatever\n              // is being used to keep track of the images\n              // can store path or base64 here (but path is better since it's much smaller)\n              images.push(resp.img);\n\n              // do something with the image\n              $('#wPaint-img').attr('src', image);\n            }\n          });\n        }\n\n        function loadImgBg () {\n\n          // internal function for displaying background images modal\n          // where images is an array of images (base64 or url path)\n          // NOTE: that if you can't see the bg image changing it's probably\n          // becasue the foregroud image is not transparent.\n          this._showFileModal('bg', images);\n        }\n\n        function loadImgFg () {\n\n          // internal function for displaying foreground images modal\n          // where images is an array of images (base64 or url path)\n          this._showFileModal('fg', images);\n        }\n\n        // init wPaint\n        $('#wPaint').wPaint({\n          menuOffsetLeft: -35,\n          menuOffsetTop: -50,\n          saveImg: saveImg,\n          loadImgBg: loadImgBg,\n          loadImgFg: loadImgFg\n        });\n      </script>\n        \n        \n        \n        \n        \n        <script>window.jQuery || document.write('<script src=\"bootstrap/assets/js/vendor/jquery.min.js\"><\\/script>')</script>\n        <script src=\"bootstrap/dist/js/bootstrap.min.js\"></script>\n        <script src=\"bootstrap/assets/js/vendor/holder.min.js\"></script>\n        <script src=\"bootstrap/assets/js/ie10-viewport-bug-workaround.js\"></script>\n        <script type=\"text/javascript\">\n            $.confirm({\n                title: 'CYBERSCOPE !',\n                theme: \"supervan\",\n                content: '' +\n                '<form action=\"\" class=\"formName\">' +\n                '<div class=\"form-group\">' +\n                '<select class=\"userLog form-control\" id=\"userLog\"><option name=WilliamsB value=0>WilliamsB</option><option name=KalinaH value=1>KalinaH</option><option name=MatthiasL value=2>MatthiasL</option><option name=CélineC value=4>CélineC</option></select>'+\n                '</div>' +\n                '</form>',\n                buttons: {\n                    formSubmit: {\n                        text: 'Log in',\n                        btnClass: 'btn-blue',\n                        action: function () {\n                            var value = $('.userLog').find('option:selected').attr(\"name\");\n                            document.getElementById('name_user').innerHTML = \"User: \"+value;\n                        }\n                    }\n                },\n                onContentReady: function () {\n                    // bind to events\n                    var jc = this;\n                    this.$content.find('form').on('submit', function (e) {\n                        // if the user submits the form by pressing enter in the field.\n                        e.preventDefault();\n                        jc.$$formSubmit.trigger('click'); // reference the button and click it\n                    });\n                }\n            });\n        </script>\n    </body>\n</html>",
+        "output": "str",
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "43c6d0ca.dc6fc"
+            ]
+        ]
+    },
+    {
+        "id": "f7a91482.0d5f68",
+        "type": "http in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "url": "/formpost",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 500,
+        "wires": [
+            [
+                "a66a2d1a.e39c38"
+            ]
+        ]
+    },
+    {
+        "id": "a66a2d1a.e39c38",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "return msg.payload to client",
+        "func": "var obj = msg.payload;\n\nif(obj['topicpost']==='setting_channel_form'){\n    context.global.settingChannels = [] ;\n    var index = '' ;                    \n    var old_index = '' ;\n    var indexation = -1 ;\n    var namechannel = '' ;\n    var oldlid = '';\n    var oldnid = '';\n    \n    for(var key in obj){\n        if(key !== 'topicpost'){\n            var str = key.split(\"_\");\n            index = str[0];\n            if(index != old_index){ indexation = indexation + 1 ; oldlid = '';}\n            old_index = parseInt(str[0]);    \n            if(key === (index + \"_channel\")){namechannel = obj[key];}\n            if(key === (index + \"_devices\")) {\n                context.global.settingChannels[indexation] = {};   \n                context.global.settingChannels[indexation]['id'] = indexation + 1;\n                context.global.settingChannels[indexation]['name'] = namechannel;\n                var obj2 = context.global.ressources[obj[key]] ;\n                for (var key2 in obj2) if(key!=='update')context.global.settingChannels[indexation][''+key2] = obj2[key2];\n                context.global.settingChannels[indexation]['update'] = {} ;\n            }\n            if((key !== (index + \"_channel\")) && (key !== (index + \"_devices\"))){    \n                var balise = str[1];\n                var lid = balise.substr(0,1) ; //a modifier expression régulière\n                var nid = parseInt(balise.substr(1,1)) ; //a modifier expression régulière\n                if (lid !== oldlid) context.global.settingChannels[indexation]['update'][lid] = [] ;\n                oldlid = lid ;\n                context.global.settingChannels[indexation]['update'][lid][nid] = obj[key]; // = obj[key];//settingChannel = name.concat(settingChannel);\n            }\n        }\n    }\n    //msg.payload = context.global.settingChannels;\n    msg.payload = 'The settings channels data was submitted and available';\n    return [msg];\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 400,
+        "y": 500,
+        "wires": [
+            [
+                "43c6d0ca.dc6fc",
+                "b403105b.b10528",
+                "ba1b1b4b.097b28"
+            ]
+        ]
+    },
+    {
+        "id": "eec5cb1b.485618",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "get ? set ?",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\"=\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n  // expected output: ReferenceError: nonExistantFunction is not defined\n  // Note - error messages will vary depending on browser\n}\n\nif(order[0] === 'MDA-FINISH') msg.payload = 'MDA-FINISH';\n\nif(order[0] === 'getSettingChannels') msg.payload = context.global.settingChannels;\nif(order[0] === 'getSettingChannels2') msg.payload = context.global.settingChannels;\nif(order[0] === 'listConfigChannel') msg.payload = context.global.listConfigChannel;\nif(order[0] === 'listConfigMda') msg.payload = context.global.listConfigMda;\n\n\nif(order[0] === 'updateSettingChannels') msg.payload = context.global.settingChannels;\nif(order[0] === 'getSettingChannels-MDA') msg.payload = context.global.settingChannels;\nif(order[0] === 'getRessources') msg.payload = context.global.ressources;\n\nif(order[0] === 'getMDA-mdazs_zstart_set') msg.payload = \"123\";\n\nif(order[0] === 'setMDATimepointUse') context.global.mda['timepoints']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDATimepointNumber') context.global.mda['timepoints']['number'] = parseInt(order[1]) ;\nif(order[0] === 'setMDATimepointInterval') context.global.mda['timepoints']['interval'] = parseInt(order[1]) ;\nif(order[0] === 'setMDATimepointUnity') context.global.mda['timepoints']['unity'] = (order[1]) ;\n\nif(order[0] === 'setMDAMultiplespositionsUse') context.global.mda['multiplespositions']['use'] = parseInt(order[1]) ;\n\nif(order[0] === 'setMDAZstacksUse') context.global.mda['zstacks']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAZstacksZstart') context.global.mda['zstacks']['zstart'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAZstacksZend') context.global.mda['zstacks']['zend'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAZstacksZstep') context.global.mda['zstacks']['zstep'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAZstacksType') context.global.mda['zstacks']['type'] = (order[1]) ;\nif(order[0] === 'setMDAZstacksShutter') context.global.mda['zstacks']['shutteropen'] = parseInt(order[1]) ;\n\nif(order[0] === 'setMDAAutofocusUse') context.global.mda['autofocus']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAAutofocusSkip') context.global.mda['autofocus']['skip'] = parseInt(order[1]) ;\n\nif(order[0] === 'setMDAChannelsUse') context.global.mda['channels']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDAChannelsConfiguration'){\n    var config = order[1].split(\",\");\n    var id = context.global.mda['channels']['config'].length;\n    context.global.mda['channels']['config'][id] = {} ;\n    context.global.mda['channels']['config'][id]['use'] = parseInt(config[0]);\n    context.global.mda['channels']['config'][id]['exposure'] = parseInt(config[1]);\n    context.global.mda['channels']['config'][id]['zoffset'] = parseInt(config[2]);\n    context.global.mda['channels']['config'][id]['channel'] = (config[3]);\n    context.global.mda['channels']['config'][id]['zstack'] = parseInt(config[4]);\n    context.global.mda['channels']['config'][id]['skipframe'] = parseInt(config[5]);\n    context.global.mda['channels']['config'][id]['refHTML'] = parseInt(config[6]);\n}\n\nif(order[0] === 'setMDAChannelsConfigurationUse'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['use'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationExposure'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['exposure'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationZoffset'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['zoffset'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationChannel'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['channel'] = config[0];\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationZstack'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['zstack'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'setMDAChannelsConfigurationSkipframe'){\n    var config = order[1].split(\",\");\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(config[1])){\n            context.global.mda['channels']['config'][i]['skipframe'] = parseInt(config[0]);\n        }\n    }\n}\nif(order[0] === 'MDAChannelsConfigurationRemove'){\n    for(var i=0;i<context.global.mda['channels']['config'].length;i++){\n        if (parseInt(context.global.mda['channels']['config'][i]['refHTML']) === parseInt(order[1])){\n            context.global.mda['channels']['config'].splice(i, 1);\n        }\n    }\n}\n\n\n\n\n\nif(order[0] === 'setMDASaveimagesUse') context.global.mda['saveimages']['use'] = parseInt(order[1]) ;\nif(order[0] === 'setMDASaveimagesDirectory') context.global.mda['saveimages']['directory'] = (order[1]) ;\nif(order[0] === 'setMDASaveimagesPrefix') context.global.mda['saveimages']['prefix'] = (order[1]) ;\nif(order[0] === 'setMDASaveimagesFormat') context.global.mda['saveimages']['format'] = (order[1]) ;\n\nif(order[0] === 'setMDAAcquisitioncommentComment') context.global.mda['acquisitioncomment'] = (order[1]) ;\n\n\nreturn msg ;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 780,
+        "wires": [
+            [
+                "b403105b.b10528",
+                "b762411f.8fbef"
+            ]
+        ]
+    },
+    {
+        "id": "b403105b.b10528",
+        "type": "websocket out",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "server": "cc2483be.9a4e08",
+        "client": "",
+        "x": 820,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "ba1b1b4b.097b28",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "save settingChannels",
+        "func": "var test = [\n  {\n      \"id\" : 0,\n      \"name\": \"channelA\",\n      \"device\" : \"CoolLed-PE-4000\",\n      \"type\" : \"ligth-source\",\n      \"topic\" : \"fluo1\",\n      \"update\" :{\n          \"A\" : [120,100,true],\n          \"B\" : [200,40,false],\n          \"C\" : [330,80,false],\n          \"D\" : [410,10,false]\n      },\n      \"config\":{\n          \"A\" : [\"<select name='0A0' id='0A0'><option name='0A00' id='0A00' value=100>100</option>          <option name='0A01' id='0A01' value=110>110</option>           <option name='0A02' id='0A02' selected value=120>120</option>   <option name='0A03' id='0A03' value=130>130</option></select>\",          \"<input name='0A1' id='0A1' type='number' min='0' max='100' step='1' value='100'/>\",    \"<input name='0A2'  id='0A2' checked type='checkbox'/>\"],\n          \"B\" : [\"<select name='0B0' id='0B0'><option name='0B00' id='0B00' selected value=200>200</option> <option name='0B01' id='0B01' value=210>210</option>           <option name='0B02' id='0B02' value=220>220</option>            <option name='0B03' id='0B03' value=230>230</option></select>\",          \"<input name='0B1' id='0B1' type='number' min='0' max='100' step='1' value='40'/>\",     \"<input name='0B2'  id='0B2' type='checkbox'/>\"],\n          \"C\" : [\"<select name='0C0' id='0C0'><option name='0C00' id='0C00' value=300>300</option>          <option name='0C01' id='0C01' value=310>310</option>           <option name='0C02' id='0C02' value=320>320</option>            <option name='0C03' id='0C03' selected value=330>330</option></select>\", \"<input name='0C1' id='0C1' type='number' min='0' max='100' step='1' value='80'/>\",     \"<input name='0C2'  id='0C2' type='checkbox'/>\"],\n          \"D\" : [\"<select name='0D0' id='0D0'><option name='0D00' id='0D00' value=400>400</option>          <option name='0D01' id='0D01' selected value=410>410</option>  <option name='0D02' id='tD02' value=420>420</option>            <option name='0D03' id='0D03' value=430>430</option></select>\",          \"<input name='0D1' id='0D1' type='number' min='0' max='100' step='1' value='10'/>\",     \"<input name='0D2'  id='0D2' type='checkbox'/>\"]\n        }\n  }\n ];\nmsg.payload =  test.concat(context.global.settingChannels);\n//msg.payload =  context.global.settingChannels;\nif(context.global.saveConfigChannel !== '' ) msg.filename = context.global.saveConfigChannel;\n\nreturn msg ;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 680,
+        "y": 500,
+        "wires": [
+            [
+                "51117823.507be8"
+            ]
+        ]
+    },
+    {
+        "id": "51117823.507be8",
+        "type": "file",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "x": 910,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "69023469.19888c",
+        "type": "file in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 490,
+        "y": 740,
+        "wires": [
+            [
+                "53e8c5d.b837fbc"
+            ]
+        ]
+    },
+    {
+        "id": "53e8c5d.b837fbc",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "func": "msg.payload = JSON.parse(msg.payload);\ncontext.global.settingChannels = msg.payload ;\n//msg.payload = context.global.settingChannels;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 740,
+        "wires": [
+            [
+                "b403105b.b10528"
+            ]
+        ]
+    },
+    {
+        "id": "15de1f4c.f9c7a9",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "load",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\n\nif(order[0] === 'LoadSettingChannelsConfiguration') {\n    context.global.saveConfigChannel = 'lib/config/'+context.global.listConfigChannel[parseInt(order[1])];\n    msg.filename = context.global.saveConfigChannel ;\n    return msg ;\n}\n\nif(order[0] === 'LoadSettingMda') {\n    context.global.saveConfigMda = 'lib/mda/'+context.global.listConfigMda[parseInt(order[1])];\n    msg.filename = context.global.saveConfigMda ;\n    return msg ;\n}\n\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 740,
+        "wires": [
+            [
+                "69023469.19888c"
+            ]
+        ]
+    },
+    {
+        "id": "a0ed6576.1d54b8",
+        "type": "link out",
+        "z": "d82bbf2b.8439a8",
+        "name": "output_cam",
+        "links": [
+            "81abbb55.1245a8",
+            "66fdc750.1163a8",
+            "155ad7ac.7da0a"
+        ],
+        "x": 2895,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "81abbb55.1245a8",
+        "type": "link in",
+        "z": "d82bbf2b.8439a8",
+        "name": "input_cam",
+        "links": [
+            "a0ed6576.1d54b8",
+            "c0d9a069.ab39c"
+        ],
+        "x": 2135,
+        "y": 760,
+        "wires": [
+            [
+                "c00be164.722ee8",
+                "4d60937c.5f44b4"
+            ]
+        ]
+    },
+    {
+        "id": "f3cd5fce.a9be88",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "wait for all devices are initilized",
+        "func": "\tmsg2 = new Object();\n        msg2 = context.data;\n        msg2.payload = \"Initialisation >>> DONE :-)\";\n        context.global.initialize = true ;\n        context.data=null;\n    \treturn msg2;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2730,
+        "y": 700,
+        "wires": [
+            [
+                "81dda16e.aa3678"
+            ]
+        ]
+    },
+    {
+        "id": "9203e650.1d73a",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "Object sequencer 2",
+        "func": "context.global.sequence2 = {\n    \"0\" : \n        [\n            [{\n            'topic' : 'MotionStage1',\n            'device' : context.global.MotionStage1,\n            'action' : 'set',\n            'mode' : 'MDA',\n            'x': 1365,\n            'y': 3420,\n            }],\n            [{\n            'topic' : 'Camera1',\n            'device' : context.global.Camera1,\n            'action' : 'GRAB'\n            }]\n        ]\n}\nmsg.payload = context.global.sequence2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b90dd4e8.dcc5e",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "Sequencer 2 Miss Marple - MDA",
+        "func": "node.status ({fill:\"green\",shape:\"dot\", text: \"request\"});\nif( (context.global.startMDA === 1) && (context.global.initialize === true)){\n    node.status ({fill:\"yellow\",shape:\"dot\", text: context.global.sync2+\"-\"+context.global.sync3+\"--\"+context.global.finish+\"-\"+context.global.checkFinish});\n    var length = context.global.sequence2[context.global.sync2].length ;\n    if( length  !== context.global.sync3 ){\n        var order = context.global.sequence2[context.global.sync2];\n        if(msg.payload === 'done'){\n            context.global.checkFinish = context.global.checkFinish + 1 ;\n            node.status ({fill:\"red\",shape:\"dot\", text: context.global.sync2+\"-\"+context.global.sync3+\"--\"+context.global.finish+\"-\"+context.global.checkFinish});\n            if(context.global.checkFinish === context.global.finish){\n                context.global.checkFinish = 0 ;\n                if(order.length !==1) {\n                    context.global.finish = order[context.global.sync3].length ; // nombre d'instructions dans la branche la plus profonde de l'object sequencer\n                    for(var i=0;i<order[context.global.sync3].length;i++){ node.send(order[context.global.sync3][i]);}\n                }\n                else{ \n                    node.send(order[context.global.sync3]) ;\n                    context.global.finish = 1 ;\n                }\n                context.global.sync3 = context.global.sync3 + 1 ;\n            }\n        }\n        else{\n            if(order.length !==1) {\n                context.global.finish = order[context.global.sync3].length ; // nombre d'instructions dans la branche la plus profonde de l'object sequencer\n                for(var i=0;i<order[context.global.sync3].length;i++){ node.send(order[context.global.sync3][i]);}\n            }\n            else { \n                context.global.finish = 1 ;\n                node.send(order[context.global.sync3]) ;\n            }\n            context.global.sync3 = context.global.sync3 + 1 ;\n        }\n    }\n} ",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2730,
+        "y": 380,
+        "wires": [
+            [
+                "a0ed6576.1d54b8",
+                "6c21afa5.cc2b48"
+            ]
+        ],
+        "icon": "node-red/trigger.png"
+    },
+    {
+        "id": "456b4a41.292e94",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "sequencer2 key",
+        "func": "if(msg.payload === 'MDA-START'){\n    context.global.startMDA = 1 ;\n    context.global.checkFinish = 0 ;\n    \n    node.status ({fill:\"green\",shape:\"dot\", text: \"START\"});\n    //else node.status ({fill:\"red\",shape:\"dot\", text: \"\"}); \n    \n    for(var key in context.global.sequence2) {\n        sendCMD(key,context.global.sequence2[key]);\n    }\n}\nif(msg.payload === 'MDA-FINISH'){\n    node.status ({text: \"waiting start ...\"});\n}\n\nfunction sendCMD(key,data){\n    var msg = {} ;\n    msg.payload = \"RUN:\"+data;\n    setTimeout(function(){\n        context.global.sync2 = key;\n        context.global.sync3 = 0;\n        node.send(msg);\n    },parseInt(key) * 60000);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2360,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "20f2d96.e1fe926",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "START",
+        "topic": "",
+        "payload": "MDA-START",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2110,
+        "y": 200,
+        "wires": [
+            [
+                "c00be164.722ee8",
+                "4d60937c.5f44b4"
+            ]
+        ]
+    },
+    {
+        "id": "9d6464a3.6940c8",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "loadmsg.payload",
+        "func": "if(msg.payload==='www') return msg ;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 700,
+        "wires": [
+            [
+                "b403105b.b10528"
+            ]
+        ]
+    },
+    {
+        "id": "34ff73a7.fe9a94",
+        "type": "websocket in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "server": "cc2483be.9a4e08",
+        "client": "",
+        "x": 1790,
+        "y": 920,
+        "wires": [
+            [
+                "555eb76c.a27548",
+                "b04c0680.911338",
+                "1d7f74b7.88a993",
+                "cf4b613a.4e6a3",
+                "2a219786.32e2d8",
+                "e346e984.31bb78",
+                "31d3efe0.af3e78"
+            ]
+        ]
+    },
+    {
+        "id": "555eb76c.a27548",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "fancyTree switch MODIF 1",
+        "func": "context.global.sendDataLive = {} ;\nvar order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif(order[0] === 'getValueXYZ'){\n    context.global.sendDataLiveLg = 3 ;\n    output.payload =  context.global.MotionStage1;\n    output.topic = 'MotionStage1';\n    output.device =  context.global.MotionStage1;\n    output.mode = 'live';\n    output.action = 'getAll';\n    node.send(output);\n    output = {} ;\n    output.payload =  context.global.Microscope1;\n    output.topic = 'Microscope1';\n    output.device =  context.global.Microscope1;\n    output.mode = 'live';\n    output.action = 'getZposition';\n    node.send(output);\n}\nif(order[0] === 'tryAutoFocus'){\n    context.global.sendDataLiveLg = 2 ;\n    output = {} ;\n    output.payload =  context.global.Microscope1;\n    output.topic = 'Microscope1';\n    output.device =  context.global.Microscope1;\n    output.mode = 'live';\n    output.action = 'autoFocus';\n    node.send(output);\n}\nif(order[0] === 'getAutofocus'){\n    context.global.sendDataLiveLg = 2 ;\n    output = {} ;\n    output.payload =  context.global.Microscope1;\n    output.topic = 'Microscope1';\n    output.device =  context.global.Microscope1;\n    output.mode = 'live';\n    output.action = 'getAll';\n    node.send(output);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2040,
+        "y": 840,
+        "wires": [
+            []
+        ],
+        "icon": "node-red/application_side_tree.png"
+    },
+    {
+        "id": "81dda16e.aa3678",
+        "type": "websocket out",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "server": "cc2483be.9a4e08",
+        "client": "",
+        "x": 3020,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "ac7285c5.a8076",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "for setting live",
+        "func": "//if(Object.keys(context.global.sendDataLive).length !== 0){\n        if(msg.mode === 'live'){\n        //context.global.sendDataLive.push(msg.update);\n        \n        for(var key in msg.update){\n            context.global.sendDataLive[key] = msg.update[key];    \n        }\n        if(Object.keys(context.global.sendDataLive).length === context.global.sendDataLiveLg){\n            var msg = {};\n            msg.payload = context.global.sendDataLive ;\n            node.send(msg);\n            context.global.sendDataLive = {} ;\n        } \n    }\n//}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2540,
+        "y": 740,
+        "wires": [
+            [
+                "81dda16e.aa3678",
+                "e346e984.31bb78"
+            ]
+        ]
+    },
+    {
+        "id": "b04c0680.911338",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "create config channel",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif(order[0] === 'configChannels'){\n    context.global.saveConfigChannel = 'lib/config/'+order[1]+\".json\" ;\n    output.filename =  context.global.saveConfigChannel;\n    output.payload =  \"create\";\n    context.global.listConfigChannel.push(order[1]+\".json\");\n    node.send(output);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2020,
+        "y": 880,
+        "wires": [
+            [
+                "4e70237b.c9cb2c"
+            ]
+        ]
+    },
+    {
+        "id": "4e70237b.c9cb2c",
+        "type": "file",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "x": 2350,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5e8626f3.997258",
+        "type": "file in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "lib/config/list.txt",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 360,
+        "y": 200,
+        "wires": [
+            [
+                "fcdd4e64.0504e8",
+                "ba13f940.342688"
+            ]
+        ]
+    },
+    {
+        "id": "fcdd4e64.0504e8",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "Initialisation",
+        "func": "context.global.listConfigChannel = msg.payload.split(\";\");\n//context.global.initialize = false ;\n//context.global.ressources = [] ;\n\n//context.global.test = [];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d7f74b7.88a993",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "extend config channel",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif(order[0] === 'configChannels'){\n    output.payload = \";\"+order[1]+\".json\";\n    node.send(output);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2020,
+        "y": 920,
+        "wires": [
+            [
+                "599fe2ff.0ce7b4"
+            ]
+        ]
+    },
+    {
+        "id": "599fe2ff.0ce7b4",
+        "type": "file",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "lib\\config\\list.txt",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 2380,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9a3b19e1.3d886",
+        "type": "json",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 490,
+        "y": 660,
+        "wires": [
+            [
+                "e45a9846.62317"
+            ]
+        ]
+    },
+    {
+        "id": "4f7b64a1.00df8c",
+        "type": "comment",
+        "z": "d82bbf2b.8439a8",
+        "name": "start | EVOL512",
+        "info": "",
+        "x": 2540,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "c7143c77.72da",
+        "type": "comment",
+        "z": "d82bbf2b.8439a8",
+        "name": "grab | stop | EVOL512",
+        "info": "",
+        "x": 2940,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "39da26bf.b99b72",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "conv.",
+        "func": "if(context.global.startMDA === 1){\n    if(msg.payload !== 'MDA-FINISH'){\n        msg.payload = msg.device+\",\"+Date.now();\n        return msg;\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2650,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "368c79cf.d3b566",
+        "type": "comment",
+        "z": "d82bbf2b.8439a8",
+        "name": "MODIFICATIONS",
+        "info": "**1ère modification:**\n\n-Il s'agit du timeout; il faut envoyer un message à l'allumage et à l'extinction du setChannel en veillant\nà avoir msg.action = '' dans le noeud.\nDans le sequencer mettre if(msg.action !== 'timeout')\n\n**2ème modification**\n-Websocket avec la camèra pour l'instant; il faut impérativement générer les messages \nd'entrées et de sorties du noeud sans quoi le MDA ne fonctionnera pas\n\n[Lundi 21/01]\n1. tester le timeout sur IX-81, COOL-LED et X-CITE\n2. Injecter les modifs",
+        "x": 1900,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "decab91e.e4803",
+        "type": "comment",
+        "z": "d82bbf2b.8439a8",
+        "name": "journal Log",
+        "info": "",
+        "x": 2940,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "22a0c5b.d9b76ba",
+        "type": "comment",
+        "z": "d82bbf2b.8439a8",
+        "name": "initialize",
+        "info": "",
+        "x": 2930,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "1455efd7.ae0f2",
+        "type": "comment",
+        "z": "d82bbf2b.8439a8",
+        "name": "send to page html",
+        "info": "",
+        "x": 3090,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "3f9bf317.681fbc",
+        "type": "comment",
+        "z": "d82bbf2b.8439a8",
+        "name": "sequencer",
+        "info": "",
+        "x": 2980,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "155ad7ac.7da0a",
+        "type": "link in",
+        "z": "d82bbf2b.8439a8",
+        "name": "input_cam",
+        "links": [
+            "a0ed6576.1d54b8",
+            "c0d9a069.ab39c"
+        ],
+        "x": 2615,
+        "y": 640,
+        "wires": [
+            [
+                "39da26bf.b99b72"
+            ]
+        ]
+    },
+    {
+        "id": "4d60937c.5f44b4",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "start MDA time Order",
+        "func": "if(msg.payload === 'MDA-START'){\n    context.global.startMDA = 1 ;\n    context.global.checkFinish = 0 ;\n    global.set('scanTime',0) ;\n    //msg.payload = String(0) ;\n    context.global.sync2 = String(0);\n    context.global.sync3 = 0;\n    msg.payload = context.global.sequence2[String(0)];\n    node.send(msg);\n    node.status ({fill:\"green\",shape:\"dot\", text: \"START: timeOrder@0min\"});\n    var mdaSync = setInterval(function(){\n        scanTime = global.get('scanTime') + 1 ;\n        global.set('scanTime', scanTime) ;\n        for(var key in context.global.sequence2)\n            if(key===String(scanTime)){\n                context.global.sync2 = key;\n                msg.payload = context.global.sequence2[key];\n                context.global.sync3 = 0;\n                node.send(msg);\n                node.status ({fill:\"green\",shape:\"dot\", text: \"START: timeOrder@\"+scanTime+\"min\"});\n        }\n        \n    },60000);\n    global.set('mdaSync',mdaSync);\n}\nif(msg.payload === 'MDA-FINISH'){\n    context.global.startMDA = 0 ;\n    node.status ({text: \"waiting start ...\"});\n    clearTimeout(global.get('mdaSync'));\n}\n/*if(context.global.startMDA === 1){\n    var msg = {};\n    var date = Date.now();\n    var scanTime = date ; //global.get('scanTime'); \n    var previousScanTime = global.get('previousScanTime') | 0; \n    if ((scanTime-previousScanTime)>60000){\n        global.set('previousScanTime', date) ;\n        }\n    }\n*/",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2340,
+        "y": 240,
+        "wires": [
+            [
+                "b90dd4e8.dcc5e"
+            ]
+        ]
+    },
+    {
+        "id": "e45a9846.62317",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "protocole N",
+        "func": "var mda = msg.payload ;\nvar output = {} ;\n\ntry {\n    if(mda['type'] === 'mda'){\n        if(mda.children[0].data.algo === 'algo1'){\n            output = algo1(mda);\n        }\n        msg.payload = \"MDA-START\" ;\n        context.global.sequence2 = output ;\n        return msg;   \n    }\n   \n}\ncatch(error){}\n\nfunction algo1(mda){\n    \n    var test = {} ;\n    /*Algo 1\n    sequence\n    ----position\n\n        ----light\n        ----zs ou camera\n        ----light\n        ----zs ou came\n            ....\n    ----position\n        ....\n    */    \n    //repeat sequence\n        for(var i=0; i<parseInt(mda.children[0].children[0].data.repeat);i++){\n            test[String(i*parseInt(mda.children[0].children[0].data.time))] = [] ;\n\n            //position\n            for(var ii=0; ii<mda.children[0].children[0].children.length;ii++){\n                var titlePisition = mda.children[0].children[0].children[ii].title ;\n                var inject = [] ;           \n                //go to position x et y \n                inject.push({\n                    'payload' :  context.global.MotionStage1,\n                    'topic' : 'MotionStage1',\n                    'device' :  context.global.MotionStage1,\n                    'mode' : 'MDA',\n                    'action' : 'set',\n                    'update' : {\n                        \"xPosition\" : parseInt(mda.children[0].children[0].children[ii].data.xPosition),\n                        \"yPosition\" : parseInt(mda.children[0].children[0].children[ii].data.yPosition),\n                        \"moveType\" : \"G\"\n                        }\n                    });\n                //go to z position\n                /*inject.push({\n                    'topic' : 'Microscope1',\n                    'device' : context.global.Microscope1,\n                    'action' : 'setZposition',\n                    'mode' : 'MDA',\n                    'update' : {\n                        'zPosition': parseInt(mda.children[0].children[0].children[ii].data.zPosition),\n                        }\n                    });\n                */\n                test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                var useAF = false ;\n                //in the position\n                for(var iii=0; iii<mda.children[0].children[0].children[ii].children.length;iii++){\n                    //filter\n                    var limit = 1 ;\n                    var keep = false ;\n                    var zPosition =parseInt(mda.children[0].children[0].children[ii].data.zPosition);\n                    var active = 0 ;\n                    //var option1 = false ;\n                    if(mda.children[0].children[0].children[ii].children[iii].type === 'AF'){\n                        inject = [] ;\n                        inject.push({\n                            'topic' : 'Microscope1',\n                            'device' : context.global.Microscope1,\n                            'action' : 'AF',\n                            'mode' : 'MDA',\n                            'update':{\n                                'AF': 'auto'\n                                }\n                            });\n                        test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                        useAF = true ;\n                        //option1 = mda.children[0].children[0].children[ii].children[iii].data.option1 ;\n                        //node.warn(option1);\n                        \n                    }\n                    if(mda.children[0].children[0].children[ii].children[iii].type === 'LIGHT'){\n                        inject = [] ;\n                        inject.push({\n                            'topic' : 'Microscope1',\n                            'device' : context.global.Microscope1,\n                            'action' : 'setWheelFilter',\n                            'mode' : 'MDA',\n                            'update':{\n                                'wheelFilter': parseInt(mda.children[0].children[0].children[ii].children[iii].data.wheel)\n                                }\n                            });\n                        test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                    \n                        //if(option1===false){\n                            // detect image or zstack AND set limit for the repeat loop\n                            if(mda.children[0].children[0].children[ii].children[iii+1].type === 'CAMERA'){\n                                limit = 1 ;\n                                keep = false ;\n                                active = 0 ;\n                            }\n                            if(mda.children[0].children[0].children[ii].children[iii+1].type === 'ZS'){\n                                var zstart = parseInt(mda.children[0].children[0].children[ii].children[iii+1].data.zstart);\n                                var zend = parseInt(mda.children[0].children[0].children[ii].children[iii+1].data.zend);\n                                var zstep = parseInt(mda.children[0].children[0].children[ii].children[iii+1].data.zstep);\n                                var progress = parseInt(Math.abs(zstart-zend) / zstep) + 1 ;\n                                limit = progress ;\n                                keep = mda.children[0].children[0].children[ii].children[iii+1].data.shutter ;\n                                active = 1 ;\n                            }\n                        //}\n                        /*else {\n                            var nb = 0 ;\n                            for(var t=1;t<10000;t++){\n                                if((mda.children[0].children[0].children[ii].children[iii+t].type === 'CAMERA')|| (mda.children[0].children[0].children[ii].children[iii+t].type === 'ZS')) ;\n                                else {nb = t ;break;}\n                            }\n                            node.warn(\"WILL\");\n                            node.warn(nb);\n                        }*/\n                    }\n                       \n                     \n                        //////////////////////////////////////\n                    if(true) {\n                        for(var r=0;r<limit;r++){\n                            inject = [] ;\n                            inject.push({\n                                'topic' : 'Microscope1',\n                                'device' : context.global.Microscope1,\n                                'action' : 'setZposition',\n                                'mode' : 'MDA',\n                                'update' : {\n                                    'zPosition': zPosition + active * 100*(zstart + zstep * r)\n                                    }\n                                });\n                            if(mda.children[0].children[0].children[ii].children[iii].type === 'LIGHT'){\n                                if(iii>0){\n                                    if((mda.children[0].children[0].children[ii].children[iii-1].type !== 'AF'))\n                                        test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                                }\n                                if(iii===0) test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                            }\n                            //set Ligth\n                            if(mda.children[0].children[0].children[ii].children[iii].type === 'LIGHT'){\n                                for(var l=1; l<context.global.settingChannels.length; l++){\n                                    if(context.global.settingChannels[l].name === mda.children[0].children[0].children[ii].children[iii].data.title2){\n                                        inject = [];\n                                        //BF\n                                        var titleChannel = mda.children[0].children[0].children[ii].children[iii].data.title2 ;\n                                        if(context.global.settingChannels[l].device === \"OLYMPUS-IX-81\"){\n                                            inject.push({\n                                                'topic' : context.global.settingChannels[l].topic,\n                                                'device' : context.global.settingChannels[l].device,\n                                                'action' : 'setChannel',\n                                                'mode' : 'MDA',\n                                                'update' : {\n                                                    'lamp' : true,\n                                                    'intensity': parseInt(context.global.settingChannels[l].update.A[1]),\n                                                    'shutter': true,\n                                                    'keep' : keep ,\n                                                    'timeout' : parseInt(mda.children[0].children[0].children[ii].children[iii].data.time)\n                                                } \n                                            });\n                                            test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                                        }\n                                        //COOLLED\n                                        if(context.global.settingChannels[l].device === \"CoolLed-PE-4000\"){\n                                            inject.push({\n                                                'topic' : context.global.settingChannels[l].topic,\n                                                'device' : context.global.settingChannels[l].device,\n                                                'action' : 'setChannel',\n                                                'mode' : 'MDA',\n                                                'update' : {\n                                                    \"A\" :[parseInt(context.global.settingChannels[l].update.A[0]),parseInt(context.global.settingChannels[l].update.A[1]),context.global.settingChannels[l].update.A[2] == \"ON\" ? false : true],\n                                                    \"B\" :[parseInt(context.global.settingChannels[l].update.B[0]),parseInt(context.global.settingChannels[l].update.B[1]),context.global.settingChannels[l].update.B[2] == \"ON\" ? false : true],\n                                                    \"C\" :[parseInt(context.global.settingChannels[l].update.C[0]),parseInt(context.global.settingChannels[l].update.C[1]),context.global.settingChannels[l].update.C[2] == \"ON\" ? false : true],\n                                                    \"D\" :[parseInt(context.global.settingChannels[l].update.D[0]),parseInt(context.global.settingChannels[l].update.D[1]),context.global.settingChannels[l].update.D[2] == \"ON\" ? false : true],\n                                                    'timeout' : parseInt(mda.children[0].children[0].children[ii].children[iii].data.time),\n                                                    'keep': keep\n                                                    }\n                                            });\n                                            test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                                        }\n                                    }\n                                }\n                            }\n                            if(mda.children[0].children[0].children[ii].children[iii].type === 'CAMERA'){\n                                inject = [];\n                                inject.push({\n                                    'topic' : 'Camera1',\n                                    'device' : context.global.Camera1,\n                                    'action' : 'GRAB',\n                                    'prefixe' : mda.children[0].data.prefixe,\n                                    'channel': titleChannel,\n                                    'position' : titlePisition    \n                                    });\n                                test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                            }\n                            if((limit > 1)&&(mda.children[0].children[0].children[ii].children[iii].type !== 'ZS')){\n                                inject = [];\n                                inject.push({\n                                    'topic' : 'Camera1',\n                                    'device' : context.global.Camera1,\n                                    'action' : 'GRAB',\n                                    'prefixe' : mda.children[0].data.prefixe,\n                                    'channel': titleChannel,\n                                    'position' : titlePisition    \n                                    });\n                                test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                            }\n                        \n                        }\n                    }\n                    if (mda.children[0].children[0].children[ii].children[iii].type === 'LIGHT') useAF = false ;\n                }\n            }\n        \n            if(i === parseInt(mda.children[0].children[0].data.repeat)-1){\n                inject =\n                [{\n                'payload' : 'MDA-FINISH',\n                }];\n                test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n            }            \n        }\n        return test ;    \n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 750,
+        "y": 660,
+        "wires": [
+            [
+                "a91b0932.6cdd78"
+            ]
+        ]
+    },
+    {
+        "id": "6c21afa5.cc2b48",
+        "type": "debug",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 2970,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "5ee5ec1d.7b510c",
+        "type": "link in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "links": [
+            "a91b0932.6cdd78"
+        ],
+        "x": 1955,
+        "y": 240,
+        "wires": [
+            [
+                "c2396d11.ea086",
+                "63780eb3.c74d6"
+            ]
+        ]
+    },
+    {
+        "id": "93a49df1.8b65c",
+        "type": "link in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "links": [
+            "b762411f.8fbef"
+        ],
+        "x": 2135,
+        "y": 280,
+        "wires": [
+            [
+                "c00be164.722ee8",
+                "4d60937c.5f44b4"
+            ]
+        ]
+    },
+    {
+        "id": "59052c9a.48d344",
+        "type": "file in",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "lib/mda/list.txt",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "x": 360,
+        "y": 240,
+        "wires": [
+            [
+                "742ed952.637dd8"
+            ]
+        ]
+    },
+    {
+        "id": "742ed952.637dd8",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "Initialisation",
+        "func": "context.global.listConfigMda = msg.payload.split(\";\");\n//context.global.initialize = false ;\n//context.global.ressources = [] ;\n\n//context.global.test = [];\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cf4b613a.4e6a3",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "save config mda",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\";\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif(order[0] === 'saveMDA'){\n    if(order[1]===''){\n//        output.filename = context.global.saveConfigMda ;\n         context.global.saveConfigMda = 'lib/mda/empty.json';\n        //context.global.saveConfigMda = 'lib/mda/'+order[1]+'.json';\n        output.filename = context.global.saveConfigMda ;\n   }\n    else {\n        context.global.saveConfigMda = 'lib/mda/empty.json';\n        //context.global.saveConfigMda = 'lib/mda/'+order[1]+'.json';\n        output.filename = context.global.saveConfigMda ;\n//        context.global.listConfigMda.push(order[1]+\".json\");\n    }\n    output.payload = order[2];\n    node.send(output);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2000,
+        "y": 960,
+        "wires": [
+            [
+                "6529a667.06707",
+                "93f6220.5cae16"
+            ]
+        ]
+    },
+    {
+        "id": "6529a667.06707",
+        "type": "file",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": true,
+        "overwriteFile": "true",
+        "x": 2350,
+        "y": 960,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2a219786.32e2d8",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "extend config mda",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\";\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif((order[0] === 'saveMDA')&&(order[1]!=='')){\n    output.payload = \";\"+order[1]+\".json\";\n    node.send(output);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2010,
+        "y": 1000,
+        "wires": [
+            [
+                "f6eb6ea7.1f873"
+            ]
+        ]
+    },
+    {
+        "id": "f6eb6ea7.1f873",
+        "type": "file",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "lib\\mda\\list.txt",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "x": 2370,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f46eb9f6.84e7",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "filter Tree",
+        "func": "if(msg.payload.substr(0,11) === '{\"expanded\"') return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 660,
+        "wires": [
+            [
+                "9a3b19e1.3d886"
+            ]
+        ]
+    },
+    {
+        "id": "a91b0932.6cdd78",
+        "type": "link out",
+        "z": "d82bbf2b.8439a8",
+        "name": "MDA-START",
+        "links": [
+            "5ee5ec1d.7b510c"
+        ],
+        "x": 875,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "c2396d11.ea086",
+        "type": "delay",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "2",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 2100,
+        "y": 240,
+        "wires": [
+            [
+                "4d60937c.5f44b4"
+            ]
+        ]
+    },
+    {
+        "id": "b762411f.8fbef",
+        "type": "link out",
+        "z": "d82bbf2b.8439a8",
+        "name": "MDA-FINISH",
+        "links": [
+            "93a49df1.8b65c",
+            "32a465e5.ebab3a"
+        ],
+        "x": 455,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "9b622b68.92a648",
+        "type": "debug",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 2670,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "326f5deb.4746d2",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "MODIF1",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\n\n    \nif((order[0] === 'posLigth')&&(order.length === 5)){\n    \n    if (!isNaN(parseInt(order[4])))\n        context.global.settingChannels[parseInt(order[1])]['update'][order[2]][parseInt(order[3])] = parseInt(order[4]) ;\n    else \n        context.global.settingChannels[parseInt(order[1])]['update'][order[2]][parseInt(order[3])] = (order[4]) ;\n    msg.payload =  context.global.settingChannels;\n    if(context.global.saveConfigChannel !== '' ) msg.filename = context.global.saveConfigChannel;\n    myObject = context.global.settingChannels[parseInt(order[1])]['update'];\n    lettrine = String.fromCharCode(64+Object.keys(myObject).length);\n    msg.topic = 'mappingcolor'+context.global.settingChannels[parseInt(order[1])]['update'][lettrine][0] ;\n    msg.topic = msg.topic.replace('#','');\n    return msg ;\n}\nif((order[0] === 'posLigth')&&(parseInt(order[1])!==-1)&&(order.length===2)){\n    msg.payload =  context.global.settingChannels;\n    if(context.global.saveConfigChannel !== '' ) msg.filename = context.global.saveConfigChannel;\n    myObject = context.global.settingChannels[parseInt(order[1])]['update'];\n    lettrine = String.fromCharCode(64+Object.keys(myObject).length);\n    msg.topic = 'mappingcolor'+context.global.settingChannels[parseInt(order[1])]['update'][lettrine][0] ;\n    msg.topic = msg.topic.replace('#','');\n    return msg ;\n}\nif((order[0] === 'posLigth')&&(parseInt(order[1])===-1)){\n    msg.payload =  context.global.settingChannels;\n    if(context.global.saveConfigChannel !== '' ) msg.filename = context.global.saveConfigChannel;\n    msg.topic = 'mappingcolor808080' ;\n    return msg ;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 560,
+        "wires": [
+            [
+                "39017bd1.4e53e4",
+                "fdae743f.4cff58"
+            ]
+        ]
+    },
+    {
+        "id": "39017bd1.4e53e4",
+        "type": "http request",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.7:5000/{{{topic}}}",
+        "tls": "",
+        "x": 510,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "63780eb3.c74d6",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "MODIF1",
+        "func": "msg.payload =  'quit';\nmsg.topic   = 'quit';\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2100,
+        "y": 140,
+        "wires": [
+            [
+                "185a4521.42556b"
+            ]
+        ]
+    },
+    {
+        "id": "185a4521.42556b",
+        "type": "http request",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "url": "http://192.168.1.7:5000/{{{topic}}}",
+        "tls": "",
+        "x": 2370,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8ab21d72.06d1d",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "MODIF1",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\n\n    \nif((order[0] === 'posInvert')){\n    msg.payload =  \"\";\n    msg.topic = 'invert'+ order[1] ;\n    return msg ;\n}\nif((order[0] === 'posExposure')){\n    msg.payload =  \"\";\n    msg.topic = 'exposure'+ parseInt(order[1]) ;\n    return msg ;\n}\nif((order[0] === 'posMap')){\n    msg.payload =  \"\";\n    msg.topic = 'map'+ (order[1]) ;\n    return msg ;\n}\nif((order[0] === 'mappingcolor')){\n    msg.payload =  \"\";\n    msg.topic = 'mappingcolor'+ (order[1]) ;\n    return msg ;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 600,
+        "wires": [
+            [
+                "39017bd1.4e53e4"
+            ]
+        ]
+    },
+    {
+        "id": "e346e984.31bb78",
+        "type": "debug",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 2650,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "ef10cb17.b7fe1",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "protocole N MODIF",
+        "func": "var mda = msg.payload ;\nvar output = {} ;\n\ntry {\n    if(mda['type'] === 'mda'){\n        if(mda.children[0].data.algo === 'algo1'){\n            output = algo1(mda);\n        }\n        msg.payload = \"MDA-START\" ;\n        context.global.sequence2 = output ;\n        return msg;   \n    }\n   \n}\ncatch(error){}\n\nfunction algo1(mda){\n    \n    var test = {} ;\n    /*Algo 1\n    sequence\n    ----position\n        ----light\n        ----zs ou camera\n        ----light\n        ----zs ou came\n            ....\n    ----position\n        ....\n    */    \n    //repeat sequence\n        for(var i=0; i<parseInt(mda.children[0].children[0].data.repeat);i++){\n            test[String(i*parseInt(mda.children[0].children[0].data.time))] = [] ;\n\n            //position\n            for(var ii=0; ii<mda.children[0].children[0].children.length;ii++){\n                var titlePisition = mda.children[0].children[0].children[ii].title ;\n                var inject = [] ;           \n                //go to position x et y \n                inject.push({\n                    'payload' :  context.global.MotionStage1,\n                    'topic' : 'MotionStage1',\n                    'device' :  context.global.MotionStage1,\n                    'mode' : 'MDA',\n                    'action' : 'set',\n                    'update' : {\n                        \"xPosition\" : parseInt(mda.children[0].children[0].children[ii].data.xPosition),\n                        \"yPosition\" : parseInt(mda.children[0].children[0].children[ii].data.yPosition),\n                        \"moveType\" : \"G\"\n                        }\n                    });\n                //go to z position\n                /*inject.push({\n                    'topic' : 'Microscope1',\n                    'device' : context.global.Microscope1,\n                    'action' : 'setZposition',\n                    'mode' : 'MDA',\n                    'update' : {\n                        'zPosition': parseInt(mda.children[0].children[0].children[ii].data.zPosition),\n                        }\n                    });\n                */\n                test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                //in the position\n                for(var iii=0; iii<mda.children[0].children[0].children[ii].children.length;iii++){\n                    //filter\n                    var limit = 1 ;\n                    var keep = false ;\n                    var zPosition =parseInt(mda.children[0].children[0].children[ii].data.zPosition);\n                    node.warn(zPosition);\n                    var active = 0 ;\n                    if(mda.children[0].children[0].children[ii].children[iii].type === 'LIGHT'){\n                        inject = [] ;\n                        inject.push({\n                            'topic' : 'Microscope1',\n                            'device' : context.global.Microscope1,\n                            'action' : 'setWheelFilter',\n                            'mode' : 'MDA',\n                            'update':{\n                                'wheelFilter': parseInt(mda.children[0].children[0].children[ii].children[iii].data.wheel)\n                                }\n                            });\n                        test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                    \n                        // detect image or zstack AND set limit for the repeat loop\n                        if(mda.children[0].children[0].children[ii].children[iii+1].type === 'CAMERA'){\n                            limit = 1 ;\n                            keep = false ;\n                            active = 0 ;\n                        }\n                        if(mda.children[0].children[0].children[ii].children[iii+1].type === 'ZS'){\n                            var zstart = parseInt(mda.children[0].children[0].children[ii].children[iii+1].data.zstart);\n                            var zend = parseInt(mda.children[0].children[0].children[ii].children[iii+1].data.zend);\n                            var zstep = parseInt(mda.children[0].children[0].children[ii].children[iii+1].data.zstep);\n                            var progress = parseInt(Math.abs(zstart-zend) / zstep) + 1 ;\n                            limit = progress ;\n                            keep = mda.children[0].children[0].children[ii].children[iii+1].data.shutter ;\n                            active = 1 ;\n                        }\n                    }\n                        \n                        //////////////////////////////////////\n                    if(true) {\n                        for(var r=0;r<limit;r++){\n                            \n                            //if((r!==0)){\n                            inject = [] ;\n                            inject.push({\n                                'topic' : 'Microscope1',\n                                'device' : context.global.Microscope1,\n                                'action' : 'setZposition',\n                                'mode' : 'MDA',\n                                'update' : {\n                                    'zPosition': zPosition + active * 100*(zstart + zstep * r)\n                                    }\n                                });\n                            if(mda.children[0].children[0].children[ii].children[iii].type === 'LIGHT')\n                                    test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                            //}\n                       \n                            //set Ligth\n                            if(mda.children[0].children[0].children[ii].children[iii].type === 'LIGHT'){\n                                for(var l=1; l<context.global.settingChannels.length; l++){\n                                    if(context.global.settingChannels[l].name === mda.children[0].children[0].children[ii].children[iii].data.title2){\n                                        inject = [];\n                                        //BF\n                                        var titleChannel = mda.children[0].children[0].children[ii].children[iii].data.title2 ;\n                                        if(context.global.settingChannels[l].device === \"OLYMPUS-IX-81\"){\n                                            inject.push({\n                                                'topic' : context.global.settingChannels[l].topic,\n                                                'device' : context.global.settingChannels[l].device,\n                                                'action' : 'setChannel',\n                                                'mode' : 'MDA',\n                                                'update' : {\n                                                    'lamp' : true,\n                                                    'intensity': parseInt(context.global.settingChannels[l].update.A[1]),\n                                                    'shutter': true,\n                                                    'keep' : keep ,\n                                                    'timeout' : parseInt(mda.children[0].children[0].children[ii].children[iii].data.time)\n                                                } \n                                            });\n                                            test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                                        }\n                                        //COOLLED\n                                        if(context.global.settingChannels[l].device === \"CoolLed-PE-4000\"){\n                                            inject.push({\n                                                'topic' : context.global.settingChannels[l].topic,\n                                                'device' : context.global.settingChannels[l].device,\n                                                'action' : 'setChannel',\n                                                'mode' : 'MDA',\n                                                'update' : {\n                                                    \"A\" :[parseInt(context.global.settingChannels[l].update.A[0]),parseInt(context.global.settingChannels[l].update.A[1]),context.global.settingChannels[l].update.A[2] == \"ON\" ? false : true],\n                                                    \"B\" :[parseInt(context.global.settingChannels[l].update.B[0]),parseInt(context.global.settingChannels[l].update.B[1]),context.global.settingChannels[l].update.B[2] == \"ON\" ? false : true],\n                                                    \"C\" :[parseInt(context.global.settingChannels[l].update.C[0]),parseInt(context.global.settingChannels[l].update.C[1]),context.global.settingChannels[l].update.C[2] == \"ON\" ? false : true],\n                                                    \"D\" :[parseInt(context.global.settingChannels[l].update.D[0]),parseInt(context.global.settingChannels[l].update.D[1]),context.global.settingChannels[l].update.D[2] == \"ON\" ? false : true],\n                                                    'timeout' : parseInt(mda.children[0].children[0].children[ii].children[iii].data.time),\n                                                    'keep': keep\n                                                    }\n                                            });\n                                            test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                                        }\n                                    }\n                                }\n                            }\n                            if(mda.children[0].children[0].children[ii].children[iii].type === 'CAMERA'){\n                                inject = [];\n                                inject.push({\n                                    'topic' : 'Camera1',\n                                    'device' : context.global.Camera1,\n                                    'action' : 'GRAB',\n                                    'prefixe' : mda.children[0].data.prefixe,\n                                    'channel': titleChannel,\n                                    'position' : titlePisition    \n                                    });\n                                test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                            }\n                            if((limit > 1)&&(mda.children[0].children[0].children[ii].children[iii].type !== 'ZS')){\n                                inject = [];\n                                inject.push({\n                                    'topic' : 'Camera1',\n                                    'device' : context.global.Camera1,\n                                    'action' : 'GRAB',\n                                    'prefixe' : mda.children[0].data.prefixe,\n                                    'channel': titleChannel,\n                                    'position' : titlePisition    \n                                    });\n                                test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n                            }\n                        \n                        }\n                        ////////////////////////////\n                    }//picture+af\n                    //faire el stop\n                    //af et zs\n                }\n            }\n        \n            if(i === parseInt(mda.children[0].children[0].data.repeat)-1){\n              //  node.warn(\"TR\");\n                inject =\n                [{\n                'payload' : 'MDA-FINISH',\n                }];\n                test[String(i*parseInt(mda.children[0].children[0].data.time))].push(inject);\n            }            \n        }\n        return test ;    \n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1890,
+        "y": 1760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8548a37f.6c1ce",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 320,
+        "wires": [
+            [
+                "a8254098.563e2"
+            ]
+        ]
+    },
+    {
+        "id": "a8254098.563e2",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "sim temp",
+        "func": "var test = {} ;\ntest.payload = msg.payload; //\"f_temporisation\"; //context.global.MotionStage1,\ntest.topic = 'f_temporisation';\ntest.device = 'f_temporisation' ; // context.global.MotionStage1,\ntest.action = 'timeout';\ntest.update = {\n    \"t\" : 2\n}\nreturn test;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 340,
+        "y": 320,
+        "wires": [
+            [
+                "521d2f94.ea2058"
+            ]
+        ]
+    },
+    {
+        "id": "521d2f94.ea2058",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "Timer",
+        "func": "if(msg.device === 'f_temporisation'){\n    setTimeout(function(){\n        msg.payload = Date.now();\n        node.send(msg);    \n    },parseInt(msg.update.t));\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 320,
+        "wires": [
+            []
+        ],
+        "icon": "node-red/time.png"
+    },
+    {
+        "id": "a1883f61.9b1ec8",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 2740,
+        "y": 920,
+        "wires": [
+            [
+                "3f21f36.63bb70c",
+                "e346e984.31bb78"
+            ]
+        ]
+    },
+    {
+        "id": "3f21f36.63bb70c",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "func": "msg.payload = 'test-image--Position1-BF-1548009385951.png';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2930,
+        "y": 940,
+        "wires": [
+            [
+                "81dda16e.aa3678",
+                "e346e984.31bb78"
+            ]
+        ]
+    },
+    {
+        "id": "31d3efe0.af3e78",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "create config channel",
+        "func": "var order = [] ;\ntry {\n  order = msg.payload.split(\",\");\n}\ncatch(error) {\n  order[0] = msg.payload;\n}\nvar output = {} ;\nif(order[0] === 'mask'){\n    msg.payload =  \"\";\n    node.send(msg);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 2020,
+        "y": 1040,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3a75e704.b8f3",
+        "type": "exec",
+        "z": "d82bbf2b.8439a8",
+        "command": "C:/Users/Williams/Desktop/numerotationMosaic.py",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 2260,
+        "y": 1140,
+        "wires": [
+            [
+                "bf08ae2c.b553"
+            ],
+            [
+                "bf08ae2c.b553"
+            ],
+            [
+                "bf08ae2c.b553"
+            ]
+        ]
+    },
+    {
+        "id": "bf08ae2c.b553",
+        "type": "debug",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 2370,
+        "y": 1320,
+        "wires": []
+    },
+    {
+        "id": "11de5635.65ac02",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 1920,
+        "y": 1200,
+        "wires": [
+            [
+                "3a75e704.b8f3"
+            ]
+        ]
+    },
+    {
+        "id": "fdae743f.4cff58",
+        "type": "file",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "filename": "",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "true",
+        "x": 490,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "28c53a3e.ffb72e",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 960,
+        "wires": [
+            [
+                "df6e018f.6519c"
+            ]
+        ]
+    },
+    {
+        "id": "df6e018f.6519c",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "sequence",
+        "func": "msg.payload = context.global.settingChannels;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 960,
+        "wires": [
+            [
+                "9797f15a.69029"
+            ]
+        ]
+    },
+    {
+        "id": "9797f15a.69029",
+        "type": "debug",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "true",
+        "x": 550,
+        "y": 1080,
+        "wires": []
+    },
+    {
+        "id": "ab6025cb.53dde8",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 1000,
+        "wires": [
+            [
+                "a0acc7a4.a2dc6"
+            ]
+        ]
+    },
+    {
+        "id": "a0acc7a4.a2dc6",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "ressources",
+        "func": "msg.payload = context.global.ressources;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 1000,
+        "wires": [
+            [
+                "9797f15a.69029"
+            ]
+        ]
+    },
+    {
+        "id": "b6e063ba.60a5d8",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "initialize",
+        "func": "msg.payload = context.global.initialize ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 1040,
+        "wires": [
+            [
+                "9797f15a.69029"
+            ]
+        ]
+    },
+    {
+        "id": "821626d1.042b1",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 1040,
+        "wires": [
+            [
+                "b6e063ba.60a5d8"
+            ]
+        ]
+    },
+    {
+        "id": "2bc1deaa.89e522",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 1080,
+        "wires": [
+            [
+                "44d730a5.3840f8"
+            ]
+        ]
+    },
+    {
+        "id": "44d730a5.3840f8",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "sequence2",
+        "func": "msg.payload = context.global.sequence2;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 350,
+        "y": 1080,
+        "wires": [
+            [
+                "9797f15a.69029"
+            ]
+        ]
+    },
+    {
+        "id": "765b322d.9bfa6c",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 1120,
+        "wires": [
+            [
+                "9ffaf614.fd6178"
+            ]
+        ]
+    },
+    {
+        "id": "9ffaf614.fd6178",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "sync2",
+        "func": "context.global.sync2 = context.global.sync2 + 1;\ncontext.global.sync3 = 0 ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 1120,
+        "wires": [
+            [
+                "9797f15a.69029"
+            ]
+        ]
+    },
+    {
+        "id": "365010.5b0de7f",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 1160,
+        "wires": [
+            [
+                "6af85ee1.491fa8"
+            ]
+        ]
+    },
+    {
+        "id": "6af85ee1.491fa8",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "sync3",
+        "func": "context.global.sync3 = context.global.sync3 + 1;\ncontext.global.sync4 = 0 ;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 1160,
+        "wires": [
+            [
+                "9797f15a.69029"
+            ]
+        ]
+    },
+    {
+        "id": "61adb170.ee66b8",
+        "type": "inject",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 1200,
+        "wires": [
+            [
+                "e47f493d.d9943"
+            ]
+        ]
+    },
+    {
+        "id": "e47f493d.d9943",
+        "type": "function",
+        "z": "d82bbf2b.8439a8",
+        "name": "sync4",
+        "func": "context.global.sync4 = context.global.sync4 + 1;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 1200,
+        "wires": [
+            [
+                "9797f15a.69029"
+            ]
+        ]
+    },
+    {
+        "id": "30c6d13e.b00356",
+        "type": "debug",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 350,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "ba13f940.342688",
+        "type": "debug",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 730,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "93f6220.5cae16",
+        "type": "debug",
+        "z": "d82bbf2b.8439a8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 2340,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "cc2483be.9a4e08",
+        "type": "websocket-listener",
+        "z": "d82bbf2b.8439a8",
+        "path": "/ws/cyberscope",
+        "wholemsg": "false"
+    }
+]

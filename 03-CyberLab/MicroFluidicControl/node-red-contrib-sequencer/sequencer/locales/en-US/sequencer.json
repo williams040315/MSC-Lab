@@ -1,0 +1,21 @@
+{
+    "common":{
+        "namesave" : " Name | save",
+        "save" : " Save",
+        "duration": " Duration",
+        "config": " Configuration (all times are expressed in minutes)",
+        "airTable": "airTable keys"
+    },
+    "desc":{
+        "nm": "Name:",
+        "en":"Enabled:  ",
+        "et" : "Establishment time:  ",
+        "es" : "Establishment state:  ",
+        "tls" : "Time (low state):  ",
+        "ths" : "Time (high state):  ",
+        "stc" : "State when start:  ",
+        "sws" : "State when stop:  ",
+        "L" : "low state",
+        "H" : "high state"
+    }
+}
