@@ -1,10 +1,10 @@
 ## 01 - Banc de mesures pour les vrilles 
 `Projet scientifique dirigé par Drazen Zanchi et Julien Derr`
 
-Cette section regroupe l'ensemble des codes qui permettent de piloter les équipements du banc de mesures des vrilles.
+Cette section regroupe l'ensemble des documents techniques, tests et codes qui permettent de piloter les équipements du banc de mesures des vrilles.
 
-- Documents techniques: [Docs](https://github.com/williams040315/MSC-Lab/edit/main/01-Banc-de-mesure-vrille/Docs)
-- Tests de communications simples: [Tests](https://github.com/williams040315/MSC-Lab/edit/main/01-Banc-de-mesure-vrille/Tests)
+- [Documents techniques](https://github.com/williams040315/MSC-Lab/edit/main/01-Banc-de-mesure-vrille/Docs)
+- [Tests de communications simples](https://github.com/williams040315/MSC-Lab/edit/main/01-Banc-de-mesure-vrille/Tests)
 
 1 - Mesure de couple :
 * WLC Connect bluetooth
