@@ -7,13 +7,13 @@ Cette section regroupe l'ensemble des codes qui permettent de piloter les équip
 - Tests de communications simples: [Tests](https://github.com/williams040315/MSC-Lab/edit/main/01-Banc-de-mesure-vrille/Tests)
 
 1 - Mesure de couple :
-* WLC Connect bluetooth : [à compléter]
-* EG&G7220 Lock in amplifier : https://github.com/williams040315/MSC-Lab/tree/main/01-Banc-de-mesure-vrille/EG%26G7220-Lockin
+* WLC Connect bluetooth
+* [EG&G7220 Lock in amplifier](https://github.com/williams040315/MSC-Lab/tree/main/01-Banc-de-mesure-vrille/EG%26G7220-Lockin)
 
 `Le code du Lock in amplifier a été écrit en javascript grace à node-red. L'ensemble du contrôle et de la lecture des données se fait grâce à Python3 avec une communication en websockets non bloquante`
 
 2 - Mesure de masse :
-* Balance Kern : [à compléter]
+* Balance Kern
 
 3 - Platine de translation : 
 * [à compléter]
