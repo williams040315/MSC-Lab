@@ -1,7 +1,6 @@
 # MSC-Lab
-Cette section regroupe tous les dévellopements techniques des projets sur lesquels je travaille au laboratoire Matières et Systèmes Complexes
+Cette section regroupe tous les dévellopements techniques des projets sur lesquels je travaille au laboratoire Matières et Systèmes Complexes http://www.msc.univ-paris-diderot.fr/
 
 ## Banc de mesures pour les vrilles 
-### projet scientifique dirigé par Drazen Zanchi et Julien Derr
-Regroupe plusieurs codes en python3 et en javascript (node.js)
+### Projet scientifique dirigé par Drazen Zanchi et Julien Derr
 https://github.com/williams040315/MSC-Lab/tree/main/Banc-de-mesure-vrille
