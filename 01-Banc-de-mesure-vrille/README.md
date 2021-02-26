@@ -1,7 +1,7 @@
 ## 01 - Banc de mesures pour les vrilles 
 `Projet scientifique dirigé par Drazen Zanchi et Julien Derr`
 
-Cette section regroupe l'ensemble des codes qui permettent de piloter les équipements du banc de mesures des vrilles de vignes.
+Cette section regroupe l'ensemble des codes qui permettent de piloter les équipements du banc de mesures des vrilles.
 
 1 - Mesure de couple :
 * WLC Connect bluetooth : [à compléter]
