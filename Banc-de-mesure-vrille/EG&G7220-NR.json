@@ -1,0 +1,603 @@
+[
+    {
+        "id": "9cba5f25.24967",
+        "type": "tab",
+        "label": "EG&G-7200",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a0953eca.8ef2e",
+        "type": "ui_text",
+        "z": "9cba5f25.24967",
+        "group": "51682964.748378",
+        "order": 4,
+        "width": "8",
+        "height": "1",
+        "name": "",
+        "label": "SerialAnswer",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "x": 210,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "d92f73a8.0b23b",
+        "type": "function",
+        "z": "9cba5f25.24967",
+        "name": "SEN.14 = 50µ  ",
+        "func": "msg.payload = 'SEN.14 ' ;\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 340,
+        "y": 780,
+        "wires": [
+            [
+                "b1b6335f.66814"
+            ]
+        ]
+    },
+    {
+        "id": "2b46612e.17705e",
+        "type": "function",
+        "z": "9cba5f25.24967",
+        "name": "CleanSerialAnswer",
+        "func": "/*\nif(msg.payload.substr(0,4)!=='MAG.'){\n    msg.payload = parseFloat(msg.payload);\n    if (!isNaN(parseFloat(msg.payload))) return msg;\n}\n*/\n\nif(msg.payload.substr(0,3)!=='MP.'){\n    const exp_reg = /(?=E)/gi ;\n    var resultat = msg.payload.match(exp_reg);\n    if(resultat){\n        split = msg.payload.split(',');\n        if(split.length==2){\n            var msg2 = {} ;\n            msg.payload = parseFloat(split[0]);\n            global.set('M', msg.payload);\n            msg.topic = 'M';\n            msg2.payload = parseFloat(split[1]);\n            global.set('P', msg.payload);\n            msg2.topic = 'P';\n            if (!isNaN(parseFloat(msg.payload))&&!isNaN(parseFloat(msg2.payload))) return [msg,msg2];\n        }\n    }\n}\n\n\n",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 230,
+        "y": 600,
+        "wires": [
+            [
+                "52b0a8f9.787a3"
+            ],
+            [
+                "dcb901b1.ccd838"
+            ]
+        ]
+    },
+    {
+        "id": "52b0a8f9.787a3",
+        "type": "ui_chart",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "group": "1501939f.c0ab14",
+        "order": 1,
+        "width": "24",
+        "height": "8",
+        "label": "Magnitude",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "20",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "1",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#e8aeae",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 430,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d84a0689.cf751",
+        "type": "function",
+        "z": "9cba5f25.24967",
+        "name": "Send Lockin",
+        "func": "if(msg.payload === 'START'){\n    global.set('sendSerialCmd',setInterval(function(){\n        output = {} ;\n        output.payload = context.global.dataToSend;\n        node.send(output) ;\n    },100));\n} \nif(msg.payload === 'STOP'){\n    clearInterval(global.get('sendSerialCmd'));\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 530,
+        "y": 460,
+        "wires": [
+            [
+                "20bf84c7.5bb7bc",
+                "c7e407a2.4afb98"
+            ]
+        ]
+    },
+    {
+        "id": "dcb901b1.ccd838",
+        "type": "ui_chart",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "group": "1501939f.c0ab14",
+        "order": 1,
+        "width": "24",
+        "height": "8",
+        "label": "Phase",
+        "chartType": "line",
+        "legend": "true",
+        "xformat": "HH:mm:ss",
+        "interpolate": "step",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#e8aeae",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "x": 410,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7cc1013.4aee3",
+        "type": "function",
+        "z": "9cba5f25.24967",
+        "name": "SEN.15=100µ ",
+        "func": "msg.payload = 'SEN.15 ' ;\nreturn msg ;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 340,
+        "y": 820,
+        "wires": [
+            [
+                "b1b6335f.66814"
+            ]
+        ]
+    },
+    {
+        "id": "874a73d2.afe0b8",
+        "type": "inject",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 780,
+        "wires": [
+            [
+                "d92f73a8.0b23b"
+            ]
+        ]
+    },
+    {
+        "id": "c5a25c0c.3cd188",
+        "type": "inject",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "0.1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 820,
+        "wires": [
+            [
+                "d7cc1013.4aee3"
+            ]
+        ]
+    },
+    {
+        "id": "be31fdd8.0178",
+        "type": "serial out",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "serial": "551c84a5.7d01cc",
+        "x": 450,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "13d372e3.87848d",
+        "type": "link in",
+        "z": "9cba5f25.24967",
+        "name": "inputLockin",
+        "links": [
+            "20bf84c7.5bb7bc",
+            "b1b6335f.66814"
+        ],
+        "x": 315,
+        "y": 260,
+        "wires": [
+            [
+                "be31fdd8.0178"
+            ]
+        ]
+    },
+    {
+        "id": "20bf84c7.5bb7bc",
+        "type": "link out",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "links": [
+            "13d372e3.87848d"
+        ],
+        "x": 635,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "4178a775.dd5ca8",
+        "type": "serial in",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "serial": "551c84a5.7d01cc",
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "706edcb3.473a24"
+            ]
+        ]
+    },
+    {
+        "id": "706edcb3.473a24",
+        "type": "link out",
+        "z": "9cba5f25.24967",
+        "name": "outputLockin",
+        "links": [
+            "3eb2a440.a407cc"
+        ],
+        "x": 264,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "3eb2a440.a407cc",
+        "type": "link in",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "links": [
+            "706edcb3.473a24"
+        ],
+        "x": 75,
+        "y": 600,
+        "wires": [
+            [
+                "a0953eca.8ef2e",
+                "2b46612e.17705e"
+            ]
+        ]
+    },
+    {
+        "id": "19257846.f1a228",
+        "type": "websocket in",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "server": "466b3793.91bc58",
+        "client": "",
+        "x": 120,
+        "y": 420,
+        "wires": [
+            [
+                "aae57820.8b8078"
+            ]
+        ]
+    },
+    {
+        "id": "d7d2dc7e.d3636",
+        "type": "websocket out",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "server": "ea4a79b5.11b7c8",
+        "client": "",
+        "x": 680,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "ed7a889e.30eff8",
+        "type": "inject",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 120,
+        "wires": [
+            [
+                "60bfc555.8b56bc"
+            ]
+        ]
+    },
+    {
+        "id": "60bfc555.8b56bc",
+        "type": "function",
+        "z": "9cba5f25.24967",
+        "name": "INIT-GLOBAL",
+        "func": "global.set('dataToSend','MP. ') ;\nglobal.set('M',-10000) ;\nglobal.set('P',-10000) ;\nglobal.set('keepCMD',1500); //1,5s de maintien de commande sauf MP.",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 370,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d7d26f09.d73",
+        "type": "comment",
+        "z": "9cba5f25.24967",
+        "name": "Initialisation",
+        "info": "",
+        "x": 130,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "44710b33.eb6344",
+        "type": "comment",
+        "z": "9cba5f25.24967",
+        "name": "Contrôle du Lockin",
+        "info": "",
+        "x": 150,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "27096ed0.0558e2",
+        "type": "comment",
+        "z": "9cba5f25.24967",
+        "name": "Réponse du Lockin",
+        "info": "",
+        "x": 150,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "f06cd558.33d258",
+        "type": "comment",
+        "z": "9cba5f25.24967",
+        "name": "Communication avec le Lockin",
+        "info": "",
+        "x": 180,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "6a65ca32.92b064",
+        "type": "comment",
+        "z": "9cba5f25.24967",
+        "name": "Test du Lockin",
+        "info": "",
+        "x": 130,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "b1b6335f.66814",
+        "type": "link out",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "links": [
+            "13d372e3.87848d"
+        ],
+        "x": 455,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "b935e850.554d58",
+        "type": "function",
+        "z": "9cba5f25.24967",
+        "name": "CMD ?",
+        "func": "if(msg.payload.cmd === 'START'){\n    context.global.dataToSend = 'MP. ';\n    msg.payload = msg.payload.cmd;\n    node.send(msg);\n} \nif(msg.payload.cmd === 'STOP'){\n    context.global.dataToSend = 'MP. ';\n    msg.payload = msg.payload.cmd;\n    node.send(msg);\n} \nif(msg.payload.cmd === 'SEN.'){\n    context.global.dataToSend = 'SEN.' + msg.payload.data;\n    node.send(msg);\n    setTimeout(function(){\n        context.global.dataToSend = 'MP. ';\n    },global.get('keepCMD'));\n} \nif(msg.payload.cmd === 'DATA?'){\n    msg.payload = msg.payload.cmd;\n    node.send(msg);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 370,
+        "y": 420,
+        "wires": [
+            [
+                "d84a0689.cf751",
+                "9d065ba5.66f688",
+                "94dd71d0.1f1de"
+            ]
+        ]
+    },
+    {
+        "id": "aae57820.8b8078",
+        "type": "json",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 250,
+        "y": 420,
+        "wires": [
+            [
+                "b935e850.554d58"
+            ]
+        ]
+    },
+    {
+        "id": "9d065ba5.66f688",
+        "type": "function",
+        "z": "9cba5f25.24967",
+        "name": "Send Python ",
+        "func": "function getRandomInt(max) {\n  return Math.floor(Math.random() * Math.floor(max));\n}\n\nif(msg.payload === 'DATA?'){\n    output = {} ;\n    output.payload = getRandomInt(1000) + \";\" + getRandomInt(1000) ;\n    //output.payload = global.get('M') + \";\" + global.get('P');\n    node.send(output) ;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 530,
+        "y": 420,
+        "wires": [
+            [
+                "d7d2dc7e.d3636"
+            ]
+        ]
+    },
+    {
+        "id": "c7e407a2.4afb98",
+        "type": "debug",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "94dd71d0.1f1de",
+        "type": "debug",
+        "z": "9cba5f25.24967",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 530,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "51682964.748378",
+        "type": "ui_group",
+        "name": "Control",
+        "tab": "67f4c7c8.9a32e8",
+        "order": 1,
+        "disp": true,
+        "width": "24",
+        "collapse": true
+    },
+    {
+        "id": "1501939f.c0ab14",
+        "type": "ui_group",
+        "name": "Real Time Series",
+        "tab": "67f4c7c8.9a32e8",
+        "order": 2,
+        "disp": true,
+        "width": "24",
+        "collapse": true
+    },
+    {
+        "id": "551c84a5.7d01cc",
+        "type": "serial-port",
+        "serialport": "/dev/ttyUSB1",
+        "serialbaud": "9600",
+        "databits": "7",
+        "parity": "even",
+        "stopbits": "1",
+        "waitfor": "",
+        "dtr": "none",
+        "rts": "none",
+        "cts": "none",
+        "dsr": "none",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": "\\n\\r",
+        "responsetimeout": "10000"
+    },
+    {
+        "id": "466b3793.91bc58",
+        "type": "websocket-listener",
+        "path": "/cmd",
+        "wholemsg": "false"
+    },
+    {
+        "id": "ea4a79b5.11b7c8",
+        "type": "websocket-listener",
+        "path": "/data",
+        "wholemsg": "false"
+    },
+    {
+        "id": "67f4c7c8.9a32e8",
+        "type": "ui_tab",
+        "name": "EG&G 7220 Lock-in",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
