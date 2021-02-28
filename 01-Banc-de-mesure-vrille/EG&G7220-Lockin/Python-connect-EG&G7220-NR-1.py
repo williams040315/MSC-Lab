@@ -17,9 +17,9 @@ cmd = create_connection("ws://127.0.0.1:1880/cmd")
 data = create_connection("ws://127.0.0.1:1880/data")
 
 '''Réglages liés a Node-RED , à l'envoie des ordres au Lockin et au maintien d'une commande'''
-updateInterval='{"cmd":"ITL" , "data":100}' #0,1s d'envoie d'ordre au lockin
+updateInterval='{"cmd":"ITL" , "data":100}' # 0,1s d'envoie d'ordre au lockin
 cmd.send(updateInterval)
-updateInterval='{"cmd":"keepCMD" , "data":500}' #1,5s de maintien
+updateInterval='{"cmd":"keepCMD" , "data":500}' # 0,5s de maintien
 cmd.send(updateInterval)
 
 '''Préparation des commandes'''
@@ -40,7 +40,7 @@ Programme 1, programme de base avec changement de la sensibilité
 while iterator < 100 : 
     cmd.send(getData)
     datas  = json.loads(data.recv())
-    print(iterator,dt.datetime.now().strftime('%H:%M:%S.%f'),datas['M'],datas['P'],datas['CMD'])
+    print(dt.datetime.now().strftime('%H:%M:%S.%f'),datas['M'],datas['P'],datas['CMD'])
     iterator = iterator + 1
     if iterator == 25 :
         cmd.send(updateSensibility)
