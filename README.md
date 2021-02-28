@@ -10,7 +10,5 @@ Cette section regroupe tous les dévellopements techniques des projets sur lesqu
 ### [06 - Asservissement de la vitesse angulaire d'un capteur Renishaw haute résolution](https://github.com/williams040315/MSC-Lab/tree/main/06-Mesure-de-frequence)
 `Projet scientifique dirigé par Sandra Le Rouge`
 
-
-
 ------------------------------------------------------------------------------------------------------------------------------------------
 [Williams BRETT](williams.brett@univ-paris-diderot.fr) | [MSC](http://www.msc.univ-paris-diderot.fr/)
