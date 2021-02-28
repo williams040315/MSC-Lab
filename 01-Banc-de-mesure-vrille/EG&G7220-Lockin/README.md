@@ -6,4 +6,6 @@
 
 ![Données générées](https://github.com/williams040315/MSC-Lab/blob/main/01-Banc-de-mesure-vrille/EG%26G7220-Lockin/Figure_1.png)
 
-`Pour avoir les vrais données du Lockin il faut modifier le bloc fonctionnel 'Send Python'  les lignes 8 output.payload.M = getRandomInt(1000) par output.payload.M = global.get('M'); et la ligne 9 output.payload.P = getRandomInt(1000) par output.payload.P = global.get('P') ;`
+`Pour avoir les vrais données du Lockin il faut modifier le bloc fonctionnel 'Send Python':
+* Ligne 8 output.payload.M = getRandomInt(1000) par output.payload.M = global.get('M'); 
+* Ligne 9 output.payload.P = getRandomInt(1000) par output.payload.P = global.get('P') ;`
