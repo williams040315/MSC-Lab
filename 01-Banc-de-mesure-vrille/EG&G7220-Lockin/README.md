@@ -10,6 +10,8 @@ Pour lire les données de magnitude et de phase du Lockin il faut modifier le bl
 * Ligne 8 output.payload.M = getRandomInt(1000) par output.payload.M = global.get('M') ; 
 * Ligne 9 output.payload.P = getRandomInt(1000) par output.payload.P = global.get('P') ;
 
-Notes techniques: 
------------------------------------
-Il est important de croiser le câble série entre le LOckin et le PC comme le mentionne la documentation constructeur [Appendix D, Cable Diagrams](https://github.com/williams040315/MSC-Lab/blob/main/01-Banc-de-mesure-vrille/Docs/manual-7220-EG%26G%5B35%5D.pdf)
+## Notes techniques: 
+Il est important de croiser le câble série entre le Lockin et le PC comme le mentionne la documentation constructeur [Appendix D, Cable Diagrams](https://github.com/williams040315/MSC-Lab/blob/main/01-Banc-de-mesure-vrille/Docs/manual-7220-EG%26G%5B35%5D.pdf)
+
+------------------------------------------------------------------------------------------------------------------------------------------
+[Williams BRETT](williams.brett@univ-paris-diderot.fr) | [MSC](http://www.msc.univ-paris-diderot.fr/)
