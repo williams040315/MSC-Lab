@@ -9,8 +9,6 @@ from websocket import create_connection
 import json
 import time
 import datetime as dt
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 
 '''Tunnel de communication avec NR'''
 cmd = create_connection("ws://127.0.0.1:1880/cmd")

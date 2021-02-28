@@ -7,7 +7,6 @@ Created on Wed Feb 24 10:24:51 2021
 '''Import'''
 from websocket import create_connection
 import json
-import time
 import datetime as dt
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
