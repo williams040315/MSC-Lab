@@ -40,7 +40,7 @@ Programme 1, programme de base avec changement de la sensibilité
 while iterator < 100 : 
     cmd.send(getData)
     datas  = json.loads(data.recv())
-    print(dt.datetime.now().strftime('%H:%M:%S.%f'),datas['M'],datas['P'],datas['CMD'])
+    print(iterator,dt.datetime.now().strftime('%H:%M:%S.%f'),datas['M'],datas['P'],datas['CMD'])
     iterator = iterator + 1
     if iterator == 25 :
         cmd.send(updateSensibility)
