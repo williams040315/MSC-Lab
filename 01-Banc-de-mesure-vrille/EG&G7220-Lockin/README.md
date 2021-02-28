@@ -1,4 +1,4 @@
-# MSC-Lab
+## EG&G7220-Lockin
 
 1. Importer dans node-red le EGG7220-NR.json et déployer le flux
 2. Lancer le code python Python-connect-EGG7220-NR.py
