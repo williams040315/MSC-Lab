@@ -40,20 +40,6 @@ for i in range(0,2):
 '''Démarrage via le tunnel de communication'''
 cmd.send(start)
 
-iterator = 0
-
-'''
-Programme 1, programme de base avec changement de la sensibilité
-while iterator < 10 : 
-    cmd.send(getData)
-    datas  = json.loads(data.recv())
-    print(datas['M'],datas['P'],datas['CMD'])
-    iterator = iterator + 1
-    if iterator == 5 :
-        cmd.send(updateSensibility)
-    time.sleep(1)
-'''    
-
 '''Fonction d'animation, programme 2, juste un affichage de M et P dans matplotLib'''
 # Cette fonction est appelé périodiquement par FuncAnimation
 def animate(i, xs, ys):
@@ -86,4 +72,4 @@ plt.show()
 
 '''Arret  via le tunnel de communication'''
 cmd.send(stop)
-print('Fin> :-)')
+print('<Fin> :-)')
