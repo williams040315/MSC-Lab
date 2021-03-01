@@ -5,10 +5,10 @@ Cette section regroupe l'ensemble des documents techniques, tests et codes qui p
 
 - [Documents techniques](https://github.com/williams040315/MSC-Lab/edit/main/01-Banc-de-mesure-vrille/Docs)
 - [Tests de communications simples](https://github.com/williams040315/MSC-Lab/edit/main/01-Banc-de-mesure-vrille/Tests)
-- WLC Connect bluetooth (couple - calibration)
+- [WLC Connect bluetooth (couple - calibration)](https://github.com/williams040315/MSC-Lab/tree/main/01-Banc-de-mesure-vrille/WLC-Connect)
 - [EG&G7220 Lock in amplifier *1](https://github.com/williams040315/MSC-Lab/tree/main/01-Banc-de-mesure-vrille/EG%26G7220-Lockin)  (couple)
-- Balance Kern (masse)
-- Platine de translation (déplacement)
+- [Balance Kern (masse)](https://github.com/williams040315/MSC-Lab/tree/main/01-Banc-de-mesure-vrille/Kern-Balance)
+- [Platine de translation (déplacement)](https://github.com/williams040315/MSC-Lab/tree/main/01-Banc-de-mesure-vrille/Platine-translation-8SMC4)
 
 `*1 Le code du Lock in amplifier a été écrit en javascript grace à node-red. L'ensemble du contrôle et de la lecture des données se fait grâce à Python3 avec une communication en websockets non bloquante`
 
