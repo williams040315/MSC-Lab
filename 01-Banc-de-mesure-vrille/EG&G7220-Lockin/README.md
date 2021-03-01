@@ -10,10 +10,12 @@ Voici à titre d'exemple les données générées en temps rééel sur MatplotLi
 
 ![Données générées](https://github.com/williams040315/MSC-Lab/blob/main/01-Banc-de-mesure-vrille/EG%26G7220-Lockin/Figure_1.png)
 
-Pour lire les données de magnitude et de phase du Lockin il faut modifier le bloc fonctionnel `Send Python`:
+Pour lire les données de magnitude et de phase du Lockin il faut modifier le bloc fonctionnel `Send Python` (Python-connect-NR-1.py) :
 * Ligne 8 output.payload.M = getRandomInt(1000) par output.payload.M = global.get('M') ; 
 * Ligne 9 output.payload.P = getRandomInt(1000) par output.payload.P = global.get('P') ;
 
+![Données receuillies sur le Lockin](![Données générées](https://github.com/williams040315/MSC-Lab/blob/main/01-Banc-de-mesure-vrille/EG%26G7220-Lockin/Figure_2.png)
+)
 ## Notes techniques: 
 Il est important de croiser le câble série entre le Lockin et le PC comme le mentionne la documentation constructeur [Appendix D, Cable Diagrams](https://github.com/williams040315/MSC-Lab/blob/main/01-Banc-de-mesure-vrille/Docs/manual-7220-EG%26G%5B35%5D.pdf)
 

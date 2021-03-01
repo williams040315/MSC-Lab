@@ -6,26 +6,14 @@ Created on Wed Feb 24 10:24:51 2021
 
 '''Import'''
 from websocket import create_connection
-import json
 import datetime as dt
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 '''Tunnel de communication avec NR'''
-cmd = create_connection("ws://127.0.0.1:1880/cmd")
-data = create_connection("ws://127.0.0.1:1880/data")
-
-'''Réglages liés a Node-RED , à l'envoie des ordres au Lockin et au maintien d'une commande'''
-updateInterval='{"cmd":"ITL" , "data":100}' #0,1s d'envoie d'ordre au lockin
-cmd.send(updateInterval)
-updateInterval='{"cmd":"keepCMD" , "data":1500}' #1,5s de maintien
-cmd.send(updateInterval)
-
-'''Préparation des commandes'''
-start='{"cmd":"START"}'
-stop='{"cmd":"STOP"}'
-updateSensibility='{"cmd":"SEN." , "data":14}'
-getData='{"cmd":"MP?"}'
+magnitude = create_connection("ws://127.0.0.1:1880/magnitude")
+phase = create_connection("ws://127.0.0.1:1880/phase")
+sensibility = create_connection("ws://127.0.0.1:1880/sensibility")
 
 '''Création de la figure pour l'affichage''' 
 fig = plt.figure()
@@ -36,8 +24,6 @@ xs = [] ; ys = []
 for i in range(0,2):
     ys.append([])
 
-'''Démarrage via le tunnel de communication'''
-cmd.send(start)
 
 '''Fonction d'animation, programme 2, juste un affichage de M et P dans matplotLib'''
 # Cette fonction est appelé périodiquement par FuncAnimation
@@ -46,12 +32,9 @@ def animate(i, xs, ys):
     #40 items max soit 200ms x 40 = 8s
     limItem = -40 
 
-    # Lecture des datas via le tunnel de communication
-    cmd.send(getData); datas  = json.loads(data.recv())
-
     # Ajout de x et y dans les listes
     #xs.append(dt.datetime.now().strftime('%H:%M:%S.%f'))
-    xs.append(i) ; ys[0].append(datas['M']) ; ys[1].append(datas['P'])
+    xs.append(i) ; ys[0].append(float(magnitude.recv())) ; ys[1].append(float(phase.recv()))
     
     # Limitation a 20 items
     xs = xs[limItem:] ; ys[0] = ys[0][limItem:] ; ys[1] = ys[1][limItem:]
@@ -69,6 +52,4 @@ def animate(i, xs, ys):
 ani = animation.FuncAnimation(fig, animate, fargs=(xs, ys), interval=200)
 plt.show()
 
-'''Arret  via le tunnel de communication'''
-cmd.send(stop)
 print('<Fin> :-)')
