@@ -7,7 +7,7 @@ Cette section regroupe tous les dévellopements techniques des projets sur lesqu
 ### [05 - Programmation d'un dispositif de dépot de sable pour reproduire des dunes](https://github.com/williams040315/MSC-Lab/tree/main/05-Depot-de-sable)
 `Projet scientifique dirigé par Sylvain Courrech Dupont`
 
-### [06 - Asservissement de la vitesse angulaire d'un capteur Renishaw haute résolution](https://github.com/williams040315/MSC-Lab/tree/main/06-Mesure-de-frequence)
+### [06 - Asservissement de la vitesse angulaire d'un capteur Renishaw haute résolution](https://github.com/williams040315/MSC-Lab/tree/main/06-Banc-de-rheologie)
 `Projet scientifique dirigé par Sandra Le Rouge`
 
 ------------------------------------------------------------------------------------------------------------------------------------------
