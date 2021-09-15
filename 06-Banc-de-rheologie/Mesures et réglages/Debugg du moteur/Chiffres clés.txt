@@ -1,0 +1,14 @@
+Qq chiffres clé:
+1. 1 tr/s moteur  > 0,02 °/s dans le bignou  > 0,0034 rad/s dans le bignou  
+2. 10 tr/s moteur > 0,2  °/s dans le bignou  > 0,034 rad/s dans le bignou   
+
+Réducteur r de 60
+90 °/s max ; 0,785 rad/s max
+calcul = 4500/60/r/5 * 360 ou *2PI
+
+Renishaw:
+nombre de traits: 15744
+résolution angulaire: 1/15744 = 63,5µ°
+
+
+Test 0,001 à 0,01
