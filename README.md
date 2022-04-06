@@ -11,4 +11,4 @@ Cette section regroupe tous les dévellopements techniques des projets sur lesqu
 `Projet scientifique dirigé par Sandra Le Rouge`
 
 ------------------------------------------------------------------------------------------------------------------------------------------
-[Williams BRETT Fabienne C](williams.brett@univ-paris-diderot.fr) | [MSC](http://www.msc.univ-paris-diderot.fr/)
+[Williams BRETT inspiration by Cat Woman](williams.brett@univ-paris-diderot.fr) | [MSC](http://www.msc.univ-paris-diderot.fr/)
